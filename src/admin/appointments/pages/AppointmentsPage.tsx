@@ -1,10 +1,10 @@
-import { WeeklyCalendar } from "@/admin/components/WeeklyCalendar"
-import { AppointmentModal } from "@/admin/components/AppointmentModal"
+import { WeeklyCalendar } from "@/admin/appointments/components/WeeklyCalendar"
+import { AppointmentModal } from "@/admin/appointments/components/AppointmentModal"
 import { Button } from "@/components/ui/button"
 import { Plus, Filter } from "lucide-react"
-import { useAppointmentForm } from "@/admin/hooks/useAppointmentForm"
+import { useAppointmentForm } from "@/admin/appointments/hooks/useAppointmentForm"
 
-export const AppoinmentPage = () => {
+export const AppointmentsPage = () => {
     const {
         isDialogOpen,
         openDialog,

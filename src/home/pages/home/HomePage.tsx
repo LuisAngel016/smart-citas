@@ -1,7 +1,7 @@
+import { CustomHeader } from "@/components/custom/CustomHeader"
 import {
     CallToActionSeccion,
     CustomFooter,
-    CustomHeader,
     FeaturesSection,
     CustomJumbotron,
     PricingPlans
