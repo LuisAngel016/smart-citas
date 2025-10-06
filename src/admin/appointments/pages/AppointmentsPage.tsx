@@ -13,7 +13,8 @@ export const AppointmentsPage = () => {
         handleSubmit,
         errors,
         isSubmitting,
-    } = useAppointmentForm()
+        control,
+    } = useAppointmentForm();
 
     return (
         <div className="p-6 space-y-6">
@@ -40,6 +41,7 @@ export const AppointmentsPage = () => {
                 open={isDialogOpen}
                 onOpenChange={setIsDialogOpen}
                 register={register}
+                control={control}
                 errors={errors}
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}

@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { User, Phone, Mail, MapPin } from "lucide-react"
 import {
@@ -33,123 +35,165 @@ export const ClientModal = ({
 }: ClientModalProps) => {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[600px] font-poppins">
-                <DialogHeader>
-                    <DialogTitle>Nuevo Cliente</DialogTitle>
-                    <DialogDescription>
-                        Completa los datos para registrar un nuevo cliente
-                    </DialogDescription>
-                </DialogHeader>
-                <form onSubmit={onSubmit}>
-                    <div className="grid gap-4 py-4">
-                        {/* Nombre */}
-                        <div className="space-y-2">
-                            <Label htmlFor="nombre">
-                                <User className="h-4 w-4 inline mr-2" />
-                                Nombre Completo
-                            </Label>
-                            <Input
-                                id="nombre"
-                                placeholder="Ej: María González"
-                                {...register("nombre", {
-                                    required: "El nombre es requerido",
-                                    minLength: {
-                                        value: 3,
-                                        message: "El nombre debe tener al menos 3 caracteres"
-                                    }
-                                })}
-                            />
-                            {errors.nombre && (
-                                <p className="text-sm text-red-500">{errors.nombre.message}</p>
-                            )}
+            <DialogContent className="sm:max-w-[600px] font-poppins border-0 p-0 overflow-hidden bg-white">
+                <div className="relative">
+                    <DialogHeader className="px-8 pt-8 pb-6 space-y-3">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2.5 rounded-xl bg-primary shadow-lg shadow-primary/20">
+                                <User className="h-5 w-5 text-primary-foreground" />
+                            </div>
+                            <DialogTitle className="text-2xl font-bold text-foreground">Nuevo Cliente</DialogTitle>
                         </div>
+                        <DialogDescription className="text-base text-muted-foreground">
+                            Completa los datos para registrar un nuevo cliente
+                        </DialogDescription>
+                    </DialogHeader>
 
-                        {/* Email y Teléfono */}
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <Label htmlFor="email">
-                                    <Mail className="h-4 w-4 inline mr-2" />
-                                    Correo Electrónico
+                    <form onSubmit={onSubmit}>
+                        <div className="px-8 pb-6 space-y-6">
+                            {/* Nombre */}
+                            <div className="space-y-2.5">
+                                <Label htmlFor="nombre" className="text-sm font-medium flex items-center gap-2">
+                                    <div className="p-1 rounded-md bg-primary/10">
+                                        <User className="h-3.5 w-3.5 text-primary" />
+                                    </div>
+                                    Nombre Completo
                                 </Label>
                                 <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="maria@ejemplo.com"
-                                    {...register("email", {
-                                        required: "El correo es requerido",
-                                        pattern: {
-                                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                            message: "Correo electrónico inválido"
-                                        }
+                                    id="nombre"
+                                    placeholder="Ej: María González"
+                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                    {...register("nombre", {
+                                        required: "El nombre es requerido",
+                                        minLength: {
+                                            value: 3,
+                                            message: "El nombre debe tener al menos 3 caracteres",
+                                        },
                                     })}
                                 />
-                                {errors.email && (
-                                    <p className="text-sm text-red-500">{errors.email.message}</p>
+                                {errors.nombre && (
+                                    <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
+                                        {errors.nombre.message}
+                                    </p>
                                 )}
                             </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="telefono">
-                                    <Phone className="h-4 w-4 inline mr-2" />
-                                    Teléfono
+
+                            {/* Email y Teléfono */}
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2.5">
+                                    <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
+                                        <div className="p-1 rounded-md bg-primary/10">
+                                            <Mail className="h-3.5 w-3.5 text-primary" />
+                                        </div>
+                                        Correo Electrónico
+                                    </Label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        placeholder="maria@ejemplo.com"
+                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                        {...register("email", {
+                                            required: "El correo es requerido",
+                                            pattern: {
+                                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                message: "Correo electrónico inválido",
+                                            },
+                                        })}
+                                    />
+                                    {errors.email && (
+                                        <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
+                                            {errors.email.message}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="space-y-2.5">
+                                    <Label htmlFor="telefono" className="text-sm font-medium flex items-center gap-2">
+                                        <div className="p-1 rounded-md bg-primary/10">
+                                            <Phone className="h-3.5 w-3.5 text-primary" />
+                                        </div>
+                                        Teléfono
+                                    </Label>
+                                    <Input
+                                        id="telefono"
+                                        type="tel"
+                                        placeholder="+52 123 456 7890"
+                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                        {...register("telefono", {
+                                            required: "El teléfono es requerido",
+                                            pattern: {
+                                                value: /^[+]?[\d\s-()]+$/,
+                                                message: "Formato de teléfono inválido",
+                                            },
+                                        })}
+                                    />
+                                    {errors.telefono && (
+                                        <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
+                                            {errors.telefono.message}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Dirección */}
+                            <div className="space-y-2.5">
+                                <Label htmlFor="direccion" className="text-sm font-medium flex items-center gap-2">
+                                    <div className="p-1 rounded-md bg-primary/10">
+                                        <MapPin className="h-3.5 w-3.5 text-primary" />
+                                    </div>
+                                    Dirección (Opcional)
                                 </Label>
                                 <Input
-                                    id="telefono"
-                                    type="tel"
-                                    placeholder="+52 123 456 7890"
-                                    {...register("telefono", {
-                                        required: "El teléfono es requerido",
-                                        pattern: {
-                                            value: /^[+]?[\d\s-()]+$/,
-                                            message: "Formato de teléfono inválido"
-                                        }
-                                    })}
+                                    id="direccion"
+                                    placeholder="Calle, número, colonia, ciudad"
+                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                    {...register("direccion")}
                                 />
-                                {errors.telefono && (
-                                    <p className="text-sm text-red-500">{errors.telefono.message}</p>
-                                )}
+                            </div>
+
+                            {/* Notas */}
+                            <div className="space-y-2.5">
+                                <Label htmlFor="notas" className="text-sm font-medium">
+                                    Notas (Opcional)
+                                </Label>
+                                <Textarea
+                                    id="notas"
+                                    placeholder="Información adicional sobre el cliente..."
+                                    rows={3}
+                                    className="resize-none border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                    {...register("notas")}
+                                />
                             </div>
                         </div>
 
-                        {/* Dirección */}
-                        <div className="space-y-2">
-                            <Label htmlFor="direccion">
-                                <MapPin className="h-4 w-4 inline mr-2" />
-                                Dirección (Opcional)
-                            </Label>
-                            <Input
-                                id="direccion"
-                                placeholder="Calle, número, colonia, ciudad"
-                                {...register("direccion")}
-                            />
-                        </div>
-
-                        {/* Notas */}
-                        <div className="space-y-2">
-                            <Label htmlFor="notas">Notas (Opcional)</Label>
-                            <Textarea
-                                id="notas"
-                                placeholder="Información adicional sobre el cliente..."
-                                rows={3}
-                                {...register("notas")}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Botones de Acción */}
-                    <DialogFooter>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            onClick={() => onOpenChange(false)}
-                            disabled={isSubmitting}
-                        >
-                            Cancelar
-                        </Button>
-                        <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Guardando..." : "Guardar Cliente"}
-                        </Button>
-                    </DialogFooter>
-                </form>
+                        <DialogFooter className="px-8 py-6 bg-muted/30 border-t border-border/70">
+                            <div className="flex gap-3 w-full sm:w-auto">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => onOpenChange(false)}
+                                    disabled={isSubmitting}
+                                    className="flex-1 sm:flex-none h-11 border-border/70 hover:bg-accent transition-all duration-200"
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="flex-1 sm:flex-none h-11 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all duration-200"
+                                >
+                                    {isSubmitting ? (
+                                        <span className="flex items-center gap-2">
+                                            <div className="h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                                            Guardando...
+                                        </span>
+                                    ) : (
+                                        "Guardar Cliente"
+                                    )}
+                                </Button>
+                            </div>
+                        </DialogFooter>
+                    </form>
+                </div>
             </DialogContent>
         </Dialog>
     )

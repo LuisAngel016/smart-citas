@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import type { AppointmentFormData } from "@/admin/interfaces/appointment.interface"
+import type { AppointmentFormData } from "@/admin/appointments/interfaces/appointment.interface"
 
 /**
  * Hook personalizado para manejar el estado y lógica del formulario de citas
@@ -11,7 +11,8 @@ export const useAppointmentForm = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     
     const {
-        register,
+    register,
+    control,
         handleSubmit: handleFormSubmit,
         formState: { errors, isSubmitting },
         reset,
@@ -68,6 +69,7 @@ export const useAppointmentForm = () => {
         handleSubmit: handleFormSubmit(onSubmit),
         errors,
         isSubmitting,
+        control,
         reset,
         watch,
     }
