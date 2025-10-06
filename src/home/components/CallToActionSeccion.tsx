@@ -11,7 +11,7 @@ export const CallToActionSeccion = () => {
                     Únete a cientos de negocios que ya confían en CitasPro para administrar sus reservas
                 </p>
                 <Button size="lg" variant="secondary" asChild>
-                    <Link to="/registro">Crear Cuenta Gratis</Link>
+                    <Link to="/auth/register">Crear Cuenta Gratis</Link>
                 </Button>
             </div>
         </section>

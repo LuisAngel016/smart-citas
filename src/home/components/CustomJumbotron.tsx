@@ -15,7 +15,7 @@ export const CustomJumbotron = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <Button size="lg" className="w-full sm:w-auto" asChild>
-                        <Link to="/registro">Comenzar Gratis</Link>
+                        <Link to="/auth/register">Comenzar Gratis</Link>
                     </Button>
                     <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent" asChild>
                         <a href="#planes">Ver Planes</a>

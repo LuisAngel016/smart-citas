@@ -36,7 +36,7 @@ const pricingPlans: PricingPlan[] = [
             { text: "Notificaciones por email", included: false },
         ],
         buttonText: "Comenzar Gratis",
-        buttonLink: "/registro",
+        buttonLink: "/auth/register",
         buttonVariant: "outline",
     },
     {
@@ -53,7 +53,7 @@ const pricingPlans: PricingPlan[] = [
             { text: "Soporte prioritario", included: true, emphasized: true },
         ],
         buttonText: "Comenzar Prueba Gratis",
-        buttonLink: "/registro?plan=premium",
+        buttonLink: "/auth/register?plan=premium",
         buttonVariant: "default",
         highlighted: true,
         badge: "Más Popular",

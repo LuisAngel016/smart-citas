@@ -26,11 +26,11 @@ export const CustomHeader = () => {
                     </a>
                 </nav>
                 <div className="flex items-center gap-3">
-                    <Button variant="ghost" size="sm" asChild>
-                        <Link to="/login">Iniciar Sesión</Link>
+                    <Button variant="ghost" size="sm" className="py-4.5" asChild>
+                        <Link to="/auth/login">Iniciar Sesión</Link>
                     </Button>
-                    <Button size="sm" asChild>
-                        <Link to="/registro">Comenzar Gratis</Link>
+                    <Button size="sm" className="py-4.5" asChild>
+                        <Link to="/auth/register">Comenzar Gratis</Link>
                     </Button>
                 </div>
             </div>
