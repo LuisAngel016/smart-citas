@@ -1,7 +1,7 @@
 export type ServiceInput = {
     name: string
     duration: string
-    price: number
+    price: string
     notes?: string
 }
 

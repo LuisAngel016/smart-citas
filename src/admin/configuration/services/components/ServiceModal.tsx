@@ -73,7 +73,7 @@ export const ServiceModal = ({
                                         valueAsNumber: true
                                     })}
                                     id="price"
-                                    type="number"
+                                    type="text"
                                     className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
                                     placeholder="300"
                                 />
@@ -107,5 +107,3 @@ export const ServiceModal = ({
         </Dialog>
     )
 }
-
-export default ServiceModal

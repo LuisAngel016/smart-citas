@@ -20,7 +20,7 @@ export const useServiceForm = ({ onCreated }: Options = {}) => {
         defaultValues: {
             name: "",
             duration: "",
-            price: 0,
+            price: "",
         },
     })
 

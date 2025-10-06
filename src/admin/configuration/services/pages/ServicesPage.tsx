@@ -5,18 +5,18 @@ import { Button } from "@/components/ui/button"
 import { DollarSign } from "lucide-react"
 import { useState } from "react"
 import { useServiceForm } from "../hooks/useServiceForm"
+import { ServiceModal } from "../components/ServiceModal"
 import type { Service } from "../interfaces/service.interface"
-import ServiceModal from "../components/ServiceModal"
 
 const initialServices: Service[] = [
-    { id: '1', name: "Corte de Cabello", duration: "1 hora", price: 300 },
-    { id: '2', name: "Tinte", duration: "1.5 horas", price: 800 },
-    { id: '3', name: "Peinado", duration: "1 hora", price: 400 },
+    { id: '1', name: "Corte de Cabello", duration: "1 hora", price: "300" },
+    { id: '2', name: "Tinte", duration: "1.5 horas", price: "800" },
+    { id: '3', name: "Peinado", duration: "1 hora", price: "400" },
 ]
 
 export const ServicesPage = () => {
     const [services, setServices] = useState(initialServices)
-    const serviceForm = useServiceForm({
+    const { register, handleSubmit, errors, isSubmitting, isDialogOpen, openDialog, setIsDialogOpen } = useServiceForm({
         onCreated: (service) => {
             setServices(prev => [{ ...service, id: String(prev.length + 1) }, ...prev])
         }
@@ -34,7 +34,7 @@ export const ServicesPage = () => {
                             </div>
                             <CardDescription>Gestiona los servicios que ofreces</CardDescription>
                         </div>
-                        <Button onClick={() => serviceForm.openDialog()}>Agregar Servicio</Button>
+                        <Button onClick={() => openDialog()}>Agregar Servicio</Button>
                     </div>
                 </CardHeader>
                 <CardContent>
@@ -56,12 +56,12 @@ export const ServicesPage = () => {
             </Card>
 
             <ServiceModal
-                open={serviceForm.isDialogOpen}
-                onOpenChange={(v) => { if (!v) serviceForm.closeDialog(); else serviceForm.openDialog() }}
-                register={serviceForm.register}
-                errors={serviceForm.errors}
-                onSubmit={serviceForm.handleSubmit}
-                isSubmitting={serviceForm.isSubmitting}
+                open={isDialogOpen}
+                onOpenChange={setIsDialogOpen}
+                register={register}
+                errors={errors}
+                onSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
             />
         </div>
     )

@@ -9,7 +9,7 @@ import type { ClientFormData } from "@/admin/clients/interfaces/client.interface
  */
 export const useClientForm = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
-    
+
     const {
         register,
         handleSubmit: handleFormSubmit,
@@ -34,7 +34,7 @@ export const useClientForm = () => {
             // TODO: Aquí puedes agregar la lógica para guardar el cliente en el backend
             // Por ejemplo: await createClient(data)
             console.log("Datos del cliente:", data)
-            
+
             // Cerrar el modal y resetear el formulario
             setIsDialogOpen(false)
             reset()

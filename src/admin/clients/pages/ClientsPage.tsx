@@ -5,8 +5,9 @@ import { Plus, Search } from "lucide-react"
 import { ClientModal } from "@/admin/clients/components/ClientModal"
 import { ClientCard } from "@/admin/clients/components/ClientCard"
 import { useClientForm } from "@/admin/clients/hooks/useClientForm"
+import type { Client } from "../interfaces/client.interface"
 
-const clientes = [
+const clientes: Client[] = [
     {
         id: "1",
         nombre: "María González",
