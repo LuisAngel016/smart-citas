@@ -7,7 +7,7 @@ import { CustomAdminHeader } from "../shared/components/CustomAdminHeader";
 const AdminLayout = () => {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
     return (
-        <div className="font-poppins min-h-screen bg-gray-50 flex">
+        <div className="font-poppins min-h-screen bg-gray-50 dark:bg-gray-900 flex">
             <CustomAdminSidebar
                 isCollapsed={sidebarCollapsed}
                 onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}

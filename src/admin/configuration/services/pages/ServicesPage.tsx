@@ -24,15 +24,15 @@ export const ServicesPage = () => {
 
     return (
         <div>
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <div>
                             <div className="flex items-center gap-2">
-                                <DollarSign className="h-5 w-5 text-primary" />
-                                <CardTitle>Servicios</CardTitle>
+                                <DollarSign className="h-5 w-5 text-primary dark:text-blue-400" />
+                                <CardTitle className="dark:text-gray-100">Servicios</CardTitle>
                             </div>
-                            <CardDescription>Gestiona los servicios que ofreces</CardDescription>
+                            <CardDescription className="dark:text-gray-400">Gestiona los servicios que ofreces</CardDescription>
                         </div>
                         <Button onClick={() => openDialog()}>Agregar Servicio</Button>
                     </div>
@@ -40,14 +40,14 @@ export const ServicesPage = () => {
                 <CardContent>
                     <div className="space-y-3">
                         {services.map((service: Service) => (
-                            <div key={service.id} className="flex items-center justify-between p-4 border border-border rounded-lg">
+                            <div key={service.id} className="flex items-center justify-between p-4 border border-border dark:border-gray-700 rounded-lg">
                                 <div>
-                                    <p className="font-medium text-foreground">{service.name}</p>
-                                    <p className="text-sm text-muted-foreground">{service.duration} • ${service.price}</p>
+                                    <p className="font-medium text-foreground dark:text-gray-100">{service.name}</p>
+                                    <p className="text-sm text-muted-foreground dark:text-gray-400">{service.duration} • ${service.price}</p>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Button variant="outline" size="sm">Editar</Button>
-                                    <Button variant="outline" size="sm">Eliminar</Button>
+                                    <Button variant="outline" size="sm" className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-600">Editar</Button>
+                                    <Button variant="outline" size="sm" className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-600">Eliminar</Button>
                                 </div>
                             </div>
                         ))}

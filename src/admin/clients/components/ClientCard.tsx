@@ -10,11 +10,11 @@ export const ClientCard = ({ client, onClick }: ClientCardProps) => {
     return (
         <div
             onClick={onClick}
-            className="flex items-center justify-between p-4 rounded-lg border border-border hover:bg-muted/50 transition-colors cursor-pointer"
+            className="flex items-center justify-between p-4 rounded-lg border border-border dark:border-gray-700 hover:bg-muted/50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
         >
             <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="text-sm font-semibold text-primary">
+                <div className="h-12 w-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
+                    <span className="text-sm font-semibold text-primary dark:text-blue-400">
                         {client.nombre
                             .split(" ")
                             .map((n) => n[0])
@@ -22,13 +22,13 @@ export const ClientCard = ({ client, onClick }: ClientCardProps) => {
                     </span>
                 </div>
                 <div>
-                    <p className="font-medium text-foreground">{client.nombre}</p>
+                    <p className="font-medium text-foreground dark:text-gray-100">{client.nombre}</p>
                     <div className="flex items-center gap-4 mt-1">
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <span className="text-xs text-muted-foreground dark:text-gray-400 flex items-center gap-1">
                             <Mail className="h-3 w-3" />
                             {client.email}
                         </span>
-                        <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <span className="text-xs text-muted-foreground dark:text-gray-400 flex items-center gap-1">
                             <Phone className="h-3 w-3" />
                             {client.telefono}
                         </span>
@@ -36,9 +36,9 @@ export const ClientCard = ({ client, onClick }: ClientCardProps) => {
                 </div>
             </div>
             <div className="text-right">
-                <p className="text-sm font-medium text-foreground">{client.citas} citas</p>
+                <p className="text-sm font-medium text-foreground dark:text-gray-100">{client.citas} citas</p>
                 {client.ultimaCita && (
-                    <p className="text-xs text-muted-foreground">Última: {client.ultimaCita}</p>
+                    <p className="text-xs text-muted-foreground dark:text-gray-400">Última: {client.ultimaCita}</p>
                 )}
             </div>
         </div>

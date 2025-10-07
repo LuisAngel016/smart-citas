@@ -175,11 +175,12 @@ export const CustomLogo = ({ subtitle = 'Citas' }: Props) => {
                     className="
                         text-2xl
                         font-extralight
-                        text-muted-foreground/80
+                        text-muted-foreground
                         transition-all duration-500
                         group-hover:text-foreground
                         group-hover:font-light
                         group-hover:tracking-wide
+                        dark:text-white
                     "
                 >
                     {subtitle}

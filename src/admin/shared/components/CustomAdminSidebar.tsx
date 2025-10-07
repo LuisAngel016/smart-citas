@@ -8,6 +8,7 @@ import {
     CalendarCheck,
 } from 'lucide-react';
 import { CustomLogo } from '@/components/custom/CustomLogo';
+import { cn } from '@/lib/utils';
 // import { useAuthStore } from '@/auth/store/auth.store';
 
 interface SidebarProps {
@@ -44,16 +45,16 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
     // }
 
     return (
-        <div className={`bg-white border-r border-gray-200 transition-all duration-300 ease-in-out ${isCollapsed ? 'w-18' : 'w-64'
+        <div className={`bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300 ease-in-out ${isCollapsed ? 'w-18' : 'w-64'
             } flex flex-col`}>
             {/* Header */}
-            <div className="p-4 border-b border-gray-200 flex items-center justify-between h-18">
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between h-18">
                 {!isCollapsed && (
                     <CustomLogo />
                 )}
                 <button
                     onClick={onToggle}
-                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                    className={cn("p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-300 transition-colors")}
                 >
                     {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
                 </button>
@@ -69,8 +70,8 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
                                 <Link
                                     to={item.to || '/admin'}
                                     className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 group ${isActiveRoute(item.to || '/')
-                                        ? 'bg-blue-50 text-blue-600 font-semibold'
-                                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                        ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-semibold'
+                                        : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
                                         }`}
                                 >
                                     <Icon size={22} className="flex-shrink-0" />
@@ -86,14 +87,14 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
 
             {/* User Profile */}
             {!isCollapsed && (
-                <div className="p-4 border-t border-gray-200">
-                    <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+                    <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
                         <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
                             {/* {getInitials(user?.fullName || '')} */}
                         </div>
                         <div className="flex-1 min-w-0">
-                            {/* <p className="text-sm font-medium text-gray-900 truncate">{user?.fullName}</p> */}
-                            {/* <p className="text-xs text-gray-500 truncate">{user?.email}</p> */}
+                            {/* <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{user?.fullName}</p> */}
+                            {/* <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</p> */}
                         </div>
                     </div>
                 </div>

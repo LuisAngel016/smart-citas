@@ -6,6 +6,7 @@ import { ClientModal } from "@/admin/clients/components/ClientModal"
 import { ClientCard } from "@/admin/clients/components/ClientCard"
 import { useClientForm } from "@/admin/clients/hooks/useClientForm"
 import type { Client } from "../interfaces/client.interface"
+import { useSearchParams } from "react-router"
 
 const clientes: Client[] = [
     {
@@ -47,6 +48,12 @@ const clientes: Client[] = [
 ]
 
 export const ClientsPage = () => {
+
+    const [searchParams,] = useSearchParams();
+
+    const query = searchParams.get("query")
+    console.log(searchParams.get("query"));
+
     const {
         isDialogOpen,
         openDialog,
@@ -58,11 +65,11 @@ export const ClientsPage = () => {
     } = useClientForm()
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-foreground">Clientes</h1>
-                    <p className="text-muted-foreground mt-1">Gestiona tu base de clientes</p>
+                    <h1 className="text-3xl font-bold text-foreground dark:text-gray-100">Clientes</h1>
+                    <p className="text-muted-foreground dark:text-gray-400 mt-1">Gestiona tu base de clientes</p>
                 </div>
                 <Button onClick={openDialog}>
                     <Plus className="h-4 w-4 mr-2" />
@@ -70,20 +77,29 @@ export const ClientsPage = () => {
                 </Button>
             </div>
 
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
                 <CardHeader>
                     <div className="flex items-center gap-4">
                         <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input placeholder="Buscar clientes..." className="pl-9" />
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground dark:text-gray-400" />
+                            <Input placeholder="Buscar clientes..." className="pl-9 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
                         </div>
                     </div>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
-                        {clientes.map((cliente) => (
-                            <ClientCard key={cliente.id} client={cliente} />
-                        ))}
+                        {
+                            // TODO: Replace with real data and implement search
+                            query
+                                ? clientes
+                                    .filter((client) => client.nombre.toLowerCase().includes(query))
+                                    .map((cliente) => (
+                                        <ClientCard key={cliente.id} client={cliente} />
+                                    ))
+                                : clientes.map((cliente) => (
+                                    <ClientCard key={cliente.id} client={cliente} />
+                                ))
+                        }
                     </div>
                 </CardContent>
             </Card>

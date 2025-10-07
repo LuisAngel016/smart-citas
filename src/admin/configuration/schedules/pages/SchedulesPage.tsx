@@ -19,22 +19,22 @@ const schedules = [
 export const SchedulesPage = () => {
     return (
         <div className="space-y-4">
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
                 <CardHeader>
                     <div className="flex items-center gap-2">
-                        <Clock className="h-5 w-5 text-primary" />
-                        <CardTitle>Horario de Atención</CardTitle>
+                        <Clock className="h-5 w-5 text-primary dark:text-blue-400" />
+                        <CardTitle className="dark:text-gray-100">Horario de Atención</CardTitle>
                     </div>
-                    <CardDescription>Configura tus días y horarios de trabajo</CardDescription>
+                    <CardDescription className="dark:text-gray-400">Configura tus días y horarios de trabajo</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     {schedules.map((schedule, index) => (
-                        <div key={index} className="flex items-center gap-4 p-4 border border-border rounded-lg">
+                        <div key={index} className="flex items-center gap-4 p-4 border border-border dark:border-gray-700 rounded-lg">
                             <Switch defaultChecked={schedule.enabled} />
                             <div className="flex-1 grid grid-cols-3 gap-4 items-center">
-                                <span className="font-medium text-foreground">{schedule.day}</span>
-                                <Input type="time" defaultValue={schedule.start} disabled={!schedule.enabled} />
-                                <Input type="time" defaultValue={schedule.end} disabled={!schedule.enabled} />
+                                <span className="font-medium text-foreground dark:text-gray-100">{schedule.day}</span>
+                                <Input type="time" defaultValue={schedule.start} disabled={!schedule.enabled} className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
+                                <Input type="time" defaultValue={schedule.end} disabled={!schedule.enabled} className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
                             </div>
                         </div>
                     ))}
@@ -42,15 +42,15 @@ export const SchedulesPage = () => {
                 </CardContent>
             </Card>
 
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
                 <CardHeader>
-                    <CardTitle>Duración de Slots</CardTitle>
-                    <CardDescription>Configura la duración mínima de cada cita</CardDescription>
+                    <CardTitle className="dark:text-gray-100">Duración de Slots</CardTitle>
+                    <CardDescription className="dark:text-gray-400">Configura la duración mínima de cada cita</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-sm text-muted-foreground">Duración del Slot (minutos)</label>
-                        <Input id="slot-duration" type="number" defaultValue="30" min={15} step={15} />
+                        <label className="text-sm text-muted-foreground dark:text-gray-400">Duración del Slot (minutos)</label>
+                        <Input id="slot-duration" type="number" defaultValue="30" min={15} step={15} className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
                     </div>
                     <Button>Guardar Cambios</Button>
                 </CardContent>

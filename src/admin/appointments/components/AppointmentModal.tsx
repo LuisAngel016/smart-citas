@@ -55,16 +55,16 @@ export const AppointmentModal = ({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[650px] font-poppins border-0 p-0 overflow-visible bg-white">
+            <DialogContent className="sm:max-w-[650px] font-poppins border-0 p-0 overflow-visible bg-white dark:bg-gray-800">
                 <div className="relative">
                     <DialogHeader className="px-8 pt-8 pb-6 space-y-3">
                         <div className="flex items-center gap-3">
                             <div className="p-2.5 rounded-xl bg-primary shadow-lg shadow-primary/20">
                                 <Sparkles className="h-5 w-5 text-primary-foreground" />
                             </div>
-                            <DialogTitle className="text-2xl font-bold text-foreground">Nueva Cita</DialogTitle>
+                            <DialogTitle className="text-2xl font-bold text-foreground dark:text-gray-100">Nueva Cita</DialogTitle>
                         </div>
-                        <DialogDescription className="text-base text-muted-foreground">
+                        <DialogDescription className="text-base text-muted-foreground dark:text-gray-400">
                             Completa los datos para agendar una nueva cita
                         </DialogDescription>
                     </DialogHeader>
@@ -83,7 +83,7 @@ export const AppointmentModal = ({
                                     <Input
                                         id="clientName"
                                         placeholder="Ej: Juan Pérez"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                         {...register("clientName", {
                                             required: "El nombre del cliente es requerido",
                                             minLength: {
@@ -109,7 +109,7 @@ export const AppointmentModal = ({
                                         id="clientPhone"
                                         type="tel"
                                         placeholder="Ej: +52 123 456 7890"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                         {...register("clientPhone", {
                                             required: "El teléfono es requerido",
                                             pattern: {
@@ -138,7 +138,7 @@ export const AppointmentModal = ({
                                     id="clientEmail"
                                     type="email"
                                     placeholder="Ej: cliente@ejemplo.com"
-                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                     {...register("clientEmail", {
                                         required: "El email es requerido",
                                         pattern: {
@@ -172,15 +172,15 @@ export const AppointmentModal = ({
                                                 <Button
                                                     type="button"
                                                     onClick={() => setOpenDate((v) => !v)}
-                                                    className="w-full h-11 text-left pl-4 pr-3 rounded-lg border border-border/70 bg-white text-sm flex hover:bg-accent hover:border-primary/50 text-foreground items-center justify-between transition-all duration-200"
+                                                    className="w-full h-11 text-left pl-4 pr-3 rounded-lg border border-border/70 bg-white dark:bg-gray-700 dark:border-gray-600 text-sm flex hover:bg-accent hover:border-primary/50 text-foreground dark:text-gray-100 items-center justify-between transition-all duration-200"
                                                 >
-                                                    <span className={!field.value ? "text-muted-foreground" : ""}>
+                                                    <span className={!field.value ? "text-muted-foreground dark:text-gray-400" : ""}>
                                                         {field.value ? format(new Date(field.value), "PPP") : "Seleccionar fecha"}
                                                     </span>
                                                     <CalendarIcon className="ml-2 h-4 w-4 opacity-60" />
                                                 </Button>
                                                 {openDate && (
-                                                    <div className="absolute left-0 mt-2 z-50 w-auto p-3 bg-popover rounded-xl shadow-2xl border border-border/70 animate-in fade-in-0 zoom-in-95">
+                                                    <div className="absolute left-0 mt-2 z-50 w-auto p-3 bg-popover dark:bg-gray-800 rounded-xl shadow-2xl border border-border/70 dark:border-gray-700 animate-in fade-in-0 zoom-in-95">
                                                         <DatePicker
                                                             mode="single"
                                                             selected={field.value ? new Date(field.value) : undefined}
@@ -212,7 +212,7 @@ export const AppointmentModal = ({
                                     <Input
                                         id="time"
                                         type="time"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                         {...register("time", {
                                             required: "La hora es requerida",
                                         })}
@@ -236,7 +236,7 @@ export const AppointmentModal = ({
                                 <Input
                                     id="service"
                                     placeholder="Ej: Corte de cabello"
-                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                     {...register("service", {
                                         required: "El servicio es requerido",
                                     })}
@@ -257,20 +257,20 @@ export const AppointmentModal = ({
                                     id="notes"
                                     placeholder="Información adicional sobre la cita..."
                                     rows={3}
-                                    className="resize-none border-border/70 focus:border-primary transition-all duration-200 bg-white"
+                                    className="resize-none border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                     {...register("notes")}
                                 />
                             </div>
                         </div>
 
-                        <DialogFooter className="px-8 py-6 bg-muted/30 border-t border-border/70">
+                        <DialogFooter className="px-8 py-6 bg-muted/30 dark:bg-gray-900/50 border-t border-border/70 dark:border-gray-700">
                             <div className="flex gap-3 w-full sm:w-auto">
                                 <Button
                                     type="button"
                                     variant="outline"
                                     onClick={() => onOpenChange(false)}
                                     disabled={isSubmitting}
-                                    className="flex-1 sm:flex-none h-11 border-border/70 hover:bg-accent transition-all duration-200"
+                                    className="flex-1 sm:flex-none h-11 border-border/70 hover:bg-accent dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-100 transition-all duration-200"
                                 >
                                     Cancelar
                                 </Button>

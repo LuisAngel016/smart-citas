@@ -62,14 +62,14 @@ const pricingPlans: PricingPlan[] = [
 
 export const PricingPlans = () => {
     return (
-        <section id="planes" className="py-20">
+        <section id="planes" className="py-12 sm:py-16 md:py-20">
             <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Planes para cada tipo de negocio</h2>
-                    <p className="text-lg text-muted-foreground">Comienza gratis y escala cuando lo necesites</p>
+                <div className="text-center mb-8 sm:mb-10 md:mb-12">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">Planes para cada tipo de negocio</h2>
+                    <p className="text-base sm:text-lg text-muted-foreground">Comienza gratis y escala cuando lo necesites</p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
                     {pricingPlans.map((plan) => (
                         <Card
                             key={plan.title}
@@ -77,29 +77,29 @@ export const PricingPlans = () => {
                         >
                             {plan.badge && (
                                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                                    <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
+                                    <span className="bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full dark:text-white">
                                         {plan.badge}
                                     </span>
                                 </div>
                             )}
-                            <CardHeader>
-                                <CardTitle className="text-2xl">{plan.title}</CardTitle>
-                                <CardDescription>{plan.description}</CardDescription>
-                                <div className="mt-4">
-                                    <span className="text-4xl font-bold text-foreground">${plan.price}</span>
-                                    <span className="text-muted-foreground">{plan.period}</span>
+                            <CardHeader className="pb-4 sm:pb-6">
+                                <CardTitle className="text-xl sm:text-2xl">{plan.title}</CardTitle>
+                                <CardDescription className="text-sm sm:text-base">{plan.description}</CardDescription>
+                                <div className="mt-3 sm:mt-4">
+                                    <span className="text-3xl sm:text-4xl font-bold text-foreground">${plan.price}</span>
+                                    <span className="text-sm sm:text-base text-muted-foreground">{plan.period}</span>
                                 </div>
                             </CardHeader>
-                            <CardContent className="flex-grow">
-                                <ul className="space-y-3">
+                            <CardContent className="flex-grow pb-4 sm:pb-6">
+                                <ul className="space-y-2 sm:space-y-3">
                                     {plan.features.map((feature, index) => (
                                         <li key={index} className="flex items-start gap-2">
                                             <Check
-                                                className={`h-5 w-5 shrink-0 mt-0.5 ${feature.included ? "text-primary" : "text-muted-foreground"
+                                                className={`h-4 w-4 sm:h-5 sm:w-5 shrink-0 mt-0.5 ${feature.included ? "text-primary" : "text-muted-foreground"
                                                     }`}
                                             />
                                             <span
-                                                className={`text-sm ${feature.emphasized ? "font-medium" : ""
+                                                className={`text-xs sm:text-sm ${feature.emphasized ? "font-medium" : ""
                                                     } ${!feature.included ? "text-muted-foreground" : ""}`}
                                             >
                                                 {feature.text}
@@ -108,7 +108,7 @@ export const PricingPlans = () => {
                                     ))}
                                 </ul>
                             </CardContent>
-                            <CardFooter>
+                            <CardFooter className="pt-4 sm:pt-6">
                                 <Button
                                     className={`w-full ${plan.buttonVariant === "outline" ? "bg-transparent" : ""}`}
                                     variant={plan.buttonVariant}

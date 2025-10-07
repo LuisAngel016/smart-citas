@@ -35,10 +35,10 @@ const servicesData = [
 
 export const DashboardPage = () => {
     return (
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
             <div>
-                <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-                <p className="text-muted-foreground mt-1">Resumen de tu negocio</p>
+                <h1 className="text-3xl font-bold text-foreground dark:text-gray-100">Dashboard</h1>
+                <p className="text-muted-foreground dark:text-gray-400 mt-1">Resumen de tu negocio</p>
             </div>
 
             {/* Stats Grid */}
@@ -74,10 +74,10 @@ export const DashboardPage = () => {
 
             <div className="grid gap-4 md:grid-cols-2">
                 {/* Appointments Chart */}
-                <Card>
+                <Card className="dark:bg-gray-800 dark:border-gray-700">
                     <CardHeader>
-                        <CardTitle>Citas de la Semana</CardTitle>
-                        <CardDescription>Número de citas por día</CardDescription>
+                        <CardTitle className="dark:text-gray-100">Citas de la Semana</CardTitle>
+                        <CardDescription className="dark:text-gray-400">Número de citas por día</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <ChartContainer
@@ -109,10 +109,10 @@ export const DashboardPage = () => {
                 </Card>
 
                 {/* Revenue Chart */}
-                <Card>
+                <Card className="dark:bg-gray-800 dark:border-gray-700">
                     <CardHeader>
-                        <CardTitle>Ingresos Mensuales</CardTitle>
-                        <CardDescription>Últimos 6 meses</CardDescription>
+                        <CardTitle className="dark:text-gray-100">Ingresos Mensuales</CardTitle>
+                        <CardDescription className="dark:text-gray-400">Últimos 6 meses</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <ChartContainer
@@ -140,10 +140,10 @@ export const DashboardPage = () => {
 
             <div className="grid gap-4 md:grid-cols-2">
                 {/* Services Chart */}
-                <Card>
+                <Card className="dark:bg-gray-800 dark:border-gray-700">
                     <CardHeader>
-                        <CardTitle>Servicios Más Solicitados</CardTitle>
-                        <CardDescription>Este mes</CardDescription>
+                        <CardTitle className="dark:text-gray-100">Servicios Más Solicitados</CardTitle>
+                        <CardDescription className="dark:text-gray-400">Este mes</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <ChartContainer
@@ -169,10 +169,10 @@ export const DashboardPage = () => {
                 </Card>
 
                 {/* Recent Appointments */}
-                <Card>
+                <Card className="dark:bg-gray-800 dark:border-gray-700">
                     <CardHeader>
-                        <CardTitle>Próximas Citas</CardTitle>
-                        <CardDescription>Citas programadas para hoy</CardDescription>
+                        <CardTitle className="dark:text-gray-100">Próximas Citas</CardTitle>
+                        <CardDescription className="dark:text-gray-400">Citas programadas para hoy</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
@@ -185,20 +185,20 @@ export const DashboardPage = () => {
                             ].map((appointment, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-center justify-between py-3 border-b border-border last:border-0"
+                                    className="flex items-center justify-between py-3 border-b border-border dark:border-gray-700 last:border-0"
                                 >
                                     <div className="flex items-center gap-4">
-                                        <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10">
-                                            <Clock className="h-5 w-5 text-primary" />
+                                        <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-primary/10 dark:bg-primary/20">
+                                            <Clock className="h-5 w-5 text-primary dark:text-blue-400" />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-medium text-foreground">{appointment.client}</p>
-                                            <p className="text-xs text-muted-foreground">
+                                            <p className="text-sm font-medium text-foreground dark:text-gray-100">{appointment.client}</p>
+                                            <p className="text-xs text-muted-foreground dark:text-gray-400">
                                                 {appointment.time} • {appointment.service}
                                             </p>
                                         </div>
                                     </div>
-                                    {appointment.status === "Confirmada" && <CheckCircle className="h-5 w-5 text-accent" />}
+                                    {appointment.status === "Confirmada" && <CheckCircle className="h-5 w-5 text-accent dark:text-green-400" />}
                                 </div>
                             ))}
                         </div>

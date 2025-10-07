@@ -77,42 +77,42 @@ export const WeeklyCalendar = () => {
             {/* Week Navigation */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h2 className="text-lg font-semibold text-foreground">
+                    <h2 className="text-lg font-semibold text-foreground dark:text-gray-100">
                         {weekDates[0].toLocaleDateString("es-ES", { month: "long", year: "numeric" })}
                     </h2>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground dark:text-gray-400">
                         {weekDates[0].toLocaleDateString("es-ES", { day: "numeric", month: "short" })} -{" "}
                         {weekDates[6].toLocaleDateString("es-ES", { day: "numeric", month: "short" })}
                     </p>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" onClick={() => setCurrentWeek(currentWeek - 1)}>
+                    <Button variant="outline" size="sm" onClick={() => setCurrentWeek(currentWeek - 1)} className="dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:hover:bg-gray-700">
                         <ChevronLeft className="h-4 w-4" />
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => setCurrentWeek(0)}>
+                    <Button variant="outline" size="sm" onClick={() => setCurrentWeek(0)} className="dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:hover:bg-gray-700">
                         Hoy
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => setCurrentWeek(currentWeek + 1)}>
+                    <Button variant="outline" size="sm" onClick={() => setCurrentWeek(currentWeek + 1)} className="dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 dark:hover:bg-gray-700">
                         <ChevronRight className="h-4 w-4" />
                     </Button>
                 </div>
             </div>
 
             {/* Calendar Grid */}
-            <Card className="overflow-hidden">
+            <Card className="overflow-hidden dark:bg-gray-800 dark:border-gray-700">
                 <div className="overflow-x-auto">
                     <div className="min-w-[800px]">
                         {/* Header with days */}
-                        <div className="grid grid-cols-8 border-b border-border bg-muted/30">
-                            <div className="p-3 text-sm font-medium text-muted-foreground">Hora</div>
+                        <div className="grid grid-cols-8 border-b border-border dark:border-gray-700 bg-muted/30 dark:bg-gray-900/50">
+                            <div className="p-3 text-sm font-medium text-muted-foreground dark:text-gray-400">Hora</div>
                             {DAYS.map((day, index) => {
                                 const date = weekDates[index]
                                 const isToday = date.toDateString() === new Date().toDateString()
                                 return (
-                                    <div key={day} className={cn("p-3 text-center", isToday && "bg-primary/5")}>
-                                        <div className="text-sm font-medium text-foreground">{day}</div>
+                                    <div key={day} className={cn("p-3 text-center", isToday && "bg-primary/5 dark:bg-primary/10")}>
+                                        <div className="text-sm font-medium text-foreground dark:text-gray-100">{day}</div>
                                         <div
-                                            className={cn("text-xs text-muted-foreground mt-0.5", isToday && "text-primary font-semibold")}
+                                            className={cn("text-xs text-muted-foreground dark:text-gray-400 mt-0.5", isToday && "text-primary dark:text-blue-400 font-semibold")}
                                         >
                                             {date.getDate()}
                                         </div>
@@ -125,9 +125,9 @@ export const WeeklyCalendar = () => {
                         <div className="relative">
                             <div className="grid grid-cols-8">
                                 {/* Hours column */}
-                                <div className="border-r border-border">
+                                <div className="border-r border-border dark:border-gray-700">
                                     {HOURS.map((hour) => (
-                                        <div key={hour} className="h-20 border-b border-border p-2 text-xs text-muted-foreground">
+                                        <div key={hour} className="h-20 border-b border-border dark:border-gray-700 p-2 text-xs text-muted-foreground dark:text-gray-400">
                                             {hour.toString().padStart(2, "0")}:00
                                         </div>
                                     ))}
@@ -135,14 +135,14 @@ export const WeeklyCalendar = () => {
 
                                 {/* Days columns */}
                                 {DAYS.map((day, dayIndex) => (
-                                    <div key={day} className="relative border-r border-border last:border-r-0">
+                                    <div key={day} className="relative border-r border-border dark:border-gray-700 last:border-r-0">
                                         {HOURS.map((hour) => (
                                             <div
                                                 key={`${day}-${hour}`}
-                                                className="h-20 border-b border-border hover:bg-muted/30 transition-colors cursor-pointer group"
+                                                className="h-20 border-b border-border dark:border-gray-700 hover:bg-muted/30 dark:hover:bg-gray-700/30 transition-colors cursor-pointer group"
                                             >
                                                 <div className="opacity-0 group-hover:opacity-100 transition-opacity p-2">
-                                                    <Button variant="ghost" size="sm" className="h-6 w-full text-xs">
+                                                    <Button variant="ghost" size="sm" className="h-6 w-full text-xs dark:text-gray-300 dark:hover:bg-gray-600">
                                                         <Plus className="h-3 w-3 mr-1" />
                                                         Agregar
                                                     </Button>

@@ -17,14 +17,14 @@ export const AppointmentsPage = () => {
     } = useAppointmentForm();
 
     return (
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-foreground">Citas</h1>
-                    <p className="text-muted-foreground mt-1">Gestiona tu calendario de citas</p>
+                    <h1 className="text-3xl font-bold text-foreground dark:text-gray-100">Citas</h1>
+                    <p className="text-muted-foreground dark:text-gray-400 mt-1">Gestiona tu calendario de citas</p>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Button variant="outline">
+                    <Button variant="outline" className="dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-700">
                         <Filter className="h-4 w-4 mr-2" />
                         Filtrar
                     </Button>

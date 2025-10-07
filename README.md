@@ -7,7 +7,6 @@ Sigue estos pasos para iniciar el proyecto:
 1. **Clona el repositorio:**
   ```bash
   git clone <URL-del-repositorio>
-  cd smart-citas
   ```
 
 2. **Instala las dependencias:**

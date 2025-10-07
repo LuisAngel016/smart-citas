@@ -5,18 +5,18 @@ import { BusinessPage, NotificationsPage, SchedulesPage, ServicesPage } from "..
 
 export const ConfigurationPage = () => {
     return (
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
             <div>
-                <h1 className="text-3xl font-bold text-foreground">Configuración</h1>
-                <p className="text-muted-foreground mt-1">Personaliza tu negocio y preferencias</p>
+                <h1 className="text-3xl font-bold text-foreground dark:text-gray-100">Configuración</h1>
+                <p className="text-muted-foreground dark:text-gray-400 mt-1">Personaliza tu negocio y preferencias</p>
             </div>
 
             <Tabs defaultValue="negocio" className="space-y-6">
-                <TabsList>
-                    <TabsTrigger value="negocio">Negocio</TabsTrigger>
-                    <TabsTrigger value="servicios">Servicios</TabsTrigger>
-                    <TabsTrigger value="horarios">Horarios</TabsTrigger>
-                    <TabsTrigger value="notificaciones">Notificaciones</TabsTrigger>
+                <TabsList className="dark:bg-gray-800 dark:border-gray-700">
+                    <TabsTrigger value="negocio" className="dark:data-[state=active]:bg-gray-700 dark:text-gray-300">Negocio</TabsTrigger>
+                    <TabsTrigger value="servicios" className="dark:data-[state=active]:bg-gray-700 dark:text-gray-300">Servicios</TabsTrigger>
+                    <TabsTrigger value="horarios" className="dark:data-[state=active]:bg-gray-700 dark:text-gray-300">Horarios</TabsTrigger>
+                    <TabsTrigger value="notificaciones" className="dark:data-[state=active]:bg-gray-700 dark:text-gray-300">Notificaciones</TabsTrigger>
                     {/* <TabsTrigger value="integraciones">Integraciones</TabsTrigger> */}
                 </TabsList>
 

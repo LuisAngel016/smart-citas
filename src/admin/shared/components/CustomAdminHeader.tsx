@@ -1,36 +1,43 @@
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router';
-import { Search, Bell, MessageSquare, Settings } from 'lucide-react';
+import { useSearchParams } from 'react-router';
+import { Search, Bell, MessageSquare, Settings, Sun, Moon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useThemeContext } from '@/hooks/use-theme-context';
 
 export const CustomAdminHeader: React.FC = () => {
 
-    const navigate = useNavigate();
+    const [, setSearchParams] = useSearchParams()
+    const { toggleTheme } = useThemeContext();
 
     const inputRef = useRef<HTMLInputElement>(null)
 
     const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key !== 'Enter') return;
 
-        const query = inputRef.current?.value ?? '';
-        if (!query) return navigate('/admin/products');
+        const query = inputRef.current?.value.trim().toLowerCase() ?? '';
+        if (!query) {
+            setSearchParams(() => '')
+            return;
+        };
 
-        navigate(`/admin/products?query=${query}`);
-
+        setSearchParams((prev) => {
+            prev.set('query', query);
+            return prev;
+        })
     }
 
     return (
-        <header className="bg-white border-b border-gray-200 px-6 py-4 h-18">
+        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 h-18">
             <div className="flex items-center justify-between">
                 {/* Search */}
                 <div className="flex-1 max-w-md">
                     <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
                         <Input
                             ref={inputRef}
                             type="text"
                             placeholder="Search..."
-                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                             onKeyDown={handleSearch}
                         />
                     </div>
@@ -38,16 +45,23 @@ export const CustomAdminHeader: React.FC = () => {
 
                 {/* Actions */}
                 <div className="flex items-center space-x-4">
-                    <button className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <button
+                        onClick={toggleTheme}
+                        className="relative p-2 text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    >
+                        <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+                        <Moon className="absolute top-2 left-2 h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                    </button>
+                    <button className="relative p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
                         <Bell size={20} />
                         <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
                     </button>
 
-                    <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <button className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
                         <MessageSquare size={20} />
                     </button>
 
-                    <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                    <button className="p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
                         <Settings size={20} />
                     </button>
 

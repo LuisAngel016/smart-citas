@@ -4,16 +4,16 @@ import { Link } from "react-router"
 
 export const CustomJumbotron = () => {
     return (
-        <section className="container mx-auto px-4 py-20 md:py-32">
+        <section className="container mx-auto px-4 py-12 sm:py-20 md:py-32">
             <div className="max-w-4xl mx-auto text-center">
-                <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 text-balance">
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-4 sm:mb-6 text-balance leading-tight">
                     Gestiona las citas de tu negocio de forma profesional
                 </h1>
-                <p className="text-lg md:text-xl text-muted-foreground mb-8 text-pretty max-w-2xl mx-auto">
+                <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 text-pretty max-w-2xl mx-auto">
                     Sistema completo para administrar reservas, clientes y servicios. Ahorra tiempo y mejora la experiencia de
                     tus clientes.
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
                     <Button size="lg" className="w-full sm:w-auto" asChild>
                         <Link to="/auth/register">Comenzar Gratis</Link>
                     </Button>
@@ -21,7 +21,7 @@ export const CustomJumbotron = () => {
                         <a href="#planes">Ver Planes</a>
                     </Button>
                 </div>
-                <p className="text-sm text-muted-foreground mt-4">Sin tarjeta de crédito • Configuración en 5 minutos</p>
+                <p className="text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-4">Sin tarjeta de crédito • Configuración en 5 minutos</p>
             </div>
         </section>
     )

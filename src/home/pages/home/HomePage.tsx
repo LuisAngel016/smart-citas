@@ -10,9 +10,7 @@ import {
 export const HomePage = () => {
     return (
         <>
-            {/* Header */}
             <CustomHeader />
-
 
             {/* Hero Section */}
             <CustomJumbotron />
