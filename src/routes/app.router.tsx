@@ -1,19 +1,19 @@
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
 
-import { HomePage } from "../home/pages/home/HomePage";
-import { HomeLayout } from "../home/layouts/HomeLayout";
+import { HomePage } from "@/home/presentation/pages/home/HomePage";
+import { HomeLayout } from "@/home/presentation/layouts/HomeLayout";
 
-import { LoginPage } from "../auth/pages/login/LoginPage";
-import { RegisterPage } from "../auth/pages/register/RegisterPage";
+import { LoginPage } from "@/auth/presentation/pages/login/LoginPage";
+import { RegisterPage } from "@/auth/presentation/pages/register/RegisterPage";
 
-import { DashboardPage } from "../admin/dashboard/pages/DashboardPage";
-import { AppointmentsPage } from "../admin/appointments/pages/AppointmentsPage";
-import { ClientsPage } from "../admin/clients/pages/ClientsPage";
-import { ConfigurationPage } from "@/admin/configuration/pages/ConfigurationPage";
+import { DashboardPage } from "@/dashboard";
+import { AppointmentsPage } from "@/appointments";
+import { ClientsPage } from "@/clients";
+import { ConfigurationPage } from "@/configuration";
 
-const AuthLayout = lazy(() => import("../auth/layouts/AuthLayout"));
-const AdminLayout = lazy(() => import("../admin/layouts/AdminLayout"));
+const AuthLayout = lazy(() => import("@/auth/presentation/layouts/AuthLayout"));
+const AdminLayout = lazy(() => import("@/shared/layouts/AdminLayout"));
 
 
 export const appRouter = createBrowserRouter([
