@@ -1,4 +1,5 @@
 import { Calendar } from "lucide-react"
+import { useScrollAnimation } from "@/shared/hooks/use-scroll-animation"
 
 
 interface FooterLink {
@@ -42,9 +43,14 @@ const COMPANY_DESCRIPTION = "Sistema profesional de gestión de citas para tu ne
 
 export const CustomFooter = () => {
     const currentYear = new Date().getFullYear();
+    const { elementRef, isVisible } = useScrollAnimation();
 
     return (
-        <footer className="border-t border-border py-8 sm:py-10 md:py-12">
+        <footer
+            ref={elementRef as React.RefObject<HTMLElement>}
+            className={`border-t border-border py-8 sm:py-10 md:py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 animate-fade-up animate-duration-[2000ms]' : 'opacity-0 translate-y-10'
+                }`}
+        >
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
                     {/* Brand Section */}

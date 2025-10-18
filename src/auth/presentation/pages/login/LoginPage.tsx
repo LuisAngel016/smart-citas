@@ -40,7 +40,7 @@ export const LoginPage = () => {
     }
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 animate-fade-up animate-duration-[1000ms] animate-ease-out">
             <Card className={cn("p-0")}>
                 <CardContent className="grid p-0 md:grid-cols-2">
                     <form className="p-6 md:p-8" onSubmit={handleLogin}>
@@ -99,7 +99,7 @@ export const LoginPage = () => {
                             </div>
                             <div className="text-center text-sm">
                                 ¿No tienes cuenta? {' '}
-                                <Link to="/auth/register" className="underline underline-offset-4">
+                                <Link to="/auth/register" className="underline underline-offset-4 hover:text-primary">
                                     Crea una
                                 </Link>
                             </div>

@@ -20,6 +20,23 @@ export const CustomHeader = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
+    const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+        e.preventDefault();
+        setIsOpen(false);
+
+        const element = document.querySelector(targetId);
+        if (element) {
+            const headerOffset = 80; // Altura del header
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
         <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -34,14 +51,23 @@ export const CustomHeader = () => {
                 <nav className="hidden sm:flex items-center gap-6">
                     <a
                         href="#caracteristicas"
+                        onClick={(e) => handleSmoothScroll(e, '#caracteristicas')}
                         className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
                     >
                         Características
                     </a>
-                    <a href="#planes" className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white">
+                    <a
+                        href="#planes"
+                        onClick={(e) => handleSmoothScroll(e, '#planes')}
+                        className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
+                    >
                         Planes
                     </a>
-                    <a href="#contacto" className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white">
+                    <a
+                        href="#contacto"
+                        onClick={(e) => handleSmoothScroll(e, '#contacto')}
+                        className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
+                    >
                         Contacto
                     </a>
                 </nav>
@@ -112,7 +138,7 @@ export const CustomHeader = () => {
                                     <nav className="flex flex-col">
                                         <a
                                             href="#caracteristicas"
-                                            onClick={() => setIsOpen(false)}
+                                            onClick={(e) => handleSmoothScroll(e, '#caracteristicas')}
                                             className="flex items-center justify-between px-6 py-4 hover:bg-accent transition-colors group"
                                         >
                                             <div className="flex items-center gap-3">
@@ -128,7 +154,7 @@ export const CustomHeader = () => {
 
                                         <a
                                             href="#planes"
-                                            onClick={() => setIsOpen(false)}
+                                            onClick={(e) => handleSmoothScroll(e, '#planes')}
                                             className="flex items-center justify-between px-6 py-4 hover:bg-accent transition-colors group"
                                         >
                                             <div className="flex items-center gap-3">
@@ -144,7 +170,7 @@ export const CustomHeader = () => {
 
                                         <a
                                             href="#contacto"
-                                            onClick={() => setIsOpen(false)}
+                                            onClick={(e) => handleSmoothScroll(e, '#contacto')}
                                             className="flex items-center justify-between px-6 py-4 hover:bg-accent transition-colors group"
                                         >
                                             <div className="flex items-center gap-3">

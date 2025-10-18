@@ -2,6 +2,7 @@ import { Button } from "@/shared/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/shared/components/ui/card"
 import { Check } from "lucide-react"
 import { Link } from "react-router"
+import { useScrollAnimation } from "@/shared/hooks/use-scroll-animation"
 
 interface PlanFeature {
     text: string;
@@ -61,8 +62,15 @@ const pricingPlans: PricingPlan[] = [
 ];
 
 export const PricingPlans = () => {
+    const { elementRef, isVisible } = useScrollAnimation();
+
     return (
-        <section id="planes" className="py-12 sm:py-16 md:py-20">
+        <section
+            id="planes"
+            ref={elementRef as React.RefObject<HTMLElement>}
+            className={`py-12 sm:py-16 md:py-20 transition-all duration-1000 ${isVisible ? 'opacity-100 animate-fade-up animate-duration-[2000ms]' : 'opacity-0 translate-y-10'
+                }`}
+        >
             <div className="container mx-auto px-4">
                 <div className="text-center mb-8 sm:mb-10 md:mb-12">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">Planes para cada tipo de negocio</h2>

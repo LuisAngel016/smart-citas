@@ -105,5 +105,3 @@ src/
 - Entrada: `src/main.tsx`
 
 ---
-
-Si necesitas que haga cambios adicionales (añadir CI, tests, o renombrar carpetas), dime cuál y lo implemento.

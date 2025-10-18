@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, type FormEvent } from "react"
-import { Link, useNavigate, useSearchParams } from "react-router"
+// import { Link, useNavigate, useSearchParams } from "react-router"
+import { Link } from "react-router"
 import { toast } from "sonner"
 
 import { Button } from "@/shared/components/ui/button"
@@ -41,7 +42,7 @@ export const RegisterPage = () => {
     }
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 animate-fade-up animate-duration-[1000ms] animate-ease-out">
             <Card className="overflow-hidden">
                 <CardContent className="grid p-0">
                     <form className="p-6 md:p-8" onSubmit={handleRegister}>
@@ -105,7 +106,7 @@ export const RegisterPage = () => {
                             </div>
                             <div className="text-center text-sm">
                                 ¿Ya tienes una cuenta? {' '}
-                                <Link to="/auth/login" className="underline underline-offset-4">
+                                <Link to="/auth/login" className="underline underline-offset-4 hover:text-primary">
                                     Inicia sesión
                                 </Link>
                             </div>

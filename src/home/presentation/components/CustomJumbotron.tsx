@@ -3,8 +3,24 @@ import { Link } from "react-router"
 
 
 export const CustomJumbotron = () => {
+    const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+        e.preventDefault();
+
+        const element = document.querySelector(targetId);
+        if (element) {
+            const headerOffset = 80; // Altura del header
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     return (
-        <section className="container mx-auto px-4 py-12 sm:py-20 md:py-32">
+        <section className="container mx-auto px-4 py-12 sm:py-20 md:py-32 animate-fade-up animate-duration-[2000ms] animate-delay-100">
             <div className="max-w-4xl mx-auto text-center">
                 <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground mb-4 sm:mb-6 text-balance leading-tight">
                     Gestiona las citas de tu negocio de forma profesional
@@ -18,7 +34,7 @@ export const CustomJumbotron = () => {
                         <Link to="/auth/register">Comenzar Gratis</Link>
                     </Button>
                     <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent" asChild>
-                        <a href="#planes">Ver Planes</a>
+                        <a href="#planes" onClick={(e) => handleSmoothScroll(e, '#planes')}>Ver Planes</a>
                     </Button>
                 </div>
                 <p className="text-xs sm:text-sm text-muted-foreground mt-3 sm:mt-4">Sin tarjeta de crédito • Configuración en 5 minutos</p>

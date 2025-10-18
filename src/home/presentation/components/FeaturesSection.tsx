@@ -1,10 +1,18 @@
 import { Calendar, Users, Clock, BarChart3, Settings, Check } from "lucide-react"
 import { FeatureCard } from "./FeatureCard"
+import { useScrollAnimation } from "@/shared/hooks/use-scroll-animation"
 
 
 export const FeaturesSection = () => {
+    const { elementRef, isVisible } = useScrollAnimation();
+
     return (
-        <section id="caracteristicas" className="bg-muted/30 py-12 sm:py-16 md:py-20">
+        <section
+            id="caracteristicas"
+            ref={elementRef as React.RefObject<HTMLElement>}
+            className={`bg-muted/30 py-12 sm:py-16 md:py-20 transition-all duration-1000 ${isVisible ? 'opacity-100 animate-fade-up animate-duration-[2000ms]' : 'opacity-0 translate-y-10'
+                }`}
+        >
             <div className="container mx-auto px-4">
                 <div className="text-center mb-8 sm:mb-10 md:mb-12">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3 sm:mb-4">

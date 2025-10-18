@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/components/ui
 
 export const ConfigurationPage = () => {
     return (
-        <div className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen">
+        <div className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen animate-fade-up animate-duration-[800ms] animate-delay-100">
             <div>
                 <h1 className="text-3xl font-bold text-foreground dark:text-gray-100">Configuración</h1>
                 <p className="text-muted-foreground dark:text-gray-400 mt-1">Personaliza tu negocio y preferencias</p>
