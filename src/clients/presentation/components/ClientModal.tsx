@@ -14,13 +14,12 @@ import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
 import { Textarea } from "@/shared/components/ui/textarea"
 import type { UseFormRegister, FieldErrors } from "react-hook-form"
-import type { ClientFormData } from "@/admin/clients/interfaces/client.interface"
 
 interface ClientModalProps {
     open: boolean
     onOpenChange: (open: boolean) => void
-    register: UseFormRegister<ClientFormData>
-    errors: FieldErrors<ClientFormData>
+    register: UseFormRegister<any>
+    errors: FieldErrors<any>
     onSubmit: () => void
     isSubmitting?: boolean
 }
