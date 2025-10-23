@@ -1,10 +1,10 @@
 export interface UserAPIResponse {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  password?: string;
-  role: 'user' | 'admin';
-  createdAt: string; // ISO date string
-  updatedAt?: string; // ISO date string
+  id:         string;
+  email:      string;
+  fullName:   string;
+  isActive:   boolean;
+  roles:      string[];
+  creado_por: null;
+  createdAt:  Date;
+  updatedAt:  Date;
 }

@@ -18,7 +18,7 @@ import type { UseFormRegister, FieldErrors, Control } from "react-hook-form"
 import { Controller } from "react-hook-form"
 import { format, startOfDay } from "date-fns"
 import { useState, useRef, useEffect } from "react"
-import type { AppointmentFormData } from "@/admin/appointments/interfaces/appointment.interface"
+import type { AppointmentFormData } from "@/appointments/infrastructure/hooks/useAppointmentForm"
 
 interface AppointmentModalProps {
     open: boolean

@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { CustomLogo } from '@/shared/components/custom/CustomLogo';
 import { cn } from '@/shared/lib/utils';
+import { useAuthStore } from '@/auth/store/auth.store';
 // import { useAuthStore } from '@/auth/store/auth.store';
 
 interface SidebarProps {
@@ -20,7 +21,7 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
 
     const { pathname } = useLocation();
 
-    //   const { user } = useAuthStore();
+    const { user } = useAuthStore();
 
     const menuItems = [
         { icon: LayoutDashboard, label: 'Dashboard', to: '/admin' },
@@ -36,13 +37,13 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
         return pathname === to;
     }
 
-    // const getInitials = (fullName: string) => {
-    //     if (!fullName) return;
-    //     return fullName
-    //         .split(" ")
-    //         .map(word => word[0].toUpperCase())
-    //         .join("");
-    // }
+    const getInitials = (fullName: string) => {
+        if (!fullName) return;
+        return fullName
+            .split(" ")
+            .map(word => word[0].toUpperCase())
+            .join("");
+    }
 
     return (
         <div className={`bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-500 ease-in-out flex flex-col ${isCollapsed ? 'w-18' : 'w-64'}`}>
@@ -88,13 +89,13 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
             {/* User Profile */}
             <div className={`p-4 border-t border-gray-200 dark:border-gray-700 transition-all duration-300 ease-in-out overflow-hidden ${isCollapsed ? 'h-0 p-0 opacity-0' : 'h-auto opacity-100'
                 }`}>
-                <div className="flex items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                <div className="flex gap-2.5 items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
                     <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-                        {/* {getInitials(user?.fullName || '')} */}
+                        {getInitials(user?.name || '')}
                     </div>
                     <div className="flex-1 min-w-0">
-                        {/* <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{user?.fullName}</p> */}
-                        {/* <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</p> */}
+                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{user?.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</p>
                     </div>
                 </div>
             </div>

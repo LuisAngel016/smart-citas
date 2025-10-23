@@ -120,6 +120,16 @@
   }
 }
 
+@layer components {
+  /* Sombra reutilizable para dropdowns, con variante dark mediante selector .dark */
+  .dropdown-shadow {
+    box-shadow: 0 10px 40px -10px hsla(217,91%,60%,0.2);
+  }
+  .dark .dropdown-shadow {
+    box-shadow: 0 10px 40px -10px hsla(217,91%,60%,0.3);
+  }
+}
+
 @theme {
   --font-poppins: "Poppins", sans-serif;
 }

@@ -1,0 +1,16 @@
+import { authContainer } from "@/auth/IoC/auth.container";
+
+const dependencies = {
+  ...authContainer,
+};
+
+type DependencyMap = typeof dependencies;
+type DependencyKey = keyof DependencyMap;
+
+export const container = {
+  resolve<K extends DependencyKey>(name: K): DependencyMap[K] {
+    const dep = dependencies[name];
+    if (!dep) throw new Error(`Dependency ${String(name)} not found`);
+    return dep;
+  },
+};

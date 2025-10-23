@@ -1,7 +1,3 @@
-import { useState, type FormEvent } from "react"
-import { Link, /* useNavigate */ } from "react-router"
-import { toast } from "sonner"
-
 import { Button } from "@/shared/components/ui/button"
 import { Card, CardContent } from "@/shared/components/ui/card"
 import { Input } from "@/shared/components/ui/input"
@@ -12,57 +8,87 @@ import { CustomLogo } from "@/shared/components/custom/CustomLogo"
 
 import smartCitasTwo from "@/assets/images/smartCitas.png"
 import { cn } from "@/shared/lib/utils"
+import { useLoginForm } from "@/auth/infrastructure/hooks/useLoginForm"
+import { Lock, Mail } from "lucide-react"
 
 export const LoginPage = () => {
 
-    // const navigate = useNavigate();
-    const [isPosting, setIsPosting] = useState(false);
-
-    // const { login } = useAuthStore();
-
-    const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setIsPosting(true);
-
-        // const formData = new FormData(event.target as HTMLFormElement);
-        // const email = formData.get('email') as string;
-        // const password = formData.get('password') as string;
-
-        // const IsValid = await login(email, password);
-
-        // if (IsValid) {
-        //     navigate('/')
-        //     return;
-        // }
-
-        toast.error('Correo y/o contraseña no validos')
-        setIsPosting(false);
-    }
+    const { register, handleSubmit, errors, isSubmitting } = useLoginForm()
 
     return (
         <div className="flex flex-col gap-6 animate-fade-up animate-duration-[1000ms] animate-ease-out">
             <Card className={cn("p-0")}>
                 <CardContent className="grid p-0 md:grid-cols-2">
-                    <form className="p-6 md:p-8" onSubmit={handleLogin}>
+                    <form className="p-6 md:p-8" onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col items-center text-center">
                                 <CustomLogo />
                                 <p className="mt-4 text-balance text-muted-foreground">Ingrese a nuestra aplicación</p>
                             </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Correo</Label>
-                                <Input id="email" type="email" name="email" placeholder="mail@google.com" required />
+                            <div className="space-y-2.5">
+                                <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
+                                    <div className="p-1 rounded-md bg-primary/10">
+                                        <Mail className="h-3.5 w-3.5 text-primary" />
+                                    </div>
+                                    Correo
+                                </Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="mail@google.com"
+                                    className="h-10 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                    {...register("email", {
+                                        required: "El correo es requerido",
+                                        pattern: {
+                                            value: /^\S+@\S+\.\S+$/,
+                                            message: "Ingresa un correo válido",
+                                        },
+                                    })}
+                                />
+                                {errors.email && (
+                                    <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
+                                        {errors.email.message}
+                                    </p>
+                                )}
                             </div>
-                            <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Contraseña</Label>
-                                    <a href="#" className="ml-auto text-sm underline-offset-2 hover:underline">
-                                        ¿Olvidaste tu contraseña?
-                                    </a>
+                            <div className="space-y-2.5">
+                                <div className="flex justify-between">
+                                    <Label htmlFor="password" className="text-sm font-medium flex items-center gap-2">
+                                        <div className="p-1 rounded-md bg-primary/10">
+                                            <Lock className="h-3.5 w-3.5 text-primary" />
+                                        </div>
+                                        Contraseña
+                                    </Label>
+                                    <div className="flex items-center">
+                                        <a
+                                            href="#"
+                                            className="ml-auto text-sm underline-offset-2 hover:underline hover:decoration-primary hover:decoration-2"
+                                        >
+                                            ¿Olvidaste tu contraseña?
+                                        </a>
+                                    </div>
                                 </div>
-                                <Input id="password" name="password" type="password" required placeholder="Contraseña" />
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    placeholder="Contraseña"
+                                    className="h-10 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                    {...register("password", {
+                                        required: "El nombre del proyecto es requerido",
+                                        minLength: {
+                                            value: 6,
+                                            message: "La contraseña debe tener al menos 6 caracteres",
+                                        },
+                                    })}
+                                    required
+                                />
+                                {errors.password && (
+                                    <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
+                                        {errors.password.message}
+                                    </p>
+                                )}
                             </div>
-                            <Button disabled={isPosting} type="submit" className="w-full">
+                            <Button disabled={isSubmitting} type="submit" className="w-full">
                                 Ingresar
                             </Button>
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
@@ -97,12 +123,12 @@ export const LoginPage = () => {
                                     <span className="sr-only">Ingresar con Meta</span>
                                 </Button>
                             </div>
-                            <div className="text-center text-sm">
+                            {/* <div className="text-center text-sm">
                                 ¿No tienes cuenta? {' '}
                                 <Link to="/auth/register" className="underline underline-offset-4 hover:text-primary">
                                     Crea una
                                 </Link>
-                            </div>
+                            </div> */}
                         </div>
                     </form>
                     <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 hidden md:flex md:items-center md:justify-center p-8">

@@ -5,12 +5,13 @@ import { HomePage } from "@/home/presentation/pages/home/HomePage";
 import { HomeLayout } from "@/home/presentation/layouts/HomeLayout";
 
 import { LoginPage } from "@/auth/presentation/pages/login/LoginPage";
-import { RegisterPage } from "@/auth/presentation/pages/register/RegisterPage";
+// import { RegisterPage } from "@/auth/presentation/pages/register/RegisterPage";
 
 import { DashboardPage } from "@/dashboard";
 import { AppointmentsPage } from "@/appointments";
 import { ClientsPage } from "@/clients";
 import { ConfigurationPage } from "@/configuration";
+import { AdminRoute, NotAuthenticatedRoute } from '../shared/components/routes/ProtectedRoutes';
 
 const AuthLayout = lazy(() => import("@/auth/presentation/layouts/AuthLayout"));
 const AdminLayout = lazy(() => import("@/shared/layouts/AdminLayout"));
@@ -31,7 +32,9 @@ export const appRouter = createBrowserRouter([
     // Auth routes
     {
         path: "/auth",
-        element: <AuthLayout />,
+        element: <NotAuthenticatedRoute>
+            <AuthLayout />
+        </NotAuthenticatedRoute>,
         children: [
             {
                 index: true,
@@ -41,16 +44,18 @@ export const appRouter = createBrowserRouter([
                 path: "login",
                 element: <LoginPage />
             },
-            {
-                path: "register",
-                element: <RegisterPage />
-            }
+            // {
+            //     path: "register",
+            //     element: <RegisterPage />
+            // }
         ]
     },
     // Admin routes
     {
         path: "/admin",
-        element: <AdminLayout />,
+        element: <AdminRoute>
+            <AdminLayout />
+        </AdminRoute>,
         children: [
             {
                 index: true,
