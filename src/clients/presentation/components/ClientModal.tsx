@@ -12,14 +12,14 @@ import {
 } from "@/shared/components/ui/dialog"
 import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
-import { Textarea } from "@/shared/components/ui/textarea"
 import type { UseFormRegister, FieldErrors } from "react-hook-form"
+import type { ClientFormData } from "@/clients/infrastructure/hooks/useClientForm"
 
 interface ClientModalProps {
     open: boolean
     onOpenChange: (open: boolean) => void
-    register: UseFormRegister<any>
-    errors: FieldErrors<any>
+    register: UseFormRegister<ClientFormData>
+    errors: FieldErrors<ClientFormData>
     onSubmit: () => void
     isSubmitting?: boolean
 }
@@ -61,7 +61,7 @@ export const ClientModal = ({
                                 <Input
                                     id="nombre"
                                     placeholder="Ej: María González"
-                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                     {...register("nombre", {
                                         required: "El nombre es requerido",
                                         minLength: {
@@ -90,7 +90,7 @@ export const ClientModal = ({
                                         id="email"
                                         type="email"
                                         placeholder="maria@ejemplo.com"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                        className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                         {...register("email", {
                                             required: "El correo es requerido",
                                             pattern: {
@@ -116,7 +116,7 @@ export const ClientModal = ({
                                         id="telefono"
                                         type="tel"
                                         placeholder="+52 123 456 7890"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                        className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                         {...register("telefono", {
                                             required: "El teléfono es requerido",
                                             pattern: {
@@ -144,22 +144,24 @@ export const ClientModal = ({
                                 <Input
                                     id="direccion"
                                     placeholder="Calle, número, colonia, ciudad"
-                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                     {...register("direccion")}
                                 />
                             </div>
 
                             {/* Notas */}
                             <div className="space-y-2.5">
-                                <Label htmlFor="notas" className="text-sm font-medium dark:text-gray-200">
-                                    Notas (Opcional)
+                                <Label htmlFor="identificacion" className="text-sm font-medium flex items-center gap-2">
+                                    <div className="p-1 rounded-md bg-primary/10">
+                                        <MapPin className="h-3.5 w-3.5 text-primary" />
+                                    </div>
+                                    Identificación
                                 </Label>
-                                <Textarea
-                                    id="notas"
-                                    placeholder="Información adicional sobre el cliente..."
-                                    rows={3}
-                                    className="resize-none border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-                                    {...register("notas")}
+                                <Input
+                                    id="identificacion"
+                                    placeholder="Número de identificación"
+                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                    {...register("identificacion")}
                                 />
                             </div>
                         </div>

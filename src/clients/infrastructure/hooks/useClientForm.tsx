@@ -1,14 +1,22 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import type { ClientFormData } from "@/admin/clients/interfaces/client.interface"
+import { useCreateClient } from "./useCreateClient"
+import type { Client } from "@/clients/domain/domain/entities/client.entity"
+import { toast } from "sonner"
+import { useAuthStore } from "@/auth/store/auth.store"
 
-/**
- * Hook personalizado para manejar el estado y lógica del formulario de clientes
- * Utiliza react-hook-form para una gestión eficiente del formulario
- * @returns Estado y funciones para manejar el formulario de clientes
- */
+export interface ClientFormData {
+    nombre: string
+    email: string
+    telefono: string
+    direccion: string
+    identificacion: string
+}
+
 export const useClientForm = () => {
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [editingClient, setEditingClient] = useState<Client | null>(null);
+
 
     const {
         register,
@@ -16,24 +24,47 @@ export const useClientForm = () => {
         formState: { errors, isSubmitting },
         reset,
         watch,
+        setValue,
     } = useForm<ClientFormData>({
         defaultValues: {
             nombre: "",
             email: "",
             telefono: "",
             direccion: "",
-            notas: "",
+            identificacion: "",
         },
     })
+
+    const { mutate: createClient, isPending: isCreating } = useCreateClient()
+    // const { mutate: updateClient, isPending: isUpdating } = useUpdateClient()
+    const { user } = useAuthStore()
 
     /**
      * Maneja el envío del formulario
      */
     const onSubmit = async (data: ClientFormData) => {
         try {
-            // TODO: Aquí puedes agregar la lógica para guardar el cliente en el backend
-            // Por ejemplo: await createClient(data)
-            console.log("Datos del cliente:", data)
+
+            const payload = {
+                name: data.nombre,
+                email: data.email,
+                phone: data.telefono,
+                address: data.direccion,
+                identification: data.identificacion,
+                createdBy: user?.id || "",
+            }
+
+            if (editingClient) {
+                // await updateClient({ id: editingClient.id, clientData: payload })
+                // toast.success("Cliente actualizado exitosamente", {
+                //     description: `El cliente "${data.nombre}" ha sido actualizado correctamente.`,
+                // })
+            } else {
+                await createClient(payload)
+                toast.success("Cliente creado exitosamente", {
+                    description: `El cliente "${data.nombre}" ha sido creado correctamente.`,
+                })
+            }
 
             // Cerrar el modal y resetear el formulario
             setIsDialogOpen(false)
@@ -47,26 +78,46 @@ export const useClientForm = () => {
     /**
      * Abre el modal del formulario
      */
-    const openDialog = () => setIsDialogOpen(true)
+    const openDialog = () => {
+        setEditingClient(null)
+        reset()
+        setIsDialogOpen(true)
+    }
+
+    /**
+    * Abre el modal del formulario para editar un cliente existente
+    */
+    const openEditDialog = (client: Client) => {
+        setEditingClient(client)
+        setValue("nombre", client.name)
+        setValue("email", client.email)
+        setValue("telefono", client.phone)
+        setValue("direccion", client.address)
+        setValue("identificacion", client.identification)
+        setIsDialogOpen(true)
+    }
 
     /**
      * Cierra el modal del formulario
      */
     const closeDialog = () => {
         setIsDialogOpen(false)
+        setEditingClient(null)
         reset()
     }
 
     return {
         isDialogOpen,
         openDialog,
+        openEditDialog,
         closeDialog,
         setIsDialogOpen,
         register,
         handleSubmit: handleFormSubmit(onSubmit),
         errors,
-        isSubmitting,
+        isSubmitting: isSubmitting || isCreating /* || isUpdating */,
         reset,
         watch,
+        editingClient,
     }
 }

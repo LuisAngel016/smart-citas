@@ -5,53 +5,54 @@ import { Plus } from "lucide-react"
 import { useClientForm } from "@/clients/infrastructure/hooks/useClientForm"
 import { ClientCard } from "../components/ClientCard"
 import { ClientModal } from "../components/ClientModal"
+import { useGetClients } from "@/clients/infrastructure/hooks/useGetClients"
 
-const clientes = [
-    {
-        id: "1",
-        nombre: "María González",
-        email: "maria@email.com",
-        telefono: "+52 123 456 7890",
-        citas: 12,
-        ultimaCita: "15 Ene 2025",
-        createdAt: "2024-01-01",
-    },
-    {
-        id: "2",
-        nombre: "Carlos Ruiz",
-        email: "carlos@email.com",
-        telefono: "+52 123 456 7891",
-        citas: 8,
-        ultimaCita: "18 Ene 2025",
-        createdAt: "2024-01-02",
-    },
-    {
-        id: "3",
-        nombre: "Ana Martínez",
-        email: "ana@email.com",
-        telefono: "+52 123 456 7892",
-        citas: 15,
-        ultimaCita: "20 Ene 2025",
-        createdAt: "2024-01-03",
-    },
-    {
-        id: "4",
-        nombre: "Luis Hernández",
-        email: "luis@email.com",
-        telefono: "+52 123 456 7893",
-        citas: 5,
-        ultimaCita: "22 Ene 2025",
-        createdAt: "2024-01-04",
-    },
-]
+// const clientes = [
+//     {
+//         id: "1",
+//         nombre: "María González",
+//         email: "maria@email.com",
+//         telefono: "+52 123 456 7890",
+//         citas: 12,
+//         ultimaCita: "15 Ene 2025",
+//         createdAt: "2024-01-01",
+//     },
+//     {
+//         id: "2",
+//         nombre: "Carlos Ruiz",
+//         email: "carlos@email.com",
+//         telefono: "+52 123 456 7891",
+//         citas: 8,
+//         ultimaCita: "18 Ene 2025",
+//         createdAt: "2024-01-02",
+//     },
+//     {
+//         id: "3",
+//         nombre: "Ana Martínez",
+//         email: "ana@email.com",
+//         telefono: "+52 123 456 7892",
+//         citas: 15,
+//         ultimaCita: "20 Ene 2025",
+//         createdAt: "2024-01-03",
+//     },
+//     {
+//         id: "4",
+//         nombre: "Luis Hernández",
+//         email: "luis@email.com",
+//         telefono: "+52 123 456 7893",
+//         citas: 5,
+//         ultimaCita: "22 Ene 2025",
+//         createdAt: "2024-01-04",
+//     },
+// ]
 
 export const ClientsPage = () => {
 
     const [searchParams,] = useSearchParams();
 
     const query = searchParams.get("query")
-    console.log(searchParams.get("query"));
 
+    const { data: clients } = useGetClients();
     const {
         isDialogOpen,
         openDialog,
@@ -81,13 +82,13 @@ export const ClientsPage = () => {
                         {
                             // TODO: Replace with real data and implement search
                             query
-                                ? clientes
-                                    .filter((client) => client.nombre.toLowerCase().includes(query))
-                                    .map((cliente) => (
-                                        <ClientCard key={cliente.id} client={cliente} />
+                                ? clients?.data
+                                    .filter((client) => client.name.toLowerCase().includes(query))
+                                    .map((client) => (
+                                        <ClientCard key={client.id} client={client} />
                                     ))
-                                : clientes.map((cliente) => (
-                                    <ClientCard key={cliente.id} client={cliente} />
+                                : clients?.data.map((client) => (
+                                    <ClientCard key={client.id} client={client} />
                                 ))
                         }
                     </div>

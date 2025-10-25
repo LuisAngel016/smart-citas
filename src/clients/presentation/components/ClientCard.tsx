@@ -1,5 +1,5 @@
+import type { Client } from "@/clients/domain/domain/entities/client.entity";
 import { Mail, Phone } from "lucide-react"
-import type { Client } from "@/admin/clients/interfaces/client.interface"
 
 interface ClientCardProps {
     client: Client
@@ -7,6 +7,13 @@ interface ClientCardProps {
 }
 
 export const ClientCard = ({ client, onClick }: ClientCardProps) => {
+    const initials = (client?.name ?? client?.email ?? "")
+        .split(" ")
+        .map((n) => (n ? n[0] : ""))
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
+
     return (
         <div
             onClick={onClick}
@@ -15,31 +22,28 @@ export const ClientCard = ({ client, onClick }: ClientCardProps) => {
             <div className="flex items-center gap-4">
                 <div className="h-12 w-12 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center">
                     <span className="text-sm font-semibold text-primary dark:text-blue-400">
-                        {client.nombre
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
+                        {initials}
                     </span>
                 </div>
                 <div>
-                    <p className="font-medium text-foreground dark:text-gray-100">{client.nombre}</p>
+                    <p className="font-medium text-foreground dark:text-gray-100">{client.name ?? client.email ?? "—"}</p>
                     <div className="flex items-center gap-4 mt-1">
                         <span className="text-xs text-muted-foreground dark:text-gray-400 flex items-center gap-1">
                             <Mail className="h-3 w-3" />
-                            {client.email}
+                            {client.email ?? "—"}
                         </span>
                         <span className="text-xs text-muted-foreground dark:text-gray-400 flex items-center gap-1">
                             <Phone className="h-3 w-3" />
-                            {client.telefono}
+                            {client.phone ?? "—"}
                         </span>
                     </div>
                 </div>
             </div>
             <div className="text-right">
-                <p className="text-sm font-medium text-foreground dark:text-gray-100">{client.citas} citas</p>
-                {client.ultimaCita && (
+                {/* <p className="text-sm font-medium text-foreground dark:text-gray-100">{client.citas} citas</p> */}
+                {/* {client.ultimaCita && (
                     <p className="text-xs text-muted-foreground dark:text-gray-400">Última: {client.ultimaCita}</p>
-                )}
+                )} */}
             </div>
         </div>
     )

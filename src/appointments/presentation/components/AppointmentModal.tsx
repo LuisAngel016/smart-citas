@@ -83,7 +83,7 @@ export const AppointmentModal = ({
                                     <Input
                                         id="clientName"
                                         placeholder="Ej: Juan Pérez"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                        className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                         {...register("clientName", {
                                             required: "El nombre del cliente es requerido",
                                             minLength: {
@@ -109,7 +109,7 @@ export const AppointmentModal = ({
                                         id="clientPhone"
                                         type="tel"
                                         placeholder="Ej: +52 123 456 7890"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                        className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                         {...register("clientPhone", {
                                             required: "El teléfono es requerido",
                                             pattern: {
@@ -138,7 +138,7 @@ export const AppointmentModal = ({
                                     id="clientEmail"
                                     type="email"
                                     placeholder="Ej: cliente@ejemplo.com"
-                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                     {...register("clientEmail", {
                                         required: "El email es requerido",
                                         pattern: {
@@ -212,7 +212,7 @@ export const AppointmentModal = ({
                                     <Input
                                         id="time"
                                         type="time"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                        className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                         {...register("time", {
                                             required: "La hora es requerida",
                                         })}
@@ -236,7 +236,7 @@ export const AppointmentModal = ({
                                 <Input
                                     id="service"
                                     placeholder="Ej: Corte de cabello"
-                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                     {...register("service", {
                                         required: "El servicio es requerido",
                                     })}
@@ -257,7 +257,7 @@ export const AppointmentModal = ({
                                     id="notes"
                                     placeholder="Información adicional sobre la cita..."
                                     rows={3}
-                                    className="resize-none border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                    className="resize-none font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                     {...register("notes")}
                                 />
                             </div>

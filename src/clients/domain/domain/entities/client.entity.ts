@@ -2,12 +2,12 @@
 export class Client {
     constructor(
         public id: string,
-        public nombre: string,
-        public telefono: string,
+        public name: string,
+        public phone: string,
         public email: string,
-        public direccion?: string,
-        public notas?: string,
-        public createdAt: Date = new Date(),
+        public identification: string,
+        public address: string,
+        public createdAt?: Date,
         public updatedAt?: Date
     ) {}
 }

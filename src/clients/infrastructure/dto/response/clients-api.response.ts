@@ -1,6 +1,7 @@
 import type { ClientAPIResponse } from "./client-api.response";
 
 export interface ClientsApiResponse {
-  results: ClientAPIResponse[];
+  data: ClientAPIResponse[];
   total: number;
 }
+

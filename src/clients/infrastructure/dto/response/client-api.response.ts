@@ -1,12 +1,12 @@
 export interface ClientAPIResponse {
-  id: string;
-  client_name: string;
-  client_phone: string;
-  client_email: string;
-  service: string;
-  date: string;
-  time: string;
-  notes: string;
-  created_at: string;
-  updated_at?: string;
+  id:             string;
+  name:           string;
+  phone:          number;
+  email:          string;
+  identification: number;
+  address:        string;
+  isActive:       boolean;
+  createdBy:      string;
+  createdAt:      Date;
+  updatedAt:      Date;
 }
