@@ -1,67 +1,52 @@
-import { useSearchParams } from "react-router"
-import { Card, CardContent } from "@/shared/components/ui/card"
+// import { useSearchParams } from "react-router"
 import { Button } from "@/shared/components/ui/button"
 import { Plus } from "lucide-react"
 import { useClientForm } from "@/clients/infrastructure/hooks/useClientForm"
-import { ClientCard } from "../components/ClientCard"
 import { ClientModal } from "../components/ClientModal"
 import { useGetClients } from "@/clients/infrastructure/hooks/useGetClients"
-
-// const clientes = [
-//     {
-//         id: "1",
-//         nombre: "María González",
-//         email: "maria@email.com",
-//         telefono: "+52 123 456 7890",
-//         citas: 12,
-//         ultimaCita: "15 Ene 2025",
-//         createdAt: "2024-01-01",
-//     },
-//     {
-//         id: "2",
-//         nombre: "Carlos Ruiz",
-//         email: "carlos@email.com",
-//         telefono: "+52 123 456 7891",
-//         citas: 8,
-//         ultimaCita: "18 Ene 2025",
-//         createdAt: "2024-01-02",
-//     },
-//     {
-//         id: "3",
-//         nombre: "Ana Martínez",
-//         email: "ana@email.com",
-//         telefono: "+52 123 456 7892",
-//         citas: 15,
-//         ultimaCita: "20 Ene 2025",
-//         createdAt: "2024-01-03",
-//     },
-//     {
-//         id: "4",
-//         nombre: "Luis Hernández",
-//         email: "luis@email.com",
-//         telefono: "+52 123 456 7893",
-//         citas: 5,
-//         ultimaCita: "22 Ene 2025",
-//         createdAt: "2024-01-04",
-//     },
-// ]
+import { DataTable } from "@/shared/components/DataTable"
+import { createColumns } from "../components/Columns"
+import { useMemo } from "react"
+import { useDeleteClientDialog } from "@/clients/infrastructure/hooks/useDeleteClientDialog"
+import { DeleteModal } from "../components/DeleteModal"
+import { ClientsLoadingSkeleton } from "../components/ClientsLoadingSkeleton"
 
 export const ClientsPage = () => {
 
-    const [searchParams,] = useSearchParams();
+    // const [searchParams,] = useSearchParams();
 
-    const query = searchParams.get("query")
+    // const query = searchParams.get("query")
 
-    const { data: clients } = useGetClients();
+    const { data: clients, isLoading } = useGetClients();
+
+    const {
+        clientToDelete,
+        isDeleteDialogOpen,
+        setIsDeleteDialogOpen,
+        handleDeleteClick,
+        handleConfirmDelete,
+        isDeleting,
+    } = useDeleteClientDialog();
+
     const {
         isDialogOpen,
         openDialog,
+        openEditDialog,
         setIsDialogOpen,
         register,
         handleSubmit,
         errors,
         isSubmitting,
+        control,
+        editingClient
     } = useClientForm()
+
+
+    const columns = useMemo(() => createColumns(openEditDialog, handleDeleteClick), [openEditDialog, handleDeleteClick]);
+
+    if (isLoading) {
+        return <ClientsLoadingSkeleton />;
+    }
 
     return (
         <div className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen animate-fade-up animate-duration-[800ms] animate-delay-100">
@@ -76,32 +61,26 @@ export const ClientsPage = () => {
                 </Button>
             </div>
 
-            <Card className="dark:bg-gray-800 dark:border-gray-700">
-                <CardContent>
-                    <div className="space-y-4">
-                        {
-                            // TODO: Replace with real data and implement search
-                            query
-                                ? clients?.data
-                                    .filter((client) => client.name.toLowerCase().includes(query))
-                                    .map((client) => (
-                                        <ClientCard key={client.id} client={client} />
-                                    ))
-                                : clients?.data.map((client) => (
-                                    <ClientCard key={client.id} client={client} />
-                                ))
-                        }
-                    </div>
-                </CardContent>
-            </Card>
+            <DataTable columns={columns} data={clients?.data || []} />
 
             <ClientModal
                 open={isDialogOpen}
                 onOpenChange={setIsDialogOpen}
                 register={register}
+                control={control}
                 errors={errors}
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
+                editingClient={editingClient}
+            />
+
+            <DeleteModal
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+                client={clientToDelete}
+                onConfirm={handleConfirmDelete}
+                isDeleting={isDeleting}
+                label={"Cliente"}
             />
         </div>
     )

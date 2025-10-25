@@ -1,9 +1,9 @@
 export interface ClientAPIResponse {
   id:             string;
   name:           string;
-  phone:          number;
+  phone:          string;
   email:          string;
-  identification: number;
+  identification: string;
   address:        string;
   isActive:       boolean;
   createdBy:      string;

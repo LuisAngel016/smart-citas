@@ -21,7 +21,7 @@ export class AppointmentRepositoryImpl implements IAppointmentRepository {
   }
 
   async update(id: string, appointmentData: Partial<Omit<Appointment, "id">>): Promise<Appointment> {
-    const { data } = await this.httpClient.put<Appointment>(`/appointments/${id}`, appointmentData);
+    const { data } = await this.httpClient.patch<Appointment>(`/appointments/${id}`, appointmentData);
     return data;
   }
 

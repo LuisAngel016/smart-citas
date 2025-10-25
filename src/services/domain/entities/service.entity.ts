@@ -4,9 +4,10 @@ export class Service {
         public id: string,
         public name: string,
         public duration: string,
-        public price: number,
-        public notes?: string,
-        public createdAt: Date = new Date(),
+        public price: string,
+        public notes: string,
+        public createdBy: string,
+        public createdAt?: Date,
         public updatedAt?: Date
     ) {}
 }

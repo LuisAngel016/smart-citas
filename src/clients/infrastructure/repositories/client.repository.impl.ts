@@ -22,7 +22,6 @@ export class ClientRepositoryImpl implements IClientRepository {
   }
 
   async create(clientData: Omit<Client, "id">): Promise<Client> {
-    console.log(clientData)
     const { data } = await this.httpClient.post<ClientAPIResponse>("/clients", clientData);
     const client = ClientMapper.toDomainSingle(data);
     console.log(client)
@@ -30,7 +29,7 @@ export class ClientRepositoryImpl implements IClientRepository {
   }
 
   async update(id: string, clientData: Partial<Omit<Client, "id">>): Promise<Client> {
-    const { data } = await this.httpClient.put<ClientAPIResponse>(`/clients/${id}`, clientData);
+    const { data } = await this.httpClient.patch<ClientAPIResponse>(`/clients/${id}`, clientData);
     const client = ClientMapper.toDomainSingle(data);
     return client;
   }

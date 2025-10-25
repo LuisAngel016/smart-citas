@@ -12,16 +12,18 @@ import {
 } from "@/shared/components/ui/dialog"
 import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
-import type { UseFormRegister, FieldErrors } from "react-hook-form"
+import type { UseFormRegister, FieldErrors, Control } from "react-hook-form"
 import type { ClientFormData } from "@/clients/infrastructure/hooks/useClientForm"
 
 interface ClientModalProps {
     open: boolean
     onOpenChange: (open: boolean) => void
     register: UseFormRegister<ClientFormData>
+    control: Control<ClientFormData>
     errors: FieldErrors<ClientFormData>
     onSubmit: () => void
-    isSubmitting?: boolean
+    isSubmitting?: boolean,
+    editingClient?: { id: string } | null
 }
 
 export const ClientModal = ({
@@ -31,6 +33,7 @@ export const ClientModal = ({
     errors,
     onSubmit,
     isSubmitting = false,
+    editingClient,
 }: ClientModalProps) => {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -41,10 +44,12 @@ export const ClientModal = ({
                             <div className="p-2.5 rounded-xl bg-primary shadow-lg shadow-primary/20">
                                 <User className="h-5 w-5 text-primary-foreground" />
                             </div>
-                            <DialogTitle className="text-2xl font-bold text-foreground dark:text-gray-100">Nuevo Cliente</DialogTitle>
+                            <DialogTitle className="text-2xl font-bold text-foreground dark:text-gray-100">
+                                {editingClient ? "Editar Cliente" : "Nuevo Cliente"}
+                            </DialogTitle>
                         </div>
                         <DialogDescription className="text-base text-muted-foreground dark:text-gray-400">
-                            Completa los datos para registrar un nuevo cliente
+                            {editingClient ? "Modifica los datos del cliente" : "Completa los datos para crear un nuevo cliente"}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -185,10 +190,10 @@ export const ClientModal = ({
                                     {isSubmitting ? (
                                         <span className="flex items-center gap-2">
                                             <div className="h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                                            Guardando...
+                                            {editingClient ? "Actualizando..." : "Guardando..."}
                                         </span>
                                     ) : (
-                                        "Guardar Cliente"
+                                        editingClient ? "Actualizar Cliente" : "Guardar Cliente"
                                     )}
                                 </Button>
                             </div>

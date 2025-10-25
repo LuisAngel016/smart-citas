@@ -18,7 +18,7 @@ export const CheckAuthProvider = ({ children }: PropsWithChildren) => {
     queryKey: ['auth'],
     queryFn: checkAuthStatus,
     retry: false,
-    refetchInterval: 1000 * 60 * 1.5,
+    refetchInterval: 1000 * 60 * 4.5,
     refetchOnWindowFocus: true
   })
 

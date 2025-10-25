@@ -5,6 +5,7 @@ import { Button } from "@/shared/components/ui/button"
 import { DollarSign } from "lucide-react"
 import { useState } from "react"
 import { ServiceModal } from "../components/ServiceModal"
+import { useServiceForm } from "@/services/infrastructure/hooks/useServiceForm"
 
 const initialServices = [
     { id: '1', name: "Corte de Cabello", duration: "1 hora", price: "300" },
@@ -13,12 +14,8 @@ const initialServices = [
 ]
 
 export const ServicesPage = () => {
-    const [services, setServices] = useState(initialServices)
-    const { register, handleSubmit, errors, isSubmitting, isDialogOpen, openDialog, setIsDialogOpen } = useServiceForm({
-        onCreated: (service) => {
-            setServices(prev => [{ ...service, id: String(prev.length + 1) }, ...prev])
-        }
-    })
+    const [services,] = useState(initialServices)
+    const { register, handleSubmit, errors, isSubmitting, isDialogOpen, openDialog, setIsDialogOpen } = useServiceForm()
 
     return (
         <div>

@@ -8,7 +8,7 @@ export class ClientMapper {
     const data: Client[] = clients.data.map(result => ({
       id: result.id,
       name: result.name,
-      phone: result.telefono,
+      phone: result.phone,
       email: result.email,
       address: result.address ?? '',
       identification: result.identification,
@@ -26,7 +26,7 @@ export class ClientMapper {
     return {
       id: result.id,
       name: result.name,
-      phone: result.telefono,
+      phone: result.phone,
       email: result.email,
       address: result.address ?? '',
       identification: result.identification,

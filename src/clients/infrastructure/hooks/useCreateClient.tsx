@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { container } from "@/shared/IoC";
 import type { Client } from "@/clients/domain/domain/entities/client.entity";
+import queryClient from "@/shared/lib/queryClient";
 
 export const useCreateClient = () => {
-    const queryClient = useQueryClient();
 
     const createClientUseCase = container.resolve("createClientUseCase");
 

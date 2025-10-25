@@ -4,7 +4,7 @@ import type { IClientRepository } from "../domain/domain/repositories/client.rep
 export class UpdateClientUseCase {
   constructor(private repository: IClientRepository) {}
 
-  async execute(id: string, data: Client): Promise<Client> {
+  async execute(id: string, data: Partial<Omit<Client, "id">>): Promise<Client> {
     return await this.repository.update(id, data);
   }
 }

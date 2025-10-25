@@ -7,12 +7,13 @@ import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
 import { Textarea } from "@/shared/components/ui/textarea"
 import type { UseFormRegister, FieldErrors } from "react-hook-form"
+import type { ServiceFormData } from "@/services/infrastructure/hooks/useServiceForm"
 
 interface ServiceModalProps {
     open: boolean
     onOpenChange: (open: boolean) => void
-    register: UseFormRegister<any>
-    errors: FieldErrors<any>
+    register: UseFormRegister<ServiceFormData>
+    errors: FieldErrors<ServiceFormData>
     onSubmit: () => void
     isSubmitting?: boolean
 }
@@ -45,43 +46,43 @@ export const ServiceModal = ({
                         <div className="px-8 pb-6 space-y-6">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2.5">
-                                    <Label htmlFor="name" className="text-sm font-medium dark:text-gray-200">Nombre del Servicio</Label>
+                                    <Label htmlFor="nombre" className="text-sm font-medium dark:text-gray-200">Nombre del Servicio</Label>
                                     <Input
-                                        {...register("name", { required: "El nombre es requerido" })}
-                                        id="name"
+                                        {...register("nombre", { required: "El nombre es requerido" })}
+                                        id="nombre"
                                         className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                         placeholder="Corte de cabello" />
-                                    {errors.name && <p className="text-xs text-red-500">{errors.name.message}</p>}
+                                    {errors.nombre && <p className="text-xs text-red-500">{errors.nombre.message}</p>}
                                 </div>
                                 <div className="space-y-2.5">
-                                    <Label htmlFor="duration" className="text-sm font-medium dark:text-gray-200">Duración</Label>
+                                    <Label htmlFor="duracion" className="text-sm font-medium dark:text-gray-200">Duración</Label>
                                     <Input
-                                        {...register("duration", { required: "La duración es requerida" })}
-                                        id="duration"
+                                        {...register("duracion", { required: "La duración es requerida" })}
+                                        id="duracion"
                                         className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                         placeholder="Ej: 1 hora" />
-                                    {errors.duration && <p className="text-xs text-red-500">{errors.duration.message}</p>}
+                                    {errors.duracion && <p className="text-xs text-red-500">{errors.duracion.message}</p>}
                                 </div>
                             </div>
 
                             <div className="space-y-2.5">
-                                <Label htmlFor="price" className="text-sm font-medium dark:text-gray-200">Precio</Label>
+                                <Label htmlFor="precio" className="text-sm font-medium dark:text-gray-200">Precio</Label>
                                 <Input
-                                    {...register("price", {
+                                    {...register("precio", {
                                         required: "El precio es requerido",
                                         valueAsNumber: true
                                     })}
-                                    id="price"
+                                    id="precio"
                                     type="text"
                                     className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                     placeholder="300"
                                 />
-                                {errors.price && <p className="text-xs text-red-500">{errors.price.message}</p>}
+                                {errors.precio && <p className="text-xs text-red-500">{errors.precio.message}</p>}
                             </div>
 
                             <div className="space-y-2.5">
-                                <Label htmlFor="notes" className="text-sm font-medium dark:text-gray-200">Notas (Opcional)</Label>
-                                <Textarea id="notes" rows={3} className="resize-none border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" {...register("notes")} />
+                                <Label htmlFor="notas" className="text-sm font-medium dark:text-gray-200">Notas (Opcional)</Label>
+                                <Textarea id="notas" rows={3} className="resize-none border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" {...register("notas")} />
                             </div>
                         </div>
 

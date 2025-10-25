@@ -4,6 +4,8 @@ import { useCreateClient } from "./useCreateClient"
 import type { Client } from "@/clients/domain/domain/entities/client.entity"
 import { toast } from "sonner"
 import { useAuthStore } from "@/auth/store/auth.store"
+import formatServerError from "@/shared/lib/formatServerError"
+import { useUpdateClient } from "./useUpdateClient"
 
 export interface ClientFormData {
     nombre: string
@@ -17,7 +19,6 @@ export const useClientForm = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingClient, setEditingClient] = useState<Client | null>(null);
 
-
     const {
         register,
         handleSubmit: handleFormSubmit,
@@ -25,6 +26,7 @@ export const useClientForm = () => {
         reset,
         watch,
         setValue,
+        control,
     } = useForm<ClientFormData>({
         defaultValues: {
             nombre: "",
@@ -35,43 +37,54 @@ export const useClientForm = () => {
         },
     })
 
-    const { mutate: createClient, isPending: isCreating } = useCreateClient()
-    // const { mutate: updateClient, isPending: isUpdating } = useUpdateClient()
+    const { mutateAsync: createClientAsync, isPending: isCreating } = useCreateClient()
+    const { mutateAsync: updateClientAsync, isPending: isUpdating } = useUpdateClient()
     const { user } = useAuthStore()
 
     /**
      * Maneja el envío del formulario
      */
     const onSubmit = async (data: ClientFormData) => {
+        const payload = {
+            name: data.nombre,
+            email: data.email,
+            phone: data.telefono,
+            address: data.direccion,
+            identification: data.identificacion,
+            createdBy: user?.id || "",
+        }
+
         try {
-
-            const payload = {
-                name: data.nombre,
-                email: data.email,
-                phone: data.telefono,
-                address: data.direccion,
-                identification: data.identificacion,
-                createdBy: user?.id || "",
-            }
-
             if (editingClient) {
-                // await updateClient({ id: editingClient.id, clientData: payload })
-                // toast.success("Cliente actualizado exitosamente", {
-                //     description: `El cliente "${data.nombre}" ha sido actualizado correctamente.`,
-                // })
+                await updateClientAsync({ id: editingClient.id, clientData: payload })
+                toast.success("Cliente actualizado exitosamente", {
+                    description: `El cliente "${data.nombre}" ha sido actualizado correctamente.`,
+                })
             } else {
-                await createClient(payload)
+                // Usamos mutateAsync para esperar el resultado y manejar errores
+                await createClientAsync(payload)
+
                 toast.success("Cliente creado exitosamente", {
                     description: `El cliente "${data.nombre}" ha sido creado correctamente.`,
                 })
             }
 
-            // Cerrar el modal y resetear el formulario
+            // Cerrar el modal y resetear el formulario solo si todo fue exitoso
             setIsDialogOpen(false)
             reset()
         } catch (error) {
-            console.error("Error al guardar el cliente:", error)
-            // TODO: Mostrar notificación de error
+            // Normalizar y formatear mensaje para el usuario
+            const err = error as unknown
+            console.error("Error al guardar el cliente:", err)
+
+            const formatted = formatServerError(err, { entity: "cliente" })
+
+            // Mostrar toast de error con título y descripción en español
+            if (formatted.description) {
+                toast.error(formatted.title, { description: formatted.description })
+            } else {
+                toast.error(formatted.title)
+            }
         }
     }
 
@@ -115,9 +128,10 @@ export const useClientForm = () => {
         register,
         handleSubmit: handleFormSubmit(onSubmit),
         errors,
-        isSubmitting: isSubmitting || isCreating /* || isUpdating */,
+        isSubmitting: isSubmitting || isCreating || isUpdating,
         reset,
         watch,
+        control,
         editingClient,
     }
 }
