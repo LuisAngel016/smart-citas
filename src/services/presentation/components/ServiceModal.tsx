@@ -6,14 +6,19 @@ import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogFooter, D
 import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
 import { Textarea } from "@/shared/components/ui/textarea"
-import type { UseFormRegister, FieldErrors } from "react-hook-form"
+import type { UseFormRegister, FieldErrors, Control, UseFormWatch } from "react-hook-form"
+import { Controller } from "react-hook-form"
 import type { ServiceFormData } from "@/services/infrastructure/hooks/useServiceForm"
+import formatPrice, { normalizePriceInput } from "@/shared/lib/formatPrice"
 
 interface ServiceModalProps {
     open: boolean
     onOpenChange: (open: boolean) => void
     register: UseFormRegister<ServiceFormData>
     errors: FieldErrors<ServiceFormData>
+    // control y watch vienen del useForm para poder usar Controller / suscribirse a cambios
+    control?: Control<ServiceFormData>
+    watch?: UseFormWatch<ServiceFormData>
     onSubmit: () => void
     isSubmitting?: boolean
 }
@@ -23,9 +28,15 @@ export const ServiceModal = ({
     onOpenChange,
     register,
     errors,
+    control,
+    watch,
     onSubmit,
     isSubmitting = false,
 }: ServiceModalProps) => {
+    // Observa el valor "precio" para mantener el valor mostrado formateado
+    const precioRaw = watch ? watch("precio") : undefined
+
+    const displayedPrecio = formatPrice(precioRaw)
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[650px] font-poppins border-0 p-0 overflow-visible bg-white dark:bg-gray-800">
@@ -50,7 +61,7 @@ export const ServiceModal = ({
                                     <Input
                                         {...register("nombre", { required: "El nombre es requerido" })}
                                         id="nombre"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                         placeholder="Corte de cabello" />
                                     {errors.nombre && <p className="text-xs text-red-500">{errors.nombre.message}</p>}
                                 </div>
@@ -59,7 +70,7 @@ export const ServiceModal = ({
                                     <Input
                                         {...register("duracion", { required: "La duración es requerida" })}
                                         id="duracion"
-                                        className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                         placeholder="Ej: 1 hora" />
                                     {errors.duracion && <p className="text-xs text-red-500">{errors.duracion.message}</p>}
                                 </div>
@@ -67,22 +78,35 @@ export const ServiceModal = ({
 
                             <div className="space-y-2.5">
                                 <Label htmlFor="precio" className="text-sm font-medium dark:text-gray-200">Precio</Label>
-                                <Input
-                                    {...register("precio", {
-                                        required: "El precio es requerido",
-                                        valueAsNumber: true
-                                    })}
-                                    id="precio"
-                                    type="text"
-                                    className="h-11 border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
-                                    placeholder="300"
-                                />
+                                    <Controller
+                                        control={control}
+                                        name="precio"
+                                        rules={{ required: "El precio es requerido" }}
+                                        render={({ field }) => (
+                                            <Input
+                                                id="precio"
+                                                type="text"
+                                                value={displayedPrecio}
+                                                onChange={(e) => {
+                                                    const onlyDigits = normalizePriceInput(e.target.value)
+                                                    field.onChange(onlyDigits)
+                                                }}
+                                                className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                                placeholder="300"
+                                            />
+                                        )}
+                                    />
                                 {errors.precio && <p className="text-xs text-red-500">{errors.precio.message}</p>}
                             </div>
 
                             <div className="space-y-2.5">
                                 <Label htmlFor="notas" className="text-sm font-medium dark:text-gray-200">Notas (Opcional)</Label>
-                                <Textarea id="notas" rows={3} className="resize-none border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" {...register("notas")} />
+                                <Textarea 
+                                    {...register("notas")} 
+                                    id="notas" 
+                                    rows={3} 
+                                    className="resize-none font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                />
                             </div>
                         </div>
 

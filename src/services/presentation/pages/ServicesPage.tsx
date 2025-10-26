@@ -2,21 +2,21 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card"
 import { Button } from "@/shared/components/ui/button"
-import { DollarSign } from "lucide-react"
-import { useState } from "react"
+import { DollarSign, Plus } from "lucide-react"
 import { ServiceModal } from "../components/ServiceModal"
 import { useServiceForm } from "@/services/infrastructure/hooks/useServiceForm"
-
-const initialServices = [
-    { id: '1', name: "Corte de Cabello", duration: "1 hora", price: "300" },
-    { id: '2', name: "Tinte", duration: "1.5 horas", price: "800" },
-    { id: '3', name: "Peinado", duration: "1 hora", price: "400" },
-]
+import { useGetServices } from "@/services/infrastructure/hooks/useGetServices"
 
 export const ServicesPage = () => {
-    const [services,] = useState(initialServices)
-    const { register, handleSubmit, errors, isSubmitting, isDialogOpen, openDialog, setIsDialogOpen } = useServiceForm()
 
+    const { data: servicesData, isLoading } = useGetServices();
+    const { register, handleSubmit, errors, isSubmitting, isDialogOpen, openDialog, setIsDialogOpen, control, watch } = useServiceForm()
+
+    if (isLoading) {
+        return <div>Cargando servicios...</div>;
+    }
+
+    console.log(servicesData)
     return (
         <div>
             <Card className="dark:bg-gray-800 dark:border-gray-700">
@@ -29,12 +29,15 @@ export const ServicesPage = () => {
                             </div>
                             <CardDescription className="dark:text-gray-400">Gestiona los servicios que ofreces</CardDescription>
                         </div>
-                        <Button onClick={() => openDialog()}>Agregar Servicio</Button>
+                        <Button onClick={openDialog}>
+                            <Plus className="h-4 w-4 mr-2" />
+                            Agregar Servicio
+                        </Button>
                     </div>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-3">
-                        {services.map((service) => (
+                        {servicesData?.data.map((service) => (
                             <div key={service.id} className="flex items-center justify-between p-4 border border-border dark:border-gray-700 rounded-lg">
                                 <div>
                                     <p className="font-medium text-foreground dark:text-gray-100">{service.name}</p>
@@ -55,6 +58,8 @@ export const ServicesPage = () => {
                 onOpenChange={setIsDialogOpen}
                 register={register}
                 errors={errors}
+                control={control}
+                watch={watch}
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
             />

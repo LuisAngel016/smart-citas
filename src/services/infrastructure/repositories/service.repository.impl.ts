@@ -24,12 +24,11 @@ export class ServiceRepositoryImpl implements IServiceRepository {
   async create(serviceData: Omit<Service, "id">): Promise<Service> {
     const { data } = await this.httpClient.post<ServiceAPIResponse>("/services", serviceData);
     const service = ServiceMapper.toDomainSingle(data);
-    console.log(service)
     return service;
   }
 
   async update(id: string, serviceData: Partial<Omit<Service, "id">>): Promise<Service> {
-    const { data } = await this.httpClient.put<ServiceAPIResponse>(`/services/${id}`, serviceData);
+    const { data } = await this.httpClient.patch<ServiceAPIResponse>(`/services/${id}`, serviceData);
     const service = ServiceMapper.toDomainSingle(data);
     return service;
   }
