@@ -21,6 +21,7 @@ interface ServiceModalProps {
     watch?: UseFormWatch<ServiceFormData>
     onSubmit: () => void
     isSubmitting?: boolean
+    editingService?: { id: string } | null
 }
 
 export const ServiceModal = ({
@@ -32,6 +33,7 @@ export const ServiceModal = ({
     watch,
     onSubmit,
     isSubmitting = false,
+    editingService,
 }: ServiceModalProps) => {
     // Observa el valor "precio" para mantener el valor mostrado formateado
     const precioRaw = watch ? watch("precio") : undefined
@@ -46,10 +48,12 @@ export const ServiceModal = ({
                             <div className="p-2.5 rounded-xl bg-primary shadow-lg shadow-primary/20">
                                 <Sparkles className="h-5 w-5 text-primary-foreground" />
                             </div>
-                            <DialogTitle className="text-2xl font-bold text-foreground dark:text-gray-100">Nuevo Servicio</DialogTitle>
+                            <DialogTitle className="text-2xl font-bold text-foreground dark:text-gray-100">
+                                {editingService ? "Editar Servicio" : "Nuevo Servicio"}
+                            </DialogTitle>
                         </div>
                         <DialogDescription className="text-base text-muted-foreground dark:text-gray-400">
-                            Completa los datos para registrar un nuevo servicio
+                            {editingService ? "Modifica los datos del servicio" : "Completa los datos para crear un nuevo servicio"}
                         </DialogDescription>
                     </DialogHeader>
 
@@ -117,10 +121,10 @@ export const ServiceModal = ({
                                     {isSubmitting ? (
                                         <span className="flex items-center gap-2">
                                             <div className="h-4 w-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                                            Guardando...
+                                            {editingService ? "Actualizando..." : "Guardando..."}
                                         </span>
                                     ) : (
-                                        "Crear Servicio"
+                                        editingService ? "Actualizar Servicio" : "Guardar Servicio"
                                     )}
                                 </Button>
                             </div>

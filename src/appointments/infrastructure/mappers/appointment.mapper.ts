@@ -5,17 +5,17 @@ import type { AppointmentsApiResponse } from "../dto/response/appointments-api.r
 
 export class AppointmentMapper {
   static toDomain(appointments: AppointmentsApiResponse): AppointmentPage {
-    const data: Appointment[] = appointments.results.map(result => ({
+    const data: Appointment[] = appointments.data.map(result => ({
       id: result.id,
-      clientName: result.client_name,
-      clientPhone: result.client_phone,
-      clientEmail: result.client_email,
-      service: result.service,
+      clientName: result.client.name,
+      clientPhone: result.client.phone,
+      clientEmail: result.client.email,
+      service: result.service.name,
       date: result.date,
       time: result.time,
       notes: result.notes,
-      createdAt: new Date(result.created_at),
-      updatedAt: result.updated_at ? new Date(result.updated_at) : undefined,
+      createdAt: new Date(result.createdAt),
+      updateAt: new Date(result.updatedAt),
     }));
     
     return {
@@ -27,15 +27,15 @@ export class AppointmentMapper {
   static toDomainSingle(result: AppointmentAPIResponse): Appointment {
     return {
       id: result.id,
-      clientName: result.client_name,
-      clientPhone: result.client_phone,
-      clientEmail: result.client_email,
-      service: result.service,
+      clientName: result.client.name,
+      clientPhone: result.client.phone,
+      clientEmail: result.client.email,
+      service: result.service.name,
       date: result.date,
       time: result.time,
       notes: result.notes,
-      createdAt: new Date(result.created_at),
-      updatedAt: result.updated_at ? new Date(result.updated_at) : undefined,
+      createdAt: new Date(result.createdAt),
+      updatedAt: new Date(result.updatedAt),
     };
   }
 }

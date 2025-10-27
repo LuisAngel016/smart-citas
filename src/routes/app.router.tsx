@@ -10,8 +10,10 @@ import { LoginPage } from "@/auth/presentation/pages/login/LoginPage";
 import { DashboardPage } from "@/dashboard";
 import { AppointmentsPage } from "@/appointments";
 import { ClientsPage } from "@/clients";
-import { ConfigurationPage } from "@/configuration";
 import { AdminRoute, NotAuthenticatedRoute } from '../shared/components/routes/ProtectedRoutes';
+import { ServicesPage } from "@/services/presentation";
+import { SchedulesPage } from "@/schedules/presentation";
+import { BusinessPage } from "@/business/presentation";
 
 const AuthLayout = lazy(() => import("@/auth/presentation/layouts/AuthLayout"));
 const AdminLayout = lazy(() => import("@/shared/layouts/AdminLayout"));
@@ -70,8 +72,16 @@ export const appRouter = createBrowserRouter([
                 element: <ClientsPage />
             },
             {
-                path: "settings",
-                element: <ConfigurationPage />
+                path: "settings/business",
+                element: <BusinessPage />
+            },
+            {
+                path: "settings/services",
+                element: <ServicesPage />
+            },
+            {
+                path: "settings/schedules",
+                element: <SchedulesPage />
             }
         ]
     }

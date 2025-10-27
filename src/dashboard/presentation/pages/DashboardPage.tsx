@@ -35,8 +35,8 @@ const servicesData = [
 
 export const DashboardPage = () => {
     return (
-        <div className="p-6 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen animate-fade-up animate-duration-[800ms] animate-delay-100">
-            <div>
+        <div className="p-4 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen animate-fade-up animation-duration-[800ms] animate-delay-100">
+            <div className="bg-white rounded-xl shadow p-4 dark:bg-gray-800">
                 <h1 className="text-3xl font-bold text-foreground dark:text-gray-100">Dashboard</h1>
                 <p className="text-muted-foreground dark:text-gray-400 mt-1">Resumen de tu negocio</p>
             </div>

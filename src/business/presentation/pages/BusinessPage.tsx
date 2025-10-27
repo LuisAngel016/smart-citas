@@ -9,7 +9,7 @@ import { Palette, Building2 } from "lucide-react"
 
 export const BusinessPage = () => {
     return (
-        <div className="space-y-4">
+        <div className="p-4 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen animate-fade-up animated-duration-[800ms] animate-delay-100">
             <Card className="dark:bg-gray-800 dark:border-gray-700">
                 <CardHeader>
                     <div className="flex items-center gap-2">

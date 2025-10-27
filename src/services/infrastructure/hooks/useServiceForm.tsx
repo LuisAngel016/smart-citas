@@ -5,6 +5,7 @@ import { useAuthStore } from "@/auth/store/auth.store"
 import formatServerError from "@/shared/lib/formatServerError"
 import type { Service } from "@/services/domain/entities/service.entity"
 import { useCreateService } from "./useCreateService"
+import { useUpdateService } from "./useUpdateService"
 
 export interface ServiceFormData {
     nombre: string
@@ -35,7 +36,7 @@ export const useServiceForm = () => {
     })
 
     const { mutateAsync: createServiceAsync, isPending: isCreating } = useCreateService()
-    // const { mutateAsync: updateServiceAsync, isPending: isUpdating } = useUpdateService()
+    const { mutateAsync: updateServiceAsync, isPending: isUpdating } = useUpdateService()
     const { user } = useAuthStore()
 
     /**
@@ -52,11 +53,10 @@ export const useServiceForm = () => {
 
         try {
             if (editingService) {
-                // TODO: implementar updateService cuando exista la mutación
-                // await updateService({ id: editingService.id, clientData: payload })
-                // toast.success("Servicee actualizado exitosamente", {
-                //     description: `El servicio "${data.nombre}" ha sido actualizado correctamente.`,
-                // })
+                await updateServiceAsync({ id: editingService.id, clientData: payload })
+                toast.success("Servicio actualizado exitosamente", {
+                    description: `El servicio "${data.nombre}" ha sido actualizado correctamente.`,
+                })
             } else {
                 // Usamos mutateAsync para esperar el resultado y manejar errores
                 await createServiceAsync(payload)
@@ -124,7 +124,7 @@ export const useServiceForm = () => {
         register,
         handleSubmit: handleFormSubmit(onSubmit),
         errors,
-        isSubmitting: isSubmitting || isCreating /* || isUpdating */,
+        isSubmitting: isSubmitting || isCreating || isUpdating,
         reset,
         watch,
         control,

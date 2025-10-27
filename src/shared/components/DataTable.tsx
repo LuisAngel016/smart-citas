@@ -88,7 +88,7 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
     // }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between py-2">
                 <Input
                     placeholder="Filtrar por nombre..."
@@ -145,8 +145,9 @@ export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <div className="rounded-md border overflow-x-auto">
-                <Table className="min-w-[760px]">
+            {/* Contenedor con scroll horizontal y estilos de scrollbar */}
+            <div className="rounded-md border overflow-x-auto max-w-full">
+                <Table className="min-w-[760px] w-full">
                     <TableHeader className={cn("dark:bg-slate-800 dark:text-gray-100")}>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>

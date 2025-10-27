@@ -1,12 +1,18 @@
+import type { Client } from "@/clients/domain/domain/entities/client.entity";
+import type { Service } from "@/services/domain/entities/service.entity";
+
 export interface AppointmentAPIResponse {
-  id: string;
-  client_name: string;
-  client_phone: string;
-  client_email: string;
-  service: string;
-  date: string;
-  time: string;
-  notes: string;
-  created_at: string;
-  updated_at?: string;
+  id:         string;
+  id_client:  string;
+  id_service: string;
+  date:       string;
+  time:       string;
+  notes:      string;
+  isActive:   boolean;
+  createdBy:  string;
+  createdAt:  Date;
+  updatedAt:  Date;
+  service:    Service;
+  client:     Client;
 }
+

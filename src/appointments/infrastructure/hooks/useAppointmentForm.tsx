@@ -2,7 +2,9 @@ import type { Appointment } from "@/appointments/domain/entities/appointment.ent
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { httpClient } from "@/shared/api"
+import { useCreateAppointment } from "./useCreateAppointment"
+import { useUpdateAppointment } from "./useUpdateAppointment"
+import formatServerError from "@/shared/lib/formatServerError"
 
 /**
  * Hook personalizado para manejar el estado y lógica del formulario de citas
@@ -46,49 +48,62 @@ export const useAppointmentForm = () => {
     /**
      * Maneja el envío del formulario
      */
-    const toLocalDate = (dateStr: string): Date => {
-        // fecha en formato yyyy-MM-dd
-        const [y, m, d] = dateStr.split("-").map(Number)
-        return new Date(y, (m || 1) - 1, d || 1)
-    }
+
+    const { mutateAsync: createAppointmentAsync, isPending: isCreating } = useCreateAppointment()
+    const { mutateAsync: updateAppointmentAsync, isPending: isUpdating } = useUpdateAppointment()
 
     const onSubmit = async (data: AppointmentFormData) => {
-        try {
-            // Construir payload compatible con backend
-            const payload = {
-                clientName: data.clientName,
-                clientPhone: data.clientPhone,
-                clientEmail: data.clientEmail,
-                service: data.service,
-                // date en el formulario es string yyyy-MM-dd -> convertir a Date local
-                date: data.date ? toLocalDate(data.date) : undefined,
-                time: data.time,
-                notes: data.notes,
-            }
+        // Construir payload compatible con backend (mantener date como string yyyy-MM-dd)
+        const payload = {
+            clientName: data.clientName,
+            clientPhone: data.clientPhone,
+            clientEmail: data.clientEmail,
+            service: data.service,
+            date: data.date || undefined,
+            time: data.time,
+            notes: data.notes,
+            // Añadimos createdAt para cumplir con el tipo Omit<Appointment, 'id'>; el backend
+            // puede ignorarlo o sobrescribirlo si no lo requiere.
+            createdAt: new Date(),
+        }
 
+        try {
             if (editingAppointment) {
-                // update
-                await httpClient.put(`/appointments/${editingAppointment.id}`, payload)
+                // Para update pasamos solo los campos permitidos
+                const updatePayload: Partial<Omit<Appointment, "id">> = {
+                    clientName: payload.clientName,
+                    clientPhone: payload.clientPhone,
+                    clientEmail: payload.clientEmail,
+                    service: payload.service,
+                    date: payload.date,
+                    time: payload.time,
+                    notes: payload.notes,
+                }
+                await updateAppointmentAsync({ id: editingAppointment.id, appointmentData: updatePayload })
                 toast.success("Cita actualizada", { description: `La cita de ${payload.clientName} fue actualizada.` })
             } else {
-                // create
-                await httpClient.post(`/appointments`, payload)
+                // Create espera Omit<Appointment, 'id'>
+                const createPayload = payload as Omit<Appointment, "id">;
+                await createAppointmentAsync(createPayload)
                 toast.success("Cita creada", { description: `La cita de ${payload.clientName} fue creada.` })
             }
 
             setIsDialogOpen(false)
             setEditingAppointment(null)
             reset()
-        } catch (error: unknown) {
-            console.error("Error al guardar la cita:", error)
-            // Manejo simple de errores
-            // intentar extraer código de estado si existe
-            const errAny = error as { response?: { status?: number } }
-            if (errAny?.response?.status === 409) {
-                toast.error("Conflicto al guardar la cita", { description: "Ya existe un recurso en conflicto." })
-                return
+        } catch (error) {
+            // Normalizar y formatear mensaje para el usuario
+            const err = error as unknown
+            console.error("Error al guardar la cita:", err)
+
+            const formatted = formatServerError(err, { entity: "cita" })
+
+            // Mostrar toast de error con título y descripción en español
+            if (formatted.description) {
+                toast.error(formatted.title, { description: formatted.description })
+            } else {
+                toast.error(formatted.title)
             }
-            toast.error("Error al guardar la cita", { description: "Intenta nuevamente más tarde." })
         }
     }
 
@@ -135,10 +150,12 @@ export const useAppointmentForm = () => {
         register,
         handleSubmit: handleFormSubmit(onSubmit),
         errors,
-        isSubmitting,
-        control,
+        // Combina el estado interno de react-hook-form con los estados de las mutaciones
+        isSubmitting: isSubmitting || isCreating || isUpdating,
         reset,
         watch,
+        control,
+        setValue,
         editingAppointment,
     }
 }

@@ -1,3 +1,4 @@
+import { appointmentContainer } from "@/appointments/IoC/appointment.container";
 import { authContainer } from "@/auth/IoC/auth.container";
 import { clientContainer } from "@/clients/IoC/client.container";
 import { serviceContainer } from "@/services/IoC/service.container";
@@ -6,6 +7,7 @@ const dependencies = {
   ...authContainer,
   ...clientContainer,
   ...serviceContainer,
+  ...appointmentContainer,
 };
 
 type DependencyMap = typeof dependencies;

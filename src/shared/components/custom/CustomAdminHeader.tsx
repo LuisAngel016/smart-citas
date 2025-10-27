@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useSearchParams } from 'react-router';
-import { Search, Bell, MessageSquare, Settings, Sun, Moon, User, LogOut } from 'lucide-react';
+import { Search, Bell, MessageSquare, Sun, Moon, User, LogOut } from 'lucide-react';
 import { Input } from '@/shared/components/ui/input';
 import { useThemeContext } from '@/shared/hooks/use-theme-context';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
@@ -13,7 +13,7 @@ export const CustomAdminHeader: React.FC = () => {
 
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const { logout } = useAuthStore()
+    const { logout, user } = useAuthStore()
 
     const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key !== 'Enter') return;
@@ -28,6 +28,14 @@ export const CustomAdminHeader: React.FC = () => {
             prev.set('query', query);
             return prev;
         })
+    }
+
+    const getInitials = (fullName: string) => {
+        if (!fullName) return;
+        return fullName
+            .split(" ")
+            .map(word => word[0].toUpperCase())
+            .join("");
     }
 
     return (
@@ -67,12 +75,9 @@ export const CustomAdminHeader: React.FC = () => {
 
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button className="group cursor-pointer relative p-3 text-foreground/70 hover:text-foreground hover:bg-accent/10 rounded-xl transition-all duration-200 hover:border-accent/50">
-                                <Settings
-                                    size={22}
-                                    className="transition-transform duration-200 group-hover:rotate-45"
-                                />
-                            </button>
+                    <button className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:shadow-lg transition-shadow">
+                        {getInitials(user?.name || '')}
+                    </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
                             className="w-52 bg-popover border-border dropdown-shadow"
@@ -82,7 +87,7 @@ export const CustomAdminHeader: React.FC = () => {
                                 Mi Cuenta
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-border" />
-                            <DropdownMenuItem className="font-poppins cursor-pointer py-3 focus:bg-accent/10 focus:text-accent transition-colors">
+                            <DropdownMenuItem className="font-poppins cursor-pointer py-3 focus:bg-gray-500/10 focus:text-graybg-gray-500 transition-colors">
                                 <User className="mr-3 h-4 w-4" />
                                 <span className="font-medium">Perfil</span>
                             </DropdownMenuItem>
@@ -94,9 +99,6 @@ export const CustomAdminHeader: React.FC = () => {
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:shadow-lg transition-shadow">
-                        JD
-                    </div>
                 </div>
             </div>
         </header >

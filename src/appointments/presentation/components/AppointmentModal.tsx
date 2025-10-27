@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/shared/components/ui/button"
-import { CalendarIcon, Clock, User, Phone, Mail, Sparkles } from "lucide-react"
+import { CalendarIcon, Clock, Mail, Sparkles } from "lucide-react"
 import { Calendar as DatePicker } from "@/shared/components/ui/calendar"
 import {
     Dialog,
@@ -14,11 +14,13 @@ import {
 import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
 import { Textarea } from "@/shared/components/ui/textarea"
-import type { UseFormRegister, FieldErrors, Control } from "react-hook-form"
+import type { UseFormRegister, FieldErrors, Control, SetValueConfig } from "react-hook-form"
 import { Controller } from "react-hook-form"
 import { format, startOfDay } from "date-fns"
 import { useState, useRef, useEffect } from "react"
 import type { AppointmentFormData } from "@/appointments/infrastructure/hooks/useAppointmentForm"
+import { useGetClients } from "@/clients/infrastructure/hooks/useGetClients"
+import CustomSelect from "@/shared/components/custom/CustomSelect"
 
 interface AppointmentModalProps {
     open: boolean
@@ -26,7 +28,8 @@ interface AppointmentModalProps {
     register: UseFormRegister<AppointmentFormData>
     control: Control<AppointmentFormData>
     errors: FieldErrors<AppointmentFormData>
-    onSubmit: () => void
+    setValue: (name: keyof AppointmentFormData, value: AppointmentFormData[keyof AppointmentFormData], options?: SetValueConfig) => void
+    onSubmit: (e?: React.FormEvent<HTMLFormElement>) => void
     isSubmitting?: boolean
 }
 
@@ -36,11 +39,14 @@ export const AppointmentModal = ({
     register,
     control,
     errors,
+    setValue,
     onSubmit,
     isSubmitting = false,
 }: AppointmentModalProps) => {
     const [openDate, setOpenDate] = useState(false)
     const wrapperRef = useRef<HTMLDivElement | null>(null)
+
+    const { data: clients } = useGetClients()
 
     useEffect(() => {
         function onDoc(e: MouseEvent) {
@@ -52,6 +58,7 @@ export const AppointmentModal = ({
         document.addEventListener("mousedown", onDoc)
         return () => document.removeEventListener("mousedown", onDoc)
     }, [])
+
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -71,81 +78,26 @@ export const AppointmentModal = ({
 
                     <form onSubmit={onSubmit}>
                         <div className="px-8 pb-6 space-y-6">
-                            {/* Nombre y Teléfono */}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-2.5">
-                                    <Label htmlFor="clientName" className="text-sm font-medium flex items-center gap-2">
-                                        <div className="p-1 rounded-md bg-primary/10">
-                                            <User className="h-3.5 w-3.5 text-primary" />
-                                        </div>
-                                        Nombre del Cliente
-                                    </Label>
-                                    <Input
-                                        id="clientName"
-                                        placeholder="Ej: Juan Pérez"
-                                        className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
-                                        {...register("clientName", {
-                                            required: "El nombre del cliente es requerido",
-                                            minLength: {
-                                                value: 3,
-                                                message: "El nombre debe tener al menos 3 caracteres",
-                                            },
-                                        })}
-                                    />
-                                    {errors.clientName && (
-                                        <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
-                                            {errors.clientName.message}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="space-y-2.5">
-                                    <Label htmlFor="clientPhone" className="text-sm font-medium flex items-center gap-2">
-                                        <div className="p-1 rounded-md bg-primary/10">
-                                            <Phone className="h-3.5 w-3.5 text-primary" />
-                                        </div>
-                                        Teléfono
-                                    </Label>
-                                    <Input
-                                        id="clientPhone"
-                                        type="tel"
-                                        placeholder="Ej: +52 123 456 7890"
-                                        className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
-                                        {...register("clientPhone", {
-                                            required: "El teléfono es requerido",
-                                            pattern: {
-                                                value: /^[+]?[\d\s-()]+$/,
-                                                message: "Formato de teléfono inválido",
-                                            },
-                                        })}
-                                    />
-                                    {errors.clientPhone && (
-                                        <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
-                                            {errors.clientPhone.message}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Correo Electrónico */}
+                            {/* Cliente */}
                             <div className="space-y-2.5">
                                 <Label htmlFor="clientEmail" className="text-sm font-medium flex items-center gap-2">
                                     <div className="p-1 rounded-md bg-primary/10">
                                         <Mail className="h-3.5 w-3.5 text-primary" />
                                     </div>
-                                    Correo Electrónico
+                                    Cliente
                                 </Label>
-                                <Input
-                                    id="clientEmail"
-                                    type="email"
-                                    placeholder="Ej: cliente@ejemplo.com"
-                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
-                                    {...register("clientEmail", {
-                                        required: "El email es requerido",
-                                        pattern: {
-                                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                            message: "Correo electrónico inválido",
-                                        },
-                                    })}
+                                <CustomSelect
+                                    control={control}
+                                    name="clientEmail"
+                                    options={clients?.data.map(client => ({
+                                        value: client.id,
+                                        label: client.name
+                                    })) ?? []}
+                                    placeholder="Seleccionar cliente"
+                                    isClearable
+                                    onChange={(selected) => {
+                                        setValue("clientEmail", selected?.value ?? "");
+                                    }}
                                 />
                                 {errors.clientEmail && (
                                     <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">

@@ -2,7 +2,7 @@ import { Button } from "@/shared/components/ui/button";
 import { Card } from "@/shared/components/ui/card";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 
-export const ClientsLoadingSkeleton = () => {
+export const ServicesLoadingSkeleton = () => {
     return (
         <div className="p-4 sm:p-6 space-y-6 bg-gray-50 dark:bg-slate-800 min-h-screen">
             {/* Header */}

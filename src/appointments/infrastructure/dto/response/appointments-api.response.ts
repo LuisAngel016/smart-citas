@@ -1,6 +1,6 @@
 import type { AppointmentAPIResponse } from "./appointment-api.response";
 
 export interface AppointmentsApiResponse {
-  results: AppointmentAPIResponse[];
+  data: AppointmentAPIResponse[];
   total: number;
 }

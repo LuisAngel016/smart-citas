@@ -115,21 +115,21 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
                                 {!isCollapsed && (
                                     <ul className={`mt-1 ml-2 pl-2 border-l border-transparent ${isSettingsOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'} transition-all overflow-hidden`}>
                                         <li>
-                                                <Link to="/admin/settings/business" className={`flex items-center gap-2 p-2 text-sm rounded-l-md ${pathname === '/admin/settings/business' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}>
+                                                <Link to="/admin/settings/business" className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/business' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}>
                                                     <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/business' ? 'bg-blue-600' : 'bg-transparent'}`} />
                                                     <Briefcase size={16} className="shrink-0" />
                                                     <span>Negocio</span>
                                                 </Link>
                                         </li>
                                         <li>
-                                            <Link to="/admin/settings/services" className={`flex items-center gap-2 p-2 text-sm rounded-l-md ${pathname === '/admin/settings/services' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}>
+                                            <Link to="/admin/settings/services" className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/services' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}>
                                                 <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/services' ? 'bg-blue-600' : 'bg-transparent'}`} />
                                                 <Box size={16} className="shrink-0" />
                                                 <span>Servicio</span>
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link to="/admin/settings/schedules" className={`flex items-center gap-2 p-2 text-sm rounded-l-md ${pathname === '/admin/settings/schedules' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}>
+                                            <Link to="/admin/settings/schedules" className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/schedules' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}>
                                                 <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/schedules' ? 'bg-blue-600' : 'bg-transparent'}`} />
                                                 <Clock size={16} className="shrink-0" />
                                                 <span>Horario</span>

@@ -1,11 +1,11 @@
 import type { IAppointmentRepository } from "../domain/repositories/appointment.repository";
-import { Appointment } from "../domain/entities/appointment.entity";
+import type { AppointmentPage } from "../domain/interfaces/appointment-page.interface";
 
 
-export class GetAppointmentsUseCase {
+export class GetAllAppointmentsUseCase {
   constructor(private repository: IAppointmentRepository) {}
 
-  async execute(): Promise<Appointment[]> {
+  async execute(): Promise<AppointmentPage> {
     return await this.repository.getAll();
   }
 }
