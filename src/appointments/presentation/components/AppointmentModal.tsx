@@ -25,6 +25,7 @@ import { useGetServices } from "@/services/infrastructure/hooks/useGetServices"
 import CustomSelect from "@/shared/components/custom/CustomSelect"
 import { TimePicker } from "@/shared/components/custom"
 import { DeleteConfirmationModal } from "@/shared/components/custom/DeleteConfirmationModal"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/components/ui/tooltip"
 
 interface AppointmentModalProps {
     open: boolean
@@ -286,18 +287,27 @@ export const AppointmentModal = ({
                             <div className="flex gap-3 w-full sm:justify-between">
                                 {/* Botón de eliminar a la izquierda (solo en modo edición) */}
                                 {isEditing && (
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        onClick={() => {
-                                            // abrir diálogo de eliminación con la cita actual
-                                            if (editingAppointment) handleDeleteClick(editingAppointment as Appointment)
-                                        }}
-                                        disabled={isSubmitting}
-                                        className="h-11 border-destructive/70 text-destructive hover:bg-destructive/10 hover:border-destructive dark:border-destructive/50 dark:hover:bg-destructive/20 transition-all duration-200"
-                                    >
-                                        <Trash2 className="h-4 w-4" />
-                                    </Button>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                onClick={() => {
+                                                    // abrir diálogo de eliminación con la cita actual
+                                                    if (editingAppointment) handleDeleteClick(editingAppointment as Appointment)
+                                                }}
+                                                disabled={isSubmitting}
+                                                className="h-11 border-destructive/70 text-destructive hover:bg-destructive/10 hover:border-destructive dark:border-destructive/50 dark:hover:bg-destructive/20 transition-all duration-200"
+                                            >
+                                                <Trash2 className="h-4 w-4" />
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent className="font-poppins text-xs p-2 rounded-lg shadow-lg">
+                                            <div className="leading-tight">
+                                                <p className="text-sm font-medium">Eliminar cita</p>
+                                            </div>
+                                        </TooltipContent>
+                                    </Tooltip>
                                 )}
 
                                 {/* Botones de acción a la derecha */}

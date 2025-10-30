@@ -41,13 +41,13 @@
 }
 
 .fc .fc-button-active {
-    background-color: #3B82F6 !important;
-    color: white !important;
-    border-color: #3B82F6 !important;
+    background-color: #3B82F6;
+    color: white;
+    border-color: #3B82F6;
 }
 
 .fc .fc-button-active:hover {
-    background-color: #2563EB !important;
+    background-color: #2563EB;
 }
 
 .fc .fc-button:disabled {
@@ -131,9 +131,9 @@
 }
 
 .fc .fc-daygrid-event {
-    cursor: pointer !important;
-    margin: 2px 4px !important;
-    padding: 4px 8px !important;
+    cursor: pointer;
+    margin: 2px 4px;
+    padding: 4px 8px;
 }
 
 /* Aumentar el área clickable del evento */
@@ -148,7 +148,7 @@
 }
 
 .fc .fc-day-today {
-    background-color: #EFF6FF !important;
+    background-color: #EFF6FF;
 }
 
 .fc .fc-day-today .fc-col-header-cell-cushion {
@@ -206,10 +206,10 @@
     border-radius: 0.375rem;
     border: none;
     padding: 0.25rem 0.5rem;
-    cursor: pointer !important;
+    cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-    pointer-events: auto !important;
+    pointer-events: auto;
 }
 
 .fc-event:hover {
@@ -219,20 +219,20 @@
 }
 
 .fc-event * {
-    cursor: pointer !important;
-    pointer-events: auto !important;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .fc-event-title {
     font-weight: 600;
     font-size: 0.875rem;
-    cursor: pointer !important;
+    cursor: pointer;
 }
 
 .fc-event-time {
     font-weight: 500;
     font-size: 0.75rem;
-    cursor: pointer !important;
+    cursor: pointer;
 }
 
 /* Más eventos link */
@@ -325,4 +325,157 @@
         padding: 0.375rem 0.75rem;
         font-size: 0.8125rem;
     }
+}
+
+/* Dark mode / wrapper provided classes
+   The JSX adds classes like `ark:bg-gray-800` and `dark:text-gray-400` to the wrapper.
+   Those class names contain a colon, so we must escape it in CSS selectors.
+*/
+.ark\:bg-gray-800 {
+    background-color: #1F2937; /* tailwind gray-800 */
+}
+
+.ark\:bg-gray-800 .fc {
+    background-color: transparent;
+    color: #9CA3AF; /* gray-400 */
+}
+
+/* Also support the global `.dark` class (Tailwind dark mode) so styles apply when dark theme is active */
+.dark .fc {
+    background-color: transparent;
+    color: #9CA3AF; /* gray-400 */
+}
+
+/* Toolbar and header */
+.ark\:bg-gray-800 .fc .fc-toolbar-title,
+.dark .fc .fc-toolbar-title {
+    color: #F3F4F6; /* gray-100 for contrast */
+}
+
+.ark\:bg-gray-800 .fc .fc-button,
+.dark .fc .fc-button {
+    background-color: #0F172A; /* gray-900-ish */
+    color: #9CA3AF; /* gray-400 */
+    border-color: #374151; /* gray-700 */
+}
+
+.ark\:bg-gray-800 .fc .fc-button:hover,
+.dark .fc .fc-button:hover {
+    background-color: #0B1220;
+    color: #F3F4F6;
+}
+
+.ark\:bg-gray-800 .fc .fc-col-header-cell,
+.dark .fc .fc-col-header-cell {
+    background-color: #1a2332; /* Un tono entre gray-800 y gray-900, más claro */
+    border-color: #374151;
+    color: #9CA3AF;
+}
+
+.ark\:bg-gray-800 .fc .fc-daygrid-day,
+.dark .fc .fc-daygrid-day {
+    background-color: transparent;
+}
+
+.ark\:bg-gray-800 .fc .fc-daygrid-day:hover,
+.dark .fc .fc-daygrid-day:hover {
+    background-color: rgba(255,255,255,0.02);
+}
+
+.ark\:bg-gray-800 .fc td,
+.ark\:bg-gray-800 .fc th,
+.ark\:bg-gray-800 .fc .fc-scrollgrid,
+.ark\:bg-gray-800 .fc .fc-scrollgrid-section > *,
+.dark .fc td,
+.dark .fc th,
+.dark .fc .fc-scrollgrid,
+.dark .fc .fc-scrollgrid-section > * {
+    border-color: #374151;
+}
+
+.ark\:bg-gray-800 .fc .fc-timegrid-axis,
+.dark .fc .fc-timegrid-axis {
+    background-color: #1a2332; /* Un tono entre gray-800 y gray-900, más claro */
+    border-color: #374151;
+}
+
+.ark\:bg-gray-800 .fc .fc-timegrid-slot-label,
+.dark .fc .fc-timegrid-slot-label {
+    color: #9CA3AF;
+}
+
+.ark\:bg-gray-800 .fc .fc-day-today,
+.dark .fc .fc-day-today {
+    background-color: rgba(59,130,246,0.15);
+}
+
+/* Encabezado del día actual en modo oscuro */
+.ark\:bg-gray-800 .fc .fc-day-today .fc-col-header-cell,
+.ark\:bg-gray-800 .fc .fc-col-header-cell.fc-day-today {
+    background-color: rgba(107,114,128,0.25);
+}
+
+.dark .fc .fc-day-today .fc-col-header-cell,
+.dark .fc .fc-col-header-cell.fc-day-today {
+    background-color: rgba(107,114,128,0.25);
+}
+
+.ark\:bg-gray-800 .fc .fc-daygrid-day-number,
+.ark\:bg-gray-800 .fc .fc-daygrid-day-number,
+.dark .fc .fc-daygrid-day-number,
+.dark .fc .fc-daygrid-day-number {
+    color: #D1D5DB;
+}
+
+.ark\:bg-gray-800 .fc .fc-event,
+.dark .fc .fc-event {
+    box-shadow: none;
+}
+
+/* Ensure the wrapper text color class also applies if present */
+.dark\:text-gray-400,
+.ark\:bg-gray-800 .dark\:text-gray-400 {
+    color: #9CA3AF;
+}
+
+.dark .dark\:text-gray-400,
+.dark .ark\:bg-gray-800 .dark\:text-gray-400 {
+    color: #9CA3AF;
+}
+
+/* Fix header background and borders in dark mode (more specific selectors +)
+   Some FullCalendar header elements keep a white background; this overrides them.
+*/
+.ark\:bg-gray-800 .fc .fc-col-header,
+.ark\:bg-gray-800 .fc .fc-col-header-row,
+.ark\:bg-gray-800 .fc .fc-col-header-cell,
+.ark\:bg-gray-800 .fc .fc-col-header-cell-cushion,
+.ark\:bg-gray-800 .fc .fc-scrollgrid-section:first-child {
+    background-color: transparent;
+    background: transparent;
+    border-color: #374151;
+}
+
+.ark\:bg-gray-800 .fc .fc-col-header-cell {
+    background-color: #1a2332; /* Un tono entre gray-800 y gray-900, más claro */
+    color: #E5E7EB;
+    font-weight: 600;
+}
+
+/* Sobrescribir para el día actual (encabezado) - usar gray-500 semi-transparente */
+.ark\:bg-gray-800 .fc .fc-col-header-cell.fc-day-today,
+.ark\:bg-gray-800 .fc .fc-day-today.fc-col-header-cell,
+.dark .fc .fc-col-header-cell.fc-day-today,
+.dark .fc .fc-day-today.fc-col-header-cell {
+    background-color: rgba(107,114,128,0.25) !important;
+}
+
+.ark\:bg-gray-800 .fc .fc-scrollgrid thead th,
+.ark\:bg-gray-800 .fc .fc-scrollgrid thead td {
+    background-color: rgba(255,255,255,0.02);
+    border-bottom: 1px solid #374151;
+}
+
+.ark\:bg-gray-800 .fc .fc-scrollgrid-section > * {
+    border-color: #374151;
 }

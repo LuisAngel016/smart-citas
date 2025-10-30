@@ -18,7 +18,7 @@ export const WeeklyCalendar = ({ appointments, isLoading, onEditAppointment }: W
 
     if (isLoading) {
         return (
-            <div className="mx-auto bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <div className="mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
                 <div className="flex items-center justify-center h-64">
                     <div className="text-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -30,13 +30,13 @@ export const WeeklyCalendar = ({ appointments, isLoading, onEditAppointment }: W
     }
 
     return (
-        <div className="mx-auto bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div className="mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6">
             <div className="flex justify-between items-center mb-6">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Calendario de Citas</h1>
-                    <p className="text-sm text-gray-500 mt-1">Gestiona tu calendario de citas</p>
+                    <h1 className="text-2xl font-bold text-foreground dark:text-gray-100">Calendario de Citas</h1>
+                    <p className="text-sm text-muted-foreground dark:text-gray-400 mt-1">Gestiona tu calendario de citas</p>
                 </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-lg border border-blue-100">
+                <div className="flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-lg border border-blue-100 dark:border-gray-700 dark:bg-gray-800">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
