@@ -11,6 +11,10 @@ export class AxiosHttpAdapter implements IHttpClient {
     return await axiosInstance.post<T>(url, body, config);
   }
 
+  async put<T>(url: string, body?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+    return await axiosInstance.put<T>(url, body, config);
+  }
+
   async patch<T>(url: string, body?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return await axiosInstance.patch<T>(url, body, config);
   }

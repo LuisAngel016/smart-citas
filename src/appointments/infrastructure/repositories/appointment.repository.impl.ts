@@ -4,6 +4,7 @@ import type { IHttpClient } from "@/shared/api/interfaces/http-client.interface"
 import type { AppointmentPage } from "@/appointments/domain/interfaces/appointment-page.interface";
 import type { AppointmentsApiResponse } from "../dto/response/appointments-api.response";
 import type { AppointmentAPIResponse } from "../dto/response/appointment-api.response";
+import type { CreateAppointmentDTO, UpdateAppointmentDTO } from "../../domain/interfaces/create-appointment.dto";
 import { AppointmentMapper } from "../mappers/appointment.mapper";
 
 export class AppointmentRepositoryImpl implements IAppointmentRepository {
@@ -21,13 +22,13 @@ export class AppointmentRepositoryImpl implements IAppointmentRepository {
     return appointment;
   }
 
-  async create(appointmentData: Omit<Appointment, "id">): Promise<Appointment> {
+  async create(appointmentData: CreateAppointmentDTO): Promise<Appointment> {
     const { data } = await this.httpClient.post<AppointmentAPIResponse>("/appointments", appointmentData);
     const appointment = AppointmentMapper.toDomainSingle(data);
     return appointment;
   }
 
-  async update(id: string, appointmentData: Partial<Omit<Appointment, "id">>): Promise<Appointment> {
+  async update(id: string, appointmentData: UpdateAppointmentDTO): Promise<Appointment> {
     const { data } = await this.httpClient.patch<AppointmentAPIResponse>(`/appointments/${id}`, appointmentData);
     const appointment = AppointmentMapper.toDomainSingle(data);
     return appointment;

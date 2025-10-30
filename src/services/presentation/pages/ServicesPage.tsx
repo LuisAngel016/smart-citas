@@ -15,7 +15,7 @@ import { DeleteModal } from "../components/DeleteModal"
 export const ServicesPage = () => {
 
     const { data: servicesData, isLoading } = useGetServices();
-const {
+    const {
         serviceToDelete,
         isDeleteDialogOpen,
         setIsDeleteDialogOpen,
@@ -38,7 +38,7 @@ const {
         editingService,
     } = useServiceForm()
     const columns = useMemo(() => createColumns(openEditDialog, handleDeleteClick), [openEditDialog, handleDeleteClick]);
-    
+
     if (isLoading) {
         return <ServicesLoadingSkeleton />;
     }
@@ -50,7 +50,7 @@ const {
                     <h1 className="text-3xl font-bold text-foreground dark:text-gray-100">Servicios</h1>
                     <p className="text-muted-foreground dark:text-gray-400 mt-1">Gestiona los servicios que ofreces</p>
                 </div>
-                <Button onClick={openDialog}>
+                <Button onClick={openDialog} className="font-medium">
                     <Plus className="h-4 w-4 mr-2" />
                     Nuevo Servicio
                 </Button>

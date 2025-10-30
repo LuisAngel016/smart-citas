@@ -10,25 +10,24 @@ import {
 } from "@/shared/components/ui/dialog"
 import { Button } from "@/shared/components/ui/button"
 import { AlertTriangle, Trash2 } from "lucide-react"
-import type { Client } from "@/clients/domain/domain/entities/client.entity"
 
-interface DeleteClientDialogProps {
+interface DeleteConfirmationModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
-    client: Client | null;
+    itemName: string | null;
+    itemType: string;
     onConfirm: () => void;
     isDeleting?: boolean;
-    label: string;
 }
 
-export const DeleteModal = ({
+export const DeleteConfirmationModal = ({
     open,
     onOpenChange,
-    client,
+    itemName,
+    itemType,
     onConfirm,
     isDeleting = false,
-    label = ''
-}: DeleteClientDialogProps) => {
+}: DeleteConfirmationModalProps) => {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[520px] font-poppins border-0 p-0 overflow-visible bg-white dark:bg-gray-800">
@@ -46,14 +45,14 @@ export const DeleteModal = ({
 
                             <div className="flex-1 pt-1">
                                 <DialogTitle className="text-2xl font-bold text-foreground dark:text-gray-100 mb-2">
-                                    ¿Eliminar {label}?
+                                    ¿Eliminar {itemType}?
                                 </DialogTitle>
                                 <DialogDescription className="text-base text-muted-foreground dark:text-gray-400 leading-relaxed">
-                                    {client && (
+                                    {itemName && (
                                         <>
-                                            Estás a punto de eliminar el cliente{" "}
+                                            Estás a punto de eliminar {itemType === 'cita' ? 'la' : 'el'} {itemType}{" "}
                                             <span className="font-semibold text-foreground dark:text-gray-100 inline-block px-2 py-0.5 bg-muted/50 dark:bg-gray-700 rounded">
-                                                "{client.name}"
+                                                "{itemName}"
                                             </span>
                                             . Esta acción es permanente y no se puede deshacer.
                                         </>
@@ -81,7 +80,7 @@ export const DeleteModal = ({
                                 ) : (
                                     <span className="flex items-center gap-2">
                                         <Trash2 className="h-4 w-4" />
-                                        Eliminar {label}
+                                        Eliminar {itemType}
                                     </span>
                                 )}
                             </Button>

@@ -15,6 +15,7 @@ interface CustomSelectProps {
     isClearable?: boolean;
     isDisabled?: boolean;
     defaultValue?: string | OptionType;
+    required?: boolean;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange?: (selectedValue: any) => void;
 }export const CustomSelect = ({
@@ -25,6 +26,7 @@ interface CustomSelectProps {
     isClearable = true,
     isDisabled = false,
     defaultValue,
+    required = true,
     onChange: externalOnChange,
 }: CustomSelectProps) => {
     if (!name || typeof name !== "string") {
@@ -107,16 +109,17 @@ interface CustomSelectProps {
             backgroundColor: state.isSelected
                 ? "var(--primary)"
                 : state.isFocused
-                    ? "rgba(var(--primary-rgb), 0.1)"
+                    ? "rgba(var(--primary-rgb), 0.2)"
                     : "transparent",
-            color: state.isSelected ? "white" : "var(--text-black)",
+            color: state.isSelected ? "white" : (state.isFocused ? "var(--primary)" : "var(--text-black)"),
             cursor: "pointer",
             textAlign: "left",
             padding: '0.5rem 1rem',
             fontFamily: 'inherit',
             fontSize: 'inherit',
             '&:hover': {
-                backgroundColor: state.isSelected ? "var(--primary)" : "rgba(var(--primary-rgb), 0.1)",
+                backgroundColor: state.isSelected ? "var(--primary)" : "rgba(var(--primary-rgb), 0.2)",
+                color: state.isSelected ? "white" : "var(--primary)",
             },
         }),
         singleValue: (base) => ({
@@ -152,6 +155,9 @@ interface CustomSelectProps {
             name={name}
             control={control}
             defaultValue={defaultValue}
+            rules={{
+                required: required ? 'Este campo es requerido' : false,
+            }}
             render={({ field: { onChange, onBlur, value, ref } }) => {
                 const formattedValue = options.find(option => option.value === (value?.value || value)) || null;
 

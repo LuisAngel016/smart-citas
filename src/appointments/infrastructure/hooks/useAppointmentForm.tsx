@@ -5,6 +5,8 @@ import { toast } from "sonner"
 import { useCreateAppointment } from "./useCreateAppointment"
 import { useUpdateAppointment } from "./useUpdateAppointment"
 import formatServerError from "@/shared/lib/formatServerError"
+import type { CreateAppointmentDTO, UpdateAppointmentDTO } from "@/appointments/domain/interfaces/create-appointment.dto"
+import { useAuthStore } from "@/auth/store/auth.store"
 
 /**
  * Hook personalizado para manejar el estado y lógica del formulario de citas
@@ -12,10 +14,8 @@ import formatServerError from "@/shared/lib/formatServerError"
  * @returns Estado y funciones para manejar el formulario de citas
  */
 export interface AppointmentFormData {
-    clientName: string
-    clientPhone: string
-    clientEmail: string
-    service: string
+    idClient: string
+    idService: string
     // En el formulario normalmente trabajamos con strings para inputs de fecha
     date: string
     time: string
@@ -35,57 +35,37 @@ export const useAppointmentForm = () => {
         setValue,
     } = useForm<AppointmentFormData>({
         defaultValues: {
-            clientName: "",
-            clientPhone: "",
-            clientEmail: "",
-            service: "",
+            idClient: "",
+            idService: "",
             date: "",
             time: "",
             notes: "",
         },
     })
 
-    /**
-     * Maneja el envío del formulario
-     */
+    const { user } = useAuthStore()
 
     const { mutateAsync: createAppointmentAsync, isPending: isCreating } = useCreateAppointment()
     const { mutateAsync: updateAppointmentAsync, isPending: isUpdating } = useUpdateAppointment()
 
     const onSubmit = async (data: AppointmentFormData) => {
         // Construir payload compatible con backend (mantener date como string yyyy-MM-dd)
-        const payload = {
-            clientName: data.clientName,
-            clientPhone: data.clientPhone,
-            clientEmail: data.clientEmail,
-            service: data.service,
-            date: data.date || undefined,
+        const payload: CreateAppointmentDTO = {
+            id_client: data.idClient,
+            id_service: data.idService,
+            date: data.date,
             time: data.time,
             notes: data.notes,
-            // Añadimos createdAt para cumplir con el tipo Omit<Appointment, 'id'>; el backend
-            // puede ignorarlo o sobrescribirlo si no lo requiere.
-            createdAt: new Date(),
+            createdBy: user?.id ?? '',
         }
 
         try {
             if (editingAppointment) {
-                // Para update pasamos solo los campos permitidos
-                const updatePayload: Partial<Omit<Appointment, "id">> = {
-                    clientName: payload.clientName,
-                    clientPhone: payload.clientPhone,
-                    clientEmail: payload.clientEmail,
-                    service: payload.service,
-                    date: payload.date,
-                    time: payload.time,
-                    notes: payload.notes,
-                }
-                await updateAppointmentAsync({ id: editingAppointment.id, appointmentData: updatePayload })
-                toast.success("Cita actualizada", { description: `La cita de ${payload.clientName} fue actualizada.` })
+                await updateAppointmentAsync({ id: editingAppointment.id, appointmentData: payload as UpdateAppointmentDTO })
+                toast.success("Cita actualizada", { description: `La cita fue actualizada.` })
             } else {
-                // Create espera Omit<Appointment, 'id'>
-                const createPayload = payload as Omit<Appointment, "id">;
-                await createAppointmentAsync(createPayload)
-                toast.success("Cita creada", { description: `La cita de ${payload.clientName} fue creada.` })
+                await createAppointmentAsync(payload)
+                toast.success("Cita creada", { description: `La cita fue creada.` })
             }
 
             setIsDialogOpen(false)
@@ -107,6 +87,9 @@ export const useAppointmentForm = () => {
         }
     }
 
+    // Nota: la mutación de eliminación se maneja desde un hook/dialog separado.
+
+
     /**
      * Abre el modal del formulario
      */
@@ -122,10 +105,8 @@ export const useAppointmentForm = () => {
     const openEditDialog = (appointment: Appointment) => {
         setEditingAppointment(appointment)
         // Normalizar campos que useForm espera como strings
-        setValue("clientName", appointment.clientName || "")
-        setValue("clientPhone", appointment.clientPhone || "")
-        setValue("clientEmail", appointment.clientEmail || "")
-        setValue("service", appointment.service || "")
+        setValue("idClient", appointment.idClient || "")
+        setValue("idService", appointment.idService || "")
         setValue(
             "date",
             appointment.date ? new Date(appointment.date as unknown as Date).toISOString().slice(0, 10) : "",

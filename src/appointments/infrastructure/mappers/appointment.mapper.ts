@@ -7,17 +7,21 @@ export class AppointmentMapper {
   static toDomain(appointments: AppointmentsApiResponse): AppointmentPage {
     const data: Appointment[] = appointments.data.map(result => ({
       id: result.id,
+      idClient: result.client.id,
       clientName: result.client.name,
       clientPhone: result.client.phone,
       clientEmail: result.client.email,
-      service: result.service.name,
+      idService: result.service.id,
+      serviceName: result.service.name,
+      servicePrice: result.service.price,
+      serviceDuration: result.service.duration,
       date: result.date,
       time: result.time,
       notes: result.notes,
       createdAt: new Date(result.createdAt),
-      updateAt: new Date(result.updatedAt),
+      updatedAt: new Date(result.updatedAt),
     }));
-    
+
     return {
       data,
       total: appointments.total,
@@ -27,10 +31,14 @@ export class AppointmentMapper {
   static toDomainSingle(result: AppointmentAPIResponse): Appointment {
     return {
       id: result.id,
+      idClient: result.client.id,
       clientName: result.client.name,
       clientPhone: result.client.phone,
       clientEmail: result.client.email,
-      service: result.service.name,
+      idService: result.service.id,
+      serviceName: result.service.name,
+      servicePrice: result.service.price,
+      serviceDuration: result.service.duration,
       date: result.date,
       time: result.time,
       notes: result.notes,
