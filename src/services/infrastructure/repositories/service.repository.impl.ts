@@ -5,6 +5,7 @@ import type { IServiceRepository } from "@/services/domain/repositories/service.
 import type { ServicePage } from "@/services/domain/interfaces/service-page.interface";
 import type { Service } from "@/services/domain/entities/service.entity";
 import type { IHttpClient } from "@/shared/api/interfaces/http-client.interface";
+import type { CreateServiceDTO, UpdateServiceDTO } from "@/services/domain/interfaces/create-service.dto";
 
 export class ServiceRepositoryImpl implements IServiceRepository {
   constructor(private readonly httpClient: IHttpClient) {}
@@ -21,13 +22,13 @@ export class ServiceRepositoryImpl implements IServiceRepository {
     return service;
   }
 
-  async create(serviceData: Omit<Service, "id">): Promise<Service> {
+  async create(serviceData: CreateServiceDTO): Promise<Service> {
     const { data } = await this.httpClient.post<ServiceAPIResponse>("/services", serviceData);
     const service = ServiceMapper.toDomainSingle(data);
     return service;
   }
 
-  async update(id: string, serviceData: Partial<Omit<Service, "id">>): Promise<Service> {
+  async update(id: string, serviceData: UpdateServiceDTO): Promise<Service> {
     const { data } = await this.httpClient.patch<ServiceAPIResponse>(`/services/${id}`, serviceData);
     const service = ServiceMapper.toDomainSingle(data);
     return service;

@@ -5,6 +5,7 @@ import type { IHttpClient } from "@/shared/api/interfaces/http-client.interface"
 import { ClientMapper } from "../mappers/client.mapper";
 import type { ClientsApiResponse } from "../dto/response/clients-api.response";
 import type { ClientAPIResponse } from "../dto/response/client-api.response";
+import type { CreateClientDTO, UpdateClientDTO } from "@/clients/domain/domain/interfaces/create-client.dto";
 
 export class ClientRepositoryImpl implements IClientRepository {
   constructor(private readonly httpClient: IHttpClient) {}
@@ -21,14 +22,14 @@ export class ClientRepositoryImpl implements IClientRepository {
     return client;
   }
 
-  async create(clientData: Omit<Client, "id">): Promise<Client> {
+  async create(clientData: CreateClientDTO): Promise<Client> {
     const { data } = await this.httpClient.post<ClientAPIResponse>("/clients", clientData);
     const client = ClientMapper.toDomainSingle(data);
     console.log(client)
     return client;
   }
 
-  async update(id: string, clientData: Partial<Omit<Client, "id">>): Promise<Client> {
+  async update(id: string, clientData: UpdateClientDTO): Promise<Client> {
     const { data } = await this.httpClient.patch<ClientAPIResponse>(`/clients/${id}`, clientData);
     const client = ClientMapper.toDomainSingle(data);
     return client;
