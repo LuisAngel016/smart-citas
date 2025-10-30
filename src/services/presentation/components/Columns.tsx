@@ -7,6 +7,7 @@ import { ChevronDown, ChevronUp, Pencil, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { Button } from "@/shared/components/ui/button"
 import type { Service } from "@/services/domain/entities/service.entity"
+import formatPrice from "@/shared/lib/formatPrice"
 
 const myCustomFilterFn: FilterFn<Partial<Service>> = (
   row: Row<Partial<Service>>,
@@ -81,6 +82,10 @@ export const createColumns = (
           </Button>
         )
       },
+      cell: ({ row }) => {
+        const price = row.getValue("price") as string
+        return <div>{price ? `${formatPrice(price)}` : "-"}</div>
+      }
     },
     {
       accessorKey: "duration",
@@ -99,6 +104,22 @@ export const createColumns = (
           </Button>
         )
       },
+      cell: ({ row }) => {
+        const duration = row.getValue("duration") as string
+        const mins = Number(duration)
+        const formatDuration = (minutesVal: number) => {
+          if (isNaN(minutesVal) || minutesVal <= 0) return '-'
+          const hours = Math.floor(minutesVal / 60)
+          const minutes = minutesVal % 60
+          if (hours > 0) {
+            const hourLabel = hours === 1 ? '1 Hora' : `${hours} Horas`
+            return minutes > 0 ? `${hourLabel} y ${minutes} Minutos` : hourLabel
+          }
+          return `${minutes} Minutos`
+        }
+
+        return <div>{formatDuration(mins)}</div>
+      }
     },
     {
       accessorKey: "notes",

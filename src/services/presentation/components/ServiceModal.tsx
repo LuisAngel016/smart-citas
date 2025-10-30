@@ -4,12 +4,22 @@ import { Button } from "@/shared/components/ui/button"
 import { Sparkles } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogFooter, DialogTitle } from "@/shared/components/ui/dialog"
 import { Input } from "@/shared/components/ui/input"
+import {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+} from "@/shared/components/ui/select"
 import { Label } from "@/shared/components/ui/label"
 import { Textarea } from "@/shared/components/ui/textarea"
 import type { UseFormRegister, FieldErrors, Control, UseFormWatch } from "react-hook-form"
 import { Controller } from "react-hook-form"
 import type { ServiceFormData } from "@/services/infrastructure/hooks/useServiceForm"
 import formatPrice, { normalizePriceInput } from "@/shared/lib/formatPrice"
+import { cn } from "@/shared/lib/utils"
 
 interface ServiceModalProps {
     open: boolean
@@ -65,50 +75,81 @@ export const ServiceModal = ({
                                     <Input
                                         {...register("nombre", { required: "El nombre es requerido" })}
                                         id="nombre"
-                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                        className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                         placeholder="Corte de cabello" />
                                     {errors.nombre && <p className="text-xs text-red-500">{errors.nombre.message}</p>}
                                 </div>
                                 <div className="space-y-2.5">
                                     <Label htmlFor="duracion" className="text-sm font-medium dark:text-gray-200">Duración</Label>
-                                    <Input
-                                        {...register("duracion", { required: "La duración es requerida" })}
-                                        id="duracion"
-                                    className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
-                                        placeholder="Ej: 1 hora" />
+                                    <Controller
+                                        control={control}
+                                        name="duracion"
+                                        rules={{ required: "La duración es requerida" }}
+                                        render={({ field }) => (
+                                            <Select
+                                                value={field.value || ""}
+                                                onValueChange={field.onChange}
+                                            >
+                                                <SelectTrigger size="lg" className={cn("w-full font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400 flex items-center")}>
+                                                    <SelectValue placeholder="Selecciona la duración" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectGroup>
+                                                        <SelectLabel className="font-poppins">Duración</SelectLabel>
+                                                        {Array.from({ length: 80 / 10 }, (_, i) => (i + 1) * 30).map((mins) => {
+                                                            const hours = Math.floor(mins / 60)
+                                                            const minutes = mins % 60
+                                                            let label = ''
+                                                            if (hours > 0) {
+                                                                label = hours === 1 ? '1 Hora' : `${hours} Horas`
+                                                                if (minutes > 0) label += ` y ${minutes} Minutos`
+                                                            } else {
+                                                                label = `${minutes} Minutos`
+                                                            }
+                                                            return (
+                                                                <SelectItem key={mins} value={String(mins)} className="font-poppins">
+                                                                    {label}
+                                                                </SelectItem>
+                                                            )
+                                                        })}
+                                                    </SelectGroup>
+                                                </SelectContent>
+                                            </Select>
+                                        )}
+                                    />
                                     {errors.duracion && <p className="text-xs text-red-500">{errors.duracion.message}</p>}
                                 </div>
                             </div>
 
                             <div className="space-y-2.5">
                                 <Label htmlFor="precio" className="text-sm font-medium dark:text-gray-200">Precio</Label>
-                                    <Controller
-                                        control={control}
-                                        name="precio"
-                                        rules={{ required: "El precio es requerido" }}
-                                        render={({ field }) => (
-                                            <Input
-                                                id="precio"
-                                                type="text"
-                                                value={displayedPrecio}
-                                                onChange={(e) => {
-                                                    const onlyDigits = normalizePriceInput(e.target.value)
-                                                    field.onChange(onlyDigits)
-                                                }}
-                                                className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
-                                                placeholder="300"
-                                            />
-                                        )}
-                                    />
+                                <Controller
+                                    control={control}
+                                    name="precio"
+                                    rules={{ required: "El precio es requerido" }}
+                                    render={({ field }) => (
+                                        <Input
+                                            id="precio"
+                                            type="text"
+                                            value={displayedPrecio}
+                                            onChange={(e) => {
+                                                const onlyDigits = normalizePriceInput(e.target.value)
+                                                field.onChange(onlyDigits)
+                                            }}
+                                            className="h-11 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                            placeholder="300"
+                                        />
+                                    )}
+                                />
                                 {errors.precio && <p className="text-xs text-red-500">{errors.precio.message}</p>}
                             </div>
 
                             <div className="space-y-2.5">
                                 <Label htmlFor="notas" className="text-sm font-medium dark:text-gray-200">Notas (Opcional)</Label>
-                                <Textarea 
-                                    {...register("notas")} 
-                                    id="notas" 
-                                    rows={3} 
+                                <Textarea
+                                    {...register("notas")}
+                                    id="notas"
+                                    rows={3}
                                     className="resize-none font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
                                 />
                             </div>

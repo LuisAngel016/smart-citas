@@ -100,7 +100,19 @@ export const useServiceForm = () => {
     const openEditDialog = (service: Service) => {
         setEditingService(service)
         setValue("nombre", service.name)
-        setValue("duracion", service.duration)
+        // Normalizar la duración para que el select muestre minutos (string).
+        // Si viene en formato HH:MM lo convertimos a minutos; si ya es minutos lo dejamos.
+        const toMinutesString = (d: string) => {
+            if (!d) return ''
+            if (d.includes(':')) {
+                const parts = d.split(':').map(Number)
+                const h = parts[0] || 0
+                const m = parts[1] || 0
+                return String(h * 60 + m)
+            }
+            return d
+        }
+        setValue("duracion", toMinutesString(service.duration))
         setValue("precio", service.price)
         setValue("notas", service.notes)
         setIsDialogOpen(true)
