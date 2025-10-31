@@ -75,9 +75,9 @@ export const CustomAdminHeader: React.FC = () => {
 
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                    <button className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:shadow-lg transition-shadow">
-                        {getInitials(user?.name || '')}
-                    </button>
+                            <button className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:shadow-lg transition-shadow">
+                                {getInitials(user?.name || '')}
+                            </button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
                             className="w-52 bg-popover border-border dropdown-shadow"
@@ -87,13 +87,13 @@ export const CustomAdminHeader: React.FC = () => {
                                 Mi Cuenta
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator className="bg-border" />
-                            <DropdownMenuItem className="font-poppins cursor-pointer py-3 focus:bg-gray-500/10 focus:text-graybg-gray-500 transition-colors">
-                                <User className="mr-3 h-4 w-4" />
+                            <DropdownMenuItem className="font-poppins cursor-pointer py-3 focus:bg-ring/10 focus:text-ring transition-colors">
+                                <User className="mr-3 h-4 w-4 focus:text-ring" />
                                 <span className="font-medium">Perfil</span>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator className="bg-border" />
                             <DropdownMenuItem onClick={logout} className="font-poppins cursor-pointer py-3 text-destructive focus:bg-destructive/10 focus:text-destructive transition-colors">
-                                <LogOut className="mr-3 h-4 w-4" />
+                                <LogOut className="mr-3 h-4 w-4 text-destructive" />
                                 <span className="font-medium">Cerrar sesión</span>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
