@@ -11,6 +11,7 @@ import { useScheduleForm } from "@/schedules/infrastructure/hooks/useScheduleFor
 import { useSlotDurationForm } from "@/schedules/infrastructure/hooks/useSlotDurationForm"
 import { useGetSchedules } from "@/schedules/infrastructure/hooks/useGetSchedules"
 import { useGetScheduleSlotDuration } from "@/schedules/infrastructure/hooks/useGetScheduleSlotDuration"
+import { SchedulesLoadingSkeleton } from "@/schedules/presentation/components/SchedulesLoadingSkeleton"
 
 export const SchedulesPage = () => {
     const { data: schedulesData, isLoading } = useGetSchedules();
@@ -29,11 +30,7 @@ export const SchedulesPage = () => {
     } = useSlotDurationForm(slotDurationData?.slotDuration);
 
     if (isLoading || isSlotLoading) {
-        return (
-            <div className="p-4 flex items-center justify-center min-h-screen">
-                <div className="text-muted-foreground">Cargando horarios...</div>
-            </div>
-        )
+        return <SchedulesLoadingSkeleton />
     }
 
     return (
@@ -115,7 +112,6 @@ export const SchedulesPage = () => {
                                         type="number"
                                         value={field.value}
                                         onChange={(e) => field.onChange(Number(e.target.value))}
-                                        min={15}
                                         step={15}
                                         className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                                     />

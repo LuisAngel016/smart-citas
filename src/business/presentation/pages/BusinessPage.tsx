@@ -46,13 +46,6 @@ export const BusinessPage = () => {
                         <Label htmlFor="address" className="dark:text-gray-200">Dirección</Label>
                         <Input id="address" defaultValue="Av. Principal 123, Ciudad de México" className="dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
                     </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="slug" className="dark:text-gray-200">URL de Reservas</Label>
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm text-muted-foreground dark:text-gray-400">citaspro.com/reservar/</span>
-                            <Input id="slug" defaultValue="mi-peluqueria" className="flex-1 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
-                        </div>
-                    </div>
                     <Button>Guardar Cambios</Button>
                 </CardContent>
             </Card>

@@ -37,6 +37,7 @@ export const ServicesPage = () => {
         watch,
         editingService,
     } = useServiceForm()
+
     const columns = useMemo(() => createColumns(openEditDialog, handleDeleteClick), [openEditDialog, handleDeleteClick]);
 
     if (isLoading) {
