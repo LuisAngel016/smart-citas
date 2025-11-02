@@ -7,5 +7,6 @@ export interface IAppointmentRepository {
   getById(id: string): Promise<Appointment>;
   create(data: CreateAppointmentDTO): Promise<Appointment>;
   update(id: string, data: UpdateAppointmentDTO): Promise<Appointment>;
+  updateStatus(id: string): Promise<Appointment>;
   delete(id: string): Promise<boolean>;
 }

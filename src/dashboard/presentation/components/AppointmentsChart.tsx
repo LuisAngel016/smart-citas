@@ -13,9 +13,10 @@ export const AppointmentsChart: React.FC<Props> = ({ data }) => {
                 citas: { label: "Citas", color: "hsl(217, 91%, 60%)" },
                 promedio: { label: "Promedio", color: "hsl(142, 71%, 45%)" },
             }}
-            className="h-80"
+            className="w-full h-[300px] aspect-auto"
         >
-            <AreaChart data={data} width={500} height={320}>
+            {/* Remove fixed width/height so ResponsiveContainer can control sizing */}
+            <AreaChart data={data} margin={{ top: 8, right: 12, left: -20, bottom: 8 }}>
                 <defs>
                     <linearGradient id="colorCitas" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="hsl(217, 91%, 60%)" stopOpacity={0.3} />

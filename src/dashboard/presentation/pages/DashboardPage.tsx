@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card"
-import { Calendar, Users, TrendingUp, DollarSign, ArrowUpRight } from "lucide-react"
+import { Calendar, Users, TrendingUp, DollarSign, ToolCase, /* ArrowUpRight */ } from "lucide-react"
 import { StatCard } from "../components/StatCard"
 import { AppointmentsChart } from "../components/AppointmentsChart"
 import { RevenueChart } from "../components/RevenueChart"
@@ -14,26 +14,22 @@ import {
     useGetServicesChart,
     useGetUpcomingAppointments,
 } from "@/dashboard";
-
-// const appointmentsData = [
-//     { day: "Lun", citas: 12, promedio: 10 },
-//     { day: "Mar", citas: 15, promedio: 12 },
-//     { day: "Mié", citas: 10, promedio: 11 },
-//     { day: "Jue", citas: 18, promedio: 13 },
-//     { day: "Vie", citas: 22, promedio: 15 },
-//     { day: "Sáb", citas: 25, promedio: 20 },
-//     { day: "Dom", citas: 8, promedio: 7 },
-// ]
-
-// data will be fetched from hooks
+import { DashboardSkeleton } from "../components/DashboardSkeleton"
 
 export const DashboardPage = () => {
 
-    const { data: stats } = useGetDashboardStats()
-    const { data: appointmentsData } = useGetAppointmentsChart()
-    const { data: revenueData } = useGetRevenueChart()
-    const { data: servicesData } = useGetServicesChart()
-    const { data: upcomingData } = useGetUpcomingAppointments()
+    const { data: stats, isLoading: statsLoading } = useGetDashboardStats()
+    const { data: appointmentsData, isLoading: appointmentsLoading } = useGetAppointmentsChart()
+    const { data: revenueData, isLoading: revenueLoading } = useGetRevenueChart()
+    const { data: servicesData, isLoading: servicesLoading } = useGetServicesChart()
+    const { data: upcomingData, isLoading: upcomingLoading } = useGetUpcomingAppointments()
+
+    // Show skeleton while any data is loading
+    const isLoading = statsLoading || appointmentsLoading || revenueLoading || servicesLoading || upcomingLoading
+
+    if (isLoading) {
+        return <DashboardSkeleton />
+    }
     return (
         <div className="p-4 space-y-6 bg-linear-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950 min-h-screen">
             {/* Header */}
@@ -80,9 +76,10 @@ export const DashboardPage = () => {
                                 <CardTitle className="dark:text-gray-100 text-xl">Citas de la Semana</CardTitle>
                                 <CardDescription className="dark:text-gray-400">Comparación con promedio</CardDescription>
                             </div>
-                            <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
-                                <ArrowUpRight className="h-4 w-4" />
-                                <span className="text-sm font-semibold">+18%</span>
+                            <div className="flex items-center gap-1 text-primary dark:text-primary">
+                                <Calendar className="h-6 w-6" />
+                                {/* <ArrowUpRight className="h-4 w-4" />
+                                <span className="text-sm font-semibold">+18%</span> */}
                             </div>
                         </div>
                     </CardHeader>
@@ -96,12 +93,15 @@ export const DashboardPage = () => {
                     <CardHeader>
                         <div className="flex items-center justify-between">
                             <div>
-                                <CardTitle className="dark:text-gray-100 text-xl">Ingresos vs Gastos</CardTitle>
+                                <CardTitle className="dark:text-gray-100 text-xl">Ingresos</CardTitle>
                                 <CardDescription className="dark:text-gray-400">Últimos 6 meses</CardDescription>
                             </div>
                             <div className="text-right">
-                                <p className="text-2xl font-bold text-green-600 dark:text-green-400">$29K</p>
-                                <p className="text-xs text-muted-foreground">Ganancia neta</p>
+                                <DollarSign className="h-6 w-6 text-primary dark:text-primary" />
+                                {/* <div className="text-right">
+                                    <p className="text-2xl font-bold text-green-600 dark:text-green-400">$29K</p>
+                                    <p className="text-xs text-muted-foreground">Ganancia neta</p>
+                                </div> */}
                             </div>
                         </div>
                     </CardHeader>
@@ -116,8 +116,15 @@ export const DashboardPage = () => {
                 {/* Services Chart - Horizontal Bar mejorado */}
                 <Card className="dark:bg-gray-800 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow">
                     <CardHeader>
-                        <CardTitle className="dark:text-gray-100 text-xl">Servicios Más Solicitados</CardTitle>
-                        <CardDescription className="dark:text-gray-400">Este mes con tendencia</CardDescription>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <CardTitle className="dark:text-gray-100 text-xl">Servicios Más Solicitados</CardTitle>
+                                <CardDescription className="dark:text-gray-400">Este mes con tendencia</CardDescription>
+                            </div>
+                            <div className="flex items-center gap-1 text-primary dark:text-primary">
+                                <ToolCase className="h-6 w-6 text-primary dark:text-primary" />
+                            </div>
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <ServicesList data={servicesData || []} />
@@ -127,8 +134,15 @@ export const DashboardPage = () => {
                 {/* Recent Appointments - Mejorado */}
                 <Card className="dark:bg-gray-800 dark:border-gray-700 shadow-lg hover:shadow-xl transition-shadow">
                     <CardHeader>
-                        <CardTitle className="dark:text-gray-100 text-xl">Próximas Citas</CardTitle>
-                        <CardDescription className="dark:text-gray-400">Citas programadas para hoy</CardDescription>
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <CardTitle className="dark:text-gray-100 text-xl">Próximas Citas</CardTitle>
+                                <CardDescription className="dark:text-gray-400">Citas programadas para hoy - próximos dias</CardDescription>
+                            </div>
+                            <div className="flex items-center gap-1 text-primary dark:text-primary">
+                                <Calendar className="h-6 w-6 text-primary dark:text-primary" />
+                            </div>
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <UpcomingAppointmentsList data={upcomingData || []} />

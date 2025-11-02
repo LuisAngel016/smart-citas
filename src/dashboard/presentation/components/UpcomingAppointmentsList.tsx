@@ -1,11 +1,12 @@
 import React from "react";
-import { Clock, CheckCircle } from "lucide-react";
+import { Clock, CheckCircle, XCircle } from "lucide-react";
 
 interface Upcoming {
+    date: string;
     time: string;
     client: string;
     service: string;
-    status: "Confirmada" | "Pendiente" | "Cancelada";
+    status: "Confirmada" | "Pendiente" | "Cancelada" | "Completada";
     color: string;
 }
 
@@ -26,10 +27,15 @@ export const UpcomingAppointmentsList: React.FC<Props> = ({ data }) => {
                     </div>
                     <div className="flex-1">
                         <p className="text-sm font-semibold text-foreground dark:text-gray-100">{appointment.client}</p>
-                        <p className="text-xs text-muted-foreground dark:text-gray-400">{appointment.time} • {appointment.service}</p>
+                        <p className="text-xs text-muted-foreground dark:text-gray-400">{appointment.date} - {appointment.time} • {appointment.service}</p>
                     </div>
-                    {appointment.status === "Confirmada" ? (
+                    {/* Status indicator */}
+                    {appointment.status === "Cancelada" ? (
+                        <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                    ) : appointment.status === "Confirmada" ? (
                         <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+                    ) : appointment.status === "Completada" ? (
+                        <CheckCircle className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     ) : (
                         <div className="h-2 w-2 rounded-full bg-yellow-500 animate-pulse" />
                     )}

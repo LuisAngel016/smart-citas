@@ -8,9 +8,11 @@ import { GetUpcomingAppointmentsUseCase } from "../application/get-upcoming-appo
 // Repository
 const dashboardRepository = new DashboardRepositoryImpl();
 
-// Use Cases
-export const getDashboardStatsUseCase = new GetDashboardStatsUseCase(dashboardRepository);
-export const getAppointmentsChartUseCase = new GetAppointmentsChartUseCase(dashboardRepository);
-export const getRevenueChartUseCase = new GetRevenueChartUseCase(dashboardRepository);
-export const getServicesChartUseCase = new GetServicesChartUseCase(dashboardRepository);
-export const getUpcomingAppointmentsUseCase = new GetUpcomingAppointmentsUseCase(dashboardRepository);
+// Container
+export const dashboardContainer = {
+	getDashboardStatsUseCase: new GetDashboardStatsUseCase(dashboardRepository),
+	getAppointmentsChartUseCase: new GetAppointmentsChartUseCase(dashboardRepository),
+	getRevenueChartUseCase: new GetRevenueChartUseCase(dashboardRepository),
+	getServicesChartUseCase: new GetServicesChartUseCase(dashboardRepository),
+	getUpcomingAppointmentsUseCase: new GetUpcomingAppointmentsUseCase(dashboardRepository),
+};

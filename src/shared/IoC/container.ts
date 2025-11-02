@@ -4,10 +4,12 @@ import { clientContainer } from "@/clients/IoC/client.container";
 import { scheduleContainer } from "@/schedules/IoC/schedule.container";
 import { serviceContainer } from "@/services/IoC/service.container";
 import { businessContainer } from "@/business/IoC/business.container";
+import { dashboardContainer } from "@/dashboard/IoC/dashboard.container";
 
 const dependencies = {
   ...authContainer,
   ...clientContainer,
+  ...dashboardContainer,
   ...serviceContainer,
   ...businessContainer,
   ...appointmentContainer,

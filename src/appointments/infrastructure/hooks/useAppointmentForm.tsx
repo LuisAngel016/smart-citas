@@ -20,6 +20,8 @@ export interface AppointmentFormData {
     date: string
     time: string
     notes: string
+    status: string
+    serviceDuration: string
 }
 export const useAppointmentForm = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -33,6 +35,7 @@ export const useAppointmentForm = () => {
         reset,
         watch,
         setValue,
+        getValues
     } = useForm<AppointmentFormData>({
         defaultValues: {
             idClient: "",
@@ -112,7 +115,8 @@ export const useAppointmentForm = () => {
             appointment.date ? new Date(appointment.date as unknown as Date).toISOString().slice(0, 10) : "",
         )
         setValue("time", appointment.time || "")
-        setValue("notes", appointment.notes || "")
+        setValue("status", appointment.status || "")
+        setValue("serviceDuration", appointment.serviceDuration || "")
         setIsDialogOpen(true)
     }
 
@@ -137,6 +141,7 @@ export const useAppointmentForm = () => {
         watch,
         control,
         setValue,
+        getValues,
         editingAppointment,
     }
 }

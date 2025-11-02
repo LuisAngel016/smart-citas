@@ -1,5 +1,6 @@
 export class UpcomingAppointment {
   constructor(
+    public date: string,
     public time: string,
     public client: string,
     public service: string,

@@ -55,8 +55,9 @@ export const useWeeklyCalendar = (
                 title: appointment.serviceName || 'Cita sin servicio',
                 start: startISO,
                 end: endDateTime,
-                backgroundColor: '#3b82f6',
-                borderColor: '#2563eb',
+                backgroundColor: '#7dd3fc',
+                borderColor: '#38bdf8',    
+                textColor: '#0c4a6e', 
                 extendedProps: {
                     appointment,
                     clientName: appointment.clientName,

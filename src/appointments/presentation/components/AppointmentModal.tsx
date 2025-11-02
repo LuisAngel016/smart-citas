@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { format, startOfDay, parse, isValid } from "date-fns"
 import type { UseFormRegister, FieldErrors, Control, SetValueConfig, UseFormWatch } from "react-hook-form"
 import { Controller } from "react-hook-form"
-import { CalendarIcon, Clock, Mail, Sparkles, Edit, Trash2 } from "lucide-react"
+import { CalendarIcon, Clock, Mail, Sparkles, Edit, Trash2, CheckCircle } from "lucide-react"
 import { Button } from "@/shared/components/ui/button"
 import { Calendar } from "@/shared/components/ui/calendar"
 import {
@@ -18,14 +18,17 @@ import {
 import { Label } from "@/shared/components/ui/label"
 import { Textarea } from "@/shared/components/ui/textarea"
 import type { AppointmentFormData } from "@/appointments/infrastructure/hooks/useAppointmentForm"
-import type { Appointment } from "@/appointments/domain/entities/appointment.entity"
+import { AppointmentStatus, type Appointment } from "@/appointments/domain/entities/appointment.entity"
+import { canCompleteAppointment, getCompleteDisabledReason } from "@/shared/utils/appointment.utils"
 import { useDeleteAppointmentDialog } from "@/appointments/infrastructure/hooks/useDeleteAppointmentDialog"
+import { useCompleteAppointmentDialog } from "@/appointments/infrastructure/hooks/useCompleteAppointmentDialog"
 import { useGetClients } from "@/clients/infrastructure/hooks/useGetClients"
 import { useGetServices } from "@/services/infrastructure/hooks/useGetServices"
 import CustomSelect from "@/shared/components/custom/CustomSelect"
 import { TimePicker } from "@/shared/components/custom"
 import { DeleteConfirmationModal } from "@/shared/components/custom/DeleteConfirmationModal"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/components/ui/tooltip"
+import { CompleteAppointmentModal } from "./CompleteAppointmentModal"
 
 interface AppointmentModalProps {
     open: boolean
@@ -35,6 +38,7 @@ interface AppointmentModalProps {
     watch: UseFormWatch<AppointmentFormData>
     errors: FieldErrors<AppointmentFormData>
     setValue: (name: keyof AppointmentFormData, value: AppointmentFormData[keyof AppointmentFormData], options?: SetValueConfig) => void
+    getValues: () => AppointmentFormData
     onSubmit: (e?: React.FormEvent<HTMLFormElement>) => void
     isSubmitting?: boolean
     editingAppointment: Appointment | null
@@ -48,13 +52,14 @@ export const AppointmentModal = ({
     watch,
     errors,
     setValue,
+    getValues,
     onSubmit,
     isSubmitting = false,
     editingAppointment,
-
 }: AppointmentModalProps) => {
     const [openDate, setOpenDate] = useState(false)
-    // usar hook de diálogo de eliminación
+
+    // Hooks de diálogos
     const {
         appointmentToDelete,
         isDeleteDialogOpen,
@@ -63,6 +68,16 @@ export const AppointmentModal = ({
         handleConfirmDelete,
         isDeleting,
     } = useDeleteAppointmentDialog()
+
+    const {
+        appointmentToComplete,
+        isCompleteDialogOpen,
+        setIsCompleteDialogOpen,
+        handleCompleteClick,
+        handleConfirmComplete,
+        isCompleting,
+    } = useCompleteAppointmentDialog()
+
     const wrapperRef = useRef<HTMLDivElement | null>(null)
 
     const { data: clients } = useGetClients()
@@ -73,12 +88,19 @@ export const AppointmentModal = ({
     // Obtener valores actuales del formulario
     const idClient = watch("idClient")
     const idService = watch("idService")
+    const date = getValues().date;
+    const time = getValues().time;
+    const serviceDuration = getValues().serviceDuration;
+    const status = getValues().status as AppointmentStatus
 
-    // Obtener nombres para el modal de eliminación
+    // Obtener nombres para los modales
     const clientName = clients?.data.find(c => c.id === idClient)?.name
     const serviceName = services?.data.find(s => s.id === idService)?.name
     const appointmentName = clientName && serviceName ? `${clientName} - ${serviceName}` : "esta cita"
 
+    // Validar si se puede completar la cita
+    const canComplete = canCompleteAppointment(date, time, serviceDuration, status)
+    const completeDisabledReason = getCompleteDisabledReason(date, time, serviceDuration, status)
 
     useEffect(() => {
         function onDoc(e: MouseEvent) {
@@ -94,6 +116,12 @@ export const AppointmentModal = ({
     // Handler para confirmar eliminación y cerrar el modal padre
     const handleConfirmDeleteAndClose = async () => {
         await handleConfirmDelete()
+        onOpenChange(false)
+    }
+
+    // Handler para confirmar completar y cerrar el modal padre
+    const handleConfirmCompleteAndClose = async () => {
+        await handleConfirmComplete()
         onOpenChange(false)
     }
 
@@ -154,7 +182,7 @@ export const AppointmentModal = ({
                             </div>
 
                             {/* Fecha y Hora */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2.5" ref={wrapperRef}>
                                     <Label htmlFor="date" className="text-sm font-medium flex items-center gap-2">
                                         <div className="p-1 rounded-md bg-primary/10">
@@ -202,7 +230,6 @@ export const AppointmentModal = ({
                                                                 setOpenDate(false)
                                                             }}
                                                             disabled={(date) => date < startOfDay(new Date())}
-
                                                         />
                                                     </div>
                                                 )}
@@ -285,29 +312,53 @@ export const AppointmentModal = ({
 
                         <DialogFooter className="px-8 py-6 bg-muted/30 dark:bg-gray-900/50 border-t border-border/70 dark:border-gray-700">
                             <div className="flex gap-3 w-full sm:justify-between">
-                                {/* Botón de eliminar a la izquierda (solo en modo edición) */}
+                                {/* Botones de acción a la izquierda (solo en modo edición) */}
                                 {isEditing && (
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                onClick={() => {
-                                                    // abrir diálogo de eliminación con la cita actual
-                                                    if (editingAppointment) handleDeleteClick(editingAppointment as Appointment)
-                                                }}
-                                                disabled={isSubmitting}
-                                                className="h-11 border-destructive/70 text-destructive hover:bg-destructive/10 hover:border-destructive dark:border-destructive/50 dark:hover:bg-destructive/20 transition-all duration-200"
-                                            >
-                                                <Trash2 className="h-4 w-4" />
-                                            </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent className="font-poppins text-xs p-2 rounded-lg shadow-lg">
-                                            <div className="leading-tight">
+                                    <div className="flex gap-3">
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    onClick={() => {
+                                                        if (editingAppointment) handleDeleteClick(editingAppointment)
+                                                    }}
+                                                    disabled={isSubmitting || isCompleting}
+                                                    className="h-11 border-destructive/70 text-destructive hover:bg-destructive/10 hover:border-destructive dark:border-destructive/50 dark:hover:bg-destructive/20 transition-all duration-200"
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent className="font-poppins text-xs p-2 rounded-lg shadow-lg">
                                                 <p className="text-sm font-medium">Eliminar cita</p>
-                                            </div>
-                                        </TooltipContent>
-                                    </Tooltip>
+                                            </TooltipContent>
+                                        </Tooltip>
+
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    onClick={() => {
+                                                        if (editingAppointment) handleCompleteClick(editingAppointment)
+                                                    }}
+                                                    disabled={isSubmitting || isCompleting || !canComplete}
+                                                    className="h-11 border-green-600/70 text-green-600 hover:bg-green-50 hover:border-green-600 dark:border-green-500/50 dark:text-green-500 dark:hover:bg-green-500/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                >
+                                                    {isCompleting ? (
+                                                        <div className="h-4 w-4 border-2 border-green-600/30 border-t-green-600 rounded-full animate-spin" />
+                                                    ) : (
+                                                        <CheckCircle className="h-4 w-4" />
+                                                    )}
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent className="font-poppins text-xs p-2 rounded-lg shadow-lg">
+                                                <p className="text-sm font-medium">
+                                                    {completeDisabledReason || "Marcar como completada"}
+                                                </p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </div>
                                 )}
 
                                 {/* Botones de acción a la derecha */}
@@ -316,14 +367,14 @@ export const AppointmentModal = ({
                                         type="button"
                                         variant="outline"
                                         onClick={() => onOpenChange(false)}
-                                        disabled={isSubmitting}
-                                        className="flex-1 sm:flex-none h-11 border-border/70 hover:bg-accent dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-100 transition-all duration-200"
+                                        disabled={isSubmitting || isCompleting}
+                                        className="flex-1 hidden md:block sm:flex-none h-11 border-border/70 hover:bg-accent dark:border-gray-600 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-100 transition-all duration-200"
                                     >
                                         Cancelar
                                     </Button>
                                     <Button
                                         type="submit"
-                                        disabled={isSubmitting}
+                                        disabled={isSubmitting || isCompleting}
                                         className="flex-1 sm:flex-none h-11 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all duration-200"
                                     >
                                         {isSubmitting ? (
@@ -332,7 +383,7 @@ export const AppointmentModal = ({
                                                 {isEditing ? "Actualizando..." : "Guardando..."}
                                             </span>
                                         ) : (
-                                            isEditing ? "Actualizar Cita" : "Guardar Cita"
+                                            isEditing ? "Reprogramar" : "Guardar"
                                         )}
                                     </Button>
                                 </div>
@@ -350,6 +401,15 @@ export const AppointmentModal = ({
                 itemType="cita"
                 onConfirm={handleConfirmDeleteAndClose}
                 isDeleting={isDeleting}
+            />
+
+            {/* Modal de confirmación de completar */}
+            <CompleteAppointmentModal
+                open={isCompleteDialogOpen}
+                onOpenChange={setIsCompleteDialogOpen}
+                appointmentName={appointmentToComplete ? `${appointmentToComplete.clientName} - ${appointmentToComplete.serviceName}` : appointmentName}
+                onConfirm={handleConfirmCompleteAndClose}
+                isCompleting={isCompleting}
             />
         </Dialog>
     )

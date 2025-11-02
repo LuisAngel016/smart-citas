@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUpcomingAppointmentsUseCase } from "@/dashboard/IoC/dashboard.container";
+import { container } from "@/shared/IoC/container";
 
 export const useGetUpcomingAppointments = () => {
+    const getUpcomingAppointmentsUseCase = container.resolve("getUpcomingAppointmentsUseCase");
     return useQuery({
         queryKey: ["dashboard", "upcoming-appointments"],
         queryFn: () => getUpcomingAppointmentsUseCase.execute(),

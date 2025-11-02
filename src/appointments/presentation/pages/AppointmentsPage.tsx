@@ -4,6 +4,7 @@ import { Button } from "@/shared/components/ui/button"
 import { Plus } from "lucide-react"
 import { WeeklyCalendar } from "../components/WeeklyCalendar";
 import { AppointmentModal } from "../components/AppointmentModal";
+import { CalendarSkeleton } from "../components/CalendarSkelton";
 
 export const AppointmentsPage = () => {
     const {
@@ -17,14 +18,15 @@ export const AppointmentsPage = () => {
         isSubmitting,
         control,
         setValue,
+        getValues,
         watch,
         editingAppointment,
     } = useAppointmentForm();
 
     const { data: appointments, isLoading } = useGetAppointments();
 
-    if (!appointments) {
-        return <div>Cargando...</div>
+    if (isLoading || !appointments) {
+        return <CalendarSkeleton />
     }
 
     return (
@@ -57,6 +59,7 @@ export const AppointmentsPage = () => {
                 onSubmit={handleSubmit}
                 isSubmitting={isSubmitting}
                 setValue={setValue}
+                getValues={getValues}
                 watch={watch}
                 editingAppointment={editingAppointment}
             />

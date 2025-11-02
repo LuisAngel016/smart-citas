@@ -4,6 +4,7 @@ import type { UpcomingAppointmentAPIResponse } from "../dto/upcoming-appointment
 export class UpcomingAppointmentsMapper {
   static toDomain(apiResponse: UpcomingAppointmentAPIResponse[]): UpcomingAppointment[] {
     return apiResponse.map((item) => ({
+      date: item.date,
       time: item.time,
       client: item.client,
       service: item.service,

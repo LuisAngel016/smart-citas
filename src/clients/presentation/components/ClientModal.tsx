@@ -83,7 +83,7 @@ export const ClientModal = ({
                             </div>
 
                             {/* Email y Teléfono */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2.5">
                                     <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
                                         <div className="p-1 rounded-md bg-primary/10">

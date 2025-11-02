@@ -147,8 +147,9 @@
     padding: 2px;
 }
 
+/* DÍA DE HOY - FONDO MÁS SUTIL */
 .fc .fc-day-today {
-    background-color: #EFF6FF;
+    background-color: #F0F9FF; /* Azul muy claro, casi transparente */
 }
 
 .fc .fc-day-today .fc-col-header-cell-cushion {
@@ -275,9 +276,9 @@
     border-radius: 0.375rem;
 }
 
-/* Columna de día actual en vista semana */
+/* Columna de día actual en vista semana - MÁS SUTIL */
 .fc .fc-timegrid-col.fc-day-today {
-    background-color: #F0F9FF;
+    background-color: #F8FAFC; /* Gris/azul ultra claro */
 }
 
 /* Mejorar legibilidad de horas */
@@ -404,20 +405,21 @@
     color: #9CA3AF;
 }
 
+/* DÍA DE HOY EN DARK MODE - MÁS SUTIL */
 .ark\:bg-gray-800 .fc .fc-day-today,
 .dark .fc .fc-day-today {
-    background-color: rgba(59,130,246,0.15);
+    background-color: rgba(59,130,246,0.08); /* Reducido de 0.15 a 0.08 */
 }
 
-/* Encabezado del día actual en modo oscuro */
+/* Encabezado del día actual en modo oscuro - MÁS SUTIL */
 .ark\:bg-gray-800 .fc .fc-day-today .fc-col-header-cell,
 .ark\:bg-gray-800 .fc .fc-col-header-cell.fc-day-today {
-    background-color: rgba(107,114,128,0.25);
+    background-color: rgba(107,114,128,0.15); /* Reducido de 0.25 a 0.15 */
 }
 
 .dark .fc .fc-day-today .fc-col-header-cell,
 .dark .fc .fc-col-header-cell.fc-day-today {
-    background-color: rgba(107,114,128,0.25);
+    background-color: rgba(107,114,128,0.15); /* Reducido de 0.25 a 0.15 */
 }
 
 .ark\:bg-gray-800 .fc .fc-daygrid-day-number,
@@ -462,12 +464,12 @@
     font-weight: 600;
 }
 
-/* Sobrescribir para el día actual (encabezado) - usar gray-500 semi-transparente */
+/* Sobrescribir para el día actual (encabezado) - MÁS SUTIL */
 .ark\:bg-gray-800 .fc .fc-col-header-cell.fc-day-today,
 .ark\:bg-gray-800 .fc .fc-day-today.fc-col-header-cell,
 .dark .fc .fc-col-header-cell.fc-day-today,
 .dark .fc .fc-day-today.fc-col-header-cell {
-    background-color: rgba(107,114,128,0.25) !important;
+    background-color: rgba(107,114,128,0.15) !important; /* Reducido de 0.25 a 0.15 */
 }
 
 .ark\:bg-gray-800 .fc .fc-scrollgrid thead th,
@@ -478,4 +480,10 @@
 
 .ark\:bg-gray-800 .fc .fc-scrollgrid-section > * {
     border-color: #374151;
+}
+
+/* COLUMNA DE DÍA ACTUAL EN VISTA SEMANA - MÁS SUTIL EN DARK MODE */
+.ark\:bg-gray-800 .fc .fc-timegrid-col.fc-day-today,
+.dark .fc .fc-timegrid-col.fc-day-today {
+    background-color: rgba(59,130,246,0.05); /* Ultra sutil */
 }

@@ -12,6 +12,7 @@ export class Appointment {
         public serviceName: string,
         public serviceDuration: string,
         public servicePrice: string,
+        public status: AppointmentStatus,
         // Fecha y hora
         public date: string,
         public time: string,
@@ -19,4 +20,9 @@ export class Appointment {
         public createdAt: Date = new Date(),
         public updatedAt?: Date
     ) {}
+}
+
+export enum AppointmentStatus {
+    PENDING = 'pending',     
+    COMPLETED = 'completed', 
 }

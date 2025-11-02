@@ -8,6 +8,7 @@ export interface AppointmentAPIResponse {
   date:       string;
   time:       string;
   notes:      string;
+  status:      string;
   isActive:   boolean;
   createdBy:  string;
   createdAt:  Date;

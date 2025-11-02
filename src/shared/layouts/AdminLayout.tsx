@@ -5,24 +5,28 @@ import { Outlet } from "react-router";
 
 const AdminLayout = () => {
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     return (
         <div className="font-poppins min-h-screen bg-gray-50 dark:bg-gray-900 flex animate-fade animation-duration-[2000ms] animate-delay-100">
             <CustomAdminSidebar
                 isCollapsed={sidebarCollapsed}
                 onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+                isMobileOpen={mobileMenuOpen}
+                onMobileClose={() => setMobileMenuOpen(false)}
             />
 
-            <div className="flex-1 flex flex-col">
-                <CustomAdminHeader />
+            <div className="flex-1 flex flex-col min-w-0">
+                <CustomAdminHeader
+                    onMenuClick={() => setMobileMenuOpen(true)}
+                />
 
                 <main className="flex-1">
-
                     <Outlet />
-
                 </main>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default AdminLayout;

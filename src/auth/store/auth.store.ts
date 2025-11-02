@@ -33,7 +33,7 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     isAdmin: () => {
         const roles = get().user?.roles || [];
 
-        return roles.includes('user');
+        return roles.includes('user') || roles.includes('admin');
     },
 
     // Actions

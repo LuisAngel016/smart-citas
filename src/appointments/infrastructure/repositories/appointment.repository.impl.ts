@@ -34,6 +34,12 @@ export class AppointmentRepositoryImpl implements IAppointmentRepository {
     return appointment;
   }
 
+  async updateStatus(id: string): Promise<Appointment> {
+    const { data } = await this.httpClient.patch<AppointmentAPIResponse>(`/appointments/complete/${id}`);
+    const appointment = AppointmentMapper.toDomainSingle(data);
+    return appointment;
+  }
+
   async delete(id: string): Promise<boolean> {
     await this.httpClient.delete(`/appointments/${id}`);
     return true;

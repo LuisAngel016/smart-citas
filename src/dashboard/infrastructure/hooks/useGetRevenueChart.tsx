@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getRevenueChartUseCase } from "@/dashboard/IoC/dashboard.container";
+import { container } from "@/shared/IoC/container";
 
 export const useGetRevenueChart = () => {
+    const getRevenueChartUseCase = container.resolve("getRevenueChartUseCase");
     return useQuery({
         queryKey: ["dashboard", "revenue-chart"],
         queryFn: () => getRevenueChartUseCase.execute(),

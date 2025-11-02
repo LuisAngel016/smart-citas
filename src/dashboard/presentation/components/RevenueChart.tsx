@@ -40,15 +40,12 @@ export const RevenueChart: React.FC<Props> = ({ data }) => {
         <ChartContainer
             config={{
                 ingresos: { label: "Ingresos", color: "hsl(199, 89%, 65%)" },
-                // gastos: { label: "Gastos", color: "hsl(158, 64%, 52%)" },
             }}
-            className="h-80"
+            className="w-full h-[300px] aspect-auto"
         >
             <BarChart
                 data={data}
-                width={500}
-                height={320}
-                margin={{ top: 16, right: 24, left: 40, bottom: 12 }}
+                margin={{ top: 16, right: 12, left: 20, bottom: 12 }}
                 barCategoryGap="20%"
             >
                 <CartesianGrid strokeDasharray="3 3" className="stroke-muted/30" />
@@ -63,10 +60,10 @@ export const RevenueChart: React.FC<Props> = ({ data }) => {
                     stroke="hsl(var(--muted-foreground))"
                     axisLine={false}
                     tickFormatter={(value) => `$${Number(value).toLocaleString()}`}
+                    width={65}
                 />
                 <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(0, 0, 0, 0.05)' }} />
                 <Bar dataKey="ingresos" fill="hsl(199, 89%, 65%)" radius={[8, 8, 0, 0]} maxBarSize={60} />
-                {/* <Bar dataKey="gastos" fill="hsl(158, 64%, 52%)" radius={[8, 8, 0, 0]} maxBarSize={60} /> */}
             </BarChart>
         </ChartContainer>
     );

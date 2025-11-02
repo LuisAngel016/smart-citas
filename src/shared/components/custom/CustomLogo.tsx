@@ -12,10 +12,10 @@ export const CustomLogo = ({ subtitle = 'Citas', navigate = '/' }: Props) => {
             className="flex items-center gap-3 whitespace-nowrap group relative"
         >
             {/* Glow effect background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/5 to-primary/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
+            <div className="absolute inset-0 bg-linear-to-r from-primary/0 via-primary/5 to-primary/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
 
             {/* Logo Icon */}
-            <div className="w-10 h-10 relative flex-shrink-0 z-10">
+            <div className="w-10 h-10 relative shrink-0 z-10">
                 {/* Animated ring effect */}
                 <div className="absolute inset-0 rounded-full bg-primary/20 opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-700 blur-sm" />
 
@@ -57,7 +57,7 @@ export const CustomLogo = ({ subtitle = 'Citas', navigate = '/' }: Props) => {
                         width="32"
                         height="30"
                         rx="4"
-                        className="fill-background stroke-primary transition-all duration-500 group-hover:stroke-[3]"
+                        className="fill-background stroke-primary transition-all duration-500 group-hover:stroke-3"
                         strokeWidth="2"
                         filter="url(#glow)"
                     />
@@ -136,7 +136,7 @@ export const CustomLogo = ({ subtitle = 'Citas', navigate = '/' }: Props) => {
                     {/* Checkmark overlay with smooth animation */}
                     <path
                         d="M18 27L22 31L30 23"
-                        className="stroke-primary opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:stroke-[3]"
+                        className="stroke-primary opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:stroke-3"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -151,7 +151,7 @@ export const CustomLogo = ({ subtitle = 'Citas', navigate = '/' }: Props) => {
                         text-2xl
                         font-black 
                         tracking-tight
-                        bg-gradient-to-br from-primary via-primary to-primary/70
+                        bg-linear-to-br from-primary via-primary to-primary/70
                         bg-clip-text text-transparent
                         transition-all duration-500
                         group-hover:from-primary 

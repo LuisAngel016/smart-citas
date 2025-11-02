@@ -69,7 +69,7 @@ export const ServiceModal = ({
 
                     <form onSubmit={onSubmit}>
                         <div className="px-8 pb-6 space-y-6">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2.5">
                                     <Label htmlFor="nombre" className="text-sm font-medium dark:text-gray-200">Nombre del Servicio</Label>
                                     <Input

@@ -1,12 +1,17 @@
 import React, { useRef } from 'react';
-import { useSearchParams } from 'react-router';
-import { Search, Bell, MessageSquare, Sun, Moon, User, LogOut } from 'lucide-react';
+import { Link, useSearchParams } from 'react-router';
+import { Search, Bell, MessageSquare, Sun, Moon, User, LogOut, Menu, Settings, HelpCircle } from 'lucide-react';
 import { Input } from '@/shared/components/ui/input';
 import { useThemeContext } from '@/shared/hooks/use-theme-context';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { useAuthStore } from '@/auth/store/auth.store';
+import { cn } from '@/shared/lib/utils';
 
-export const CustomAdminHeader: React.FC = () => {
+interface HeaderProps {
+    onMenuClick: () => void;
+}
+
+export const CustomAdminHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
     const [, setSearchParams] = useSearchParams()
     const { toggleTheme } = useThemeContext();
@@ -40,9 +45,16 @@ export const CustomAdminHeader: React.FC = () => {
 
     return (
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 h-18">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
+                {/* Botón menú mobile - AGREGAR AL INICIO */}
+                <button
+                    onClick={onMenuClick}
+                    className="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                >
+                    <Menu size={24} />
+                </button>
                 {/* Search */}
-                <div className="flex-1 max-w-md">
+                <div className="flex-1 max-w-md hidden md:block">
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
                         <Input
@@ -75,25 +87,45 @@ export const CustomAdminHeader: React.FC = () => {
 
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <button className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:shadow-lg transition-shadow">
-                                {getInitials(user?.name || '')}
+                            <button className="relative flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 text-sm font-semibold text-white transition-all hover:shadow-lg hover:scale-105 focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                                {getInitials(user?.name || "")}
                             </button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                            className="w-52 bg-popover border-border dropdown-shadow"
-                            sideOffset={8}
-                        >
-                            <DropdownMenuLabel className="font-poppins text-base font-semibold">
-                                Mi Cuenta
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator className="bg-border" />
-                            <DropdownMenuItem className="font-poppins cursor-pointer py-3 focus:bg-ring/10 focus:text-ring transition-colors">
-                                <User className="mr-3 h-4 w-4 focus:text-ring" />
-                                <span className="font-medium">Perfil</span>
+                        <DropdownMenuContent className="w-72 font-poppins" align="end" sideOffset={8}>
+                            <div className="flex items-center gap-3 px-2 py-3">
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 text-sm font-semibold text-white">
+                                    {getInitials(user?.name || "")}
+                                </div>
+                                <div className="flex flex-col gap-0.5">
+                                    <p className="text-sm font-semibold leading-none">{user?.name}</p>
+                                    <p className="text-xs text-muted-foreground leading-none">{user?.email}</p>
+                                </div>
+                            </div>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem asChild className="cursor-pointer py-2.5 hover:bg-ring/30 hover:text-ring">
+                                <Link to="/profile" className="flex items-center">
+                                    <User className={cn("mr-3 h-6 w-6")} />
+                                    <span className="font-medium">Perfil</span>
+                                </Link>
                             </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-border" />
-                            <DropdownMenuItem onClick={logout} className="font-poppins cursor-pointer py-3 text-destructive focus:bg-destructive/10 focus:text-destructive transition-colors">
-                                <LogOut className="mr-3 h-4 w-4 text-destructive" />
+                            <DropdownMenuItem className="cursor-pointer py-2.5 hover:bg-ring/30 hover:text-ring">
+                                <Link to="/admin/settings/business" className="flex items-center">
+                                    <Settings className={cn("mr-3 h-6 w-6")} />
+                                    <span className="font-medium">Configuración</span>
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="cursor-pointer py-2.5 hover:bg-ring/30 hover:text-ring">
+                                <Bell className={cn("mr-3 h-6 w-6")} />
+                                <span className="font-medium">Notificaciones</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="cursor-pointer py-2.5 hover:bg-ring/30 hover:text-ring">
+                                <HelpCircle className={cn("mr-3 h-6 w-6")} />
+                                <span className="font-medium">Ayuda y soporte</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={logout} variant="destructive" className="cursor-pointer py-2.5">
+                                <LogOut className={cn("mr-3 h-6 w-6")} />
                                 <span className="font-medium">Cerrar sesión</span>
                             </DropdownMenuItem>
                         </DropdownMenuContent>

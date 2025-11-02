@@ -1,4 +1,5 @@
 export interface UpcomingAppointmentAPIResponse {
+  date: string;
   time: string;
   client: string;
   service: string;
