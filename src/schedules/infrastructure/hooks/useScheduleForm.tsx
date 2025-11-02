@@ -12,8 +12,8 @@ export const useScheduleForm = (initialData?: UpdateScheduleDTO[]) => {
     const { mutateAsync: updateSchedulesAsync, isPending } = useUpdateSchedule();
 
     const { control, handleSubmit, watch, reset } = useForm<ScheduleFormData>({
-        defaultValues: {
-            schedules: initialData || [],
+        values: {
+            schedules: initialData ?? [],
         },
     });
 

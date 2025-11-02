@@ -25,7 +25,6 @@ export class ClientRepositoryImpl implements IClientRepository {
   async create(clientData: CreateClientDTO): Promise<Client> {
     const { data } = await this.httpClient.post<ClientAPIResponse>("/clients", clientData);
     const client = ClientMapper.toDomainSingle(data);
-    console.log(client)
     return client;
   }
 

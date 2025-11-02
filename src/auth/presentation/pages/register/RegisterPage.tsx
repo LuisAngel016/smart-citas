@@ -24,12 +24,11 @@ export const RegisterPage = () => {
         event.preventDefault();
         setIsPosting(true);
 
-        const formData = new FormData(event.target as HTMLFormElement);
-        const email = formData.get('email') as string;
-        const password = formData.get('password') as string;
-        const name = formData.get('name') as string;
+        // const formData = new FormData(event.target as HTMLFormElement);
+        // const email = formData.get('email') as string;
+        // const password = formData.get('password') as string;
+        // const name = formData.get('name') as string;
 
-        console.log({ email, password, name })
         // const IsValid = await register(email, password, name);
 
         // if (IsValid) {
@@ -42,7 +41,7 @@ export const RegisterPage = () => {
     }
 
     return (
-        <div className="flex flex-col gap-6 animate-fade-up animate-duration-[1000ms] animate-ease-out">
+        <div className="flex flex-col gap-6 animate-fade-up animation-duration-[1000ms] animate-ease-out">
             <Card className="overflow-hidden">
                 <CardContent className="grid p-0">
                     <form className="p-6 md:p-8" onSubmit={handleRegister}>

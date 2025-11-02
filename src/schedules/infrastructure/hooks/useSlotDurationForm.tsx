@@ -12,8 +12,8 @@ export const useSlotDurationForm = (initialData?: number) => {
     const { mutateAsync: updateSlotDurationAsync, isPending } = useUpdateScheduleSlotDuration();
 
     const { control, handleSubmit, watch, reset } = useForm<SlotDurationFormData>({
-        defaultValues: {
-            slotDuration: initialData || 15,
+        values: {
+            slotDuration: initialData ?? 15,
         },
     });
 

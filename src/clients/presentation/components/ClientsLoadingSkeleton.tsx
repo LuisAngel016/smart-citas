@@ -23,7 +23,7 @@ export const ClientsLoadingSkeleton = () => {
                 <div className="border-b px-4 py-3 bg-transparent">
                     <div className="flex items-center justify-between">
                         <Skeleton className="h-5 w-40" />
-                        <Skeleton className="h-8 w-24 rounded" />
+                        <Skeleton className="h-8 w-24" />
                     </div>
                 </div>
                 <div className="p-4">
@@ -36,7 +36,7 @@ export const ClientsLoadingSkeleton = () => {
                         {[...Array(6)].map((_, rowIdx) => (
                             <div key={rowIdx} className="grid grid-cols-6 gap-4">
                                 {[...Array(6)].map((_, colIdx) => (
-                                    <Skeleton key={colIdx} className="h-6 w-full rounded" />
+                                    <Skeleton key={colIdx} className="h-6 w-full" />
                                 ))}
                             </div>
                         ))}
