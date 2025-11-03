@@ -25,7 +25,7 @@ export const NotAuthenticatedRoute = ({ children }: PropsWithChildren) => {
 
     if (authStatus === "checking") return <CustomFullScreenLoading />
 
-    if (authStatus === "authenticated") return <Navigate to='/' />
+    if (authStatus === "authenticated") return <Navigate to='/admin' />
 
     return children;
 
