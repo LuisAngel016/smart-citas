@@ -7,8 +7,7 @@ import { Menu, Moon, Sun, ChevronRight, Calendar, Users, MessageSquare } from "l
 import { useState } from "react"
 import { Link, useNavigate } from "react-router"
 
-
-export const CustomHeader = () => {
+export const CustomHeader = ({ showNavigation = true }: { showNavigation?: boolean }) => {
     const [isOpen, setIsOpen] = useState(false);
     const { toggleTheme } = useThemeContext();
     const navigate = useNavigate();
@@ -48,29 +47,31 @@ export const CustomHeader = () => {
                 </button>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden sm:flex items-center gap-6">
-                    <a
-                        href="#caracteristicas"
-                        onClick={(e) => handleSmoothScroll(e, '#caracteristicas')}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
-                    >
-                        Características
-                    </a>
-                    <a
-                        href="#planes"
-                        onClick={(e) => handleSmoothScroll(e, '#planes')}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
-                    >
-                        Planes
-                    </a>
-                    <a
-                        href="#contacto"
-                        onClick={(e) => handleSmoothScroll(e, '#contacto')}
-                        className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
-                    >
-                        Contacto
-                    </a>
-                </nav>
+                {showNavigation && (
+                    <nav className="hidden sm:flex items-center gap-6">
+                        <a
+                            href="#caracteristicas"
+                            onClick={(e) => handleSmoothScroll(e, '#caracteristicas')}
+                            className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
+                        >
+                            Características
+                        </a>
+                        <a
+                            href="#planes"
+                            onClick={(e) => handleSmoothScroll(e, '#planes')}
+                            className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
+                        >
+                            Planes
+                        </a>
+                        <a
+                            href="#contacto"
+                            onClick={(e) => handleSmoothScroll(e, '#contacto')}
+                            className="text-sm text-muted-foreground hover:text-foreground transition-colors dark:text-white"
+                        >
+                            Contacto
+                        </a>
+                    </nav>
+                )}
 
                 {/* Desktop Actions */}
                 <div className="hidden sm:flex items-center gap-3">

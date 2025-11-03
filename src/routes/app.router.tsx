@@ -19,6 +19,12 @@ import { ProfilePage } from "@/users/presentation/pages/UserPage";
 const AuthLayout = lazy(() => import("@/auth/presentation/layouts/AuthLayout"));
 const AdminLayout = lazy(() => import("@/shared/layouts/AdminLayout"));
 
+const AboutPage = lazy(() => import("@/home/presentation/pages/about/AboutPage"));
+const BlogPage = lazy(() => import("@/home/presentation/pages/blog/BlogPage"));
+const ContactPage = lazy(() => import("@/home/presentation/pages/contact/ContactPage"));
+const PrivacyPage = lazy(() => import("@/home/presentation/pages/privacy/PrivacyPage"));
+const TermsPage = lazy(() => import("@/home/presentation/pages/terms/TermsPage"));
+
 
 export const appRouter = createBrowserRouter([
     // Main routes
@@ -29,7 +35,27 @@ export const appRouter = createBrowserRouter([
             {
                 index: true,
                 element: <HomePage />
-            }
+            },
+            {
+                path: "about",
+                element: <AboutPage />
+            },
+            {
+                path: "blog",
+                element: <BlogPage />
+            },
+            {
+                path: "contact",
+                element: <ContactPage />
+            },
+            {
+                path: "privacy",
+                element: <PrivacyPage />
+            },
+            {
+                path: "terms",
+                element: <TermsPage />
+            },
         ]
     },
     // Auth routes

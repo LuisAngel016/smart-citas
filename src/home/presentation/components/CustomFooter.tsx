@@ -1,21 +1,24 @@
 import { Calendar } from "lucide-react"
 import { useScrollAnimation } from "@/shared/hooks/use-scroll-animation"
+import { Link } from "react-router";
 
 
 interface FooterLink {
     label: string;
-    href: string;
+    href?: string;
+    to?: string;
 }
 
 interface FooterSection {
     title: string;
-    links: FooterLink[];
+    href?: FooterLink[];
+    links?: FooterLink[];
 }
 
 const footerSections: FooterSection[] = [
     {
         title: "Producto",
-        links: [
+        href: [
             { label: "Características", href: "#caracteristicas" },
             { label: "Planes", href: "#planes" },
             { label: "Casos de Uso", href: "#" },
@@ -24,16 +27,16 @@ const footerSections: FooterSection[] = [
     {
         title: "Empresa",
         links: [
-            { label: "Acerca de", href: "#" },
-            { label: "Blog", href: "#" },
-            { label: "Contacto", href: "#contacto" },
+            { label: "Acerca de", to: "/about" },
+            { label: "Blog", to: "/blog" },
+            { label: "Contacto", to: "/contact" },
         ],
     },
     {
         title: "Legal",
         links: [
-            { label: "Privacidad", href: "#" },
-            { label: "Términos", href: "#" },
+            { label: "Privacidad", to: "/privacy" },
+            { label: "Términos", to: "/terms" },
         ],
     },
 ];
@@ -48,7 +51,7 @@ export const CustomFooter = () => {
     return (
         <footer
             ref={elementRef as React.RefObject<HTMLElement>}
-            className={`border-t border-border py-8 sm:py-10 md:py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 animate-fade-up animate-duration-[2000ms]' : 'opacity-0 translate-y-10'
+            className={`border-t border-border py-8 sm:py-10 md:py-12 transition-all duration-1000 ${isVisible ? 'opacity-100 animate-fade-up animation-duration-[2000ms]' : 'opacity-0 translate-y-10'
                 }`}
         >
             <div className="container mx-auto px-4">
@@ -67,7 +70,7 @@ export const CustomFooter = () => {
                         <div key={section.title} className="text-center sm:text-left">
                             <h3 className="font-semibold text-foreground mb-2 sm:mb-3 text-sm sm:text-base">{section.title}</h3>
                             <ul className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
-                                {section.links.map((link) => (
+                                {section.href?.map((link) => (
                                     <li key={link.label}>
                                         <a
                                             href={link.href}
@@ -75,6 +78,16 @@ export const CustomFooter = () => {
                                         >
                                             {link.label}
                                         </a>
+                                    </li>
+                                ))}
+                                {section.links?.map((link) => (
+                                    <li key={link.label}>
+                                        <Link
+                                            to={link.to!}
+                                            className="hover:text-foreground transition-colors"
+                                        >
+                                            {link.label}
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>

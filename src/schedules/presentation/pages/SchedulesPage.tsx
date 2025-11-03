@@ -1,5 +1,3 @@
-"use client"
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card"
 import { Switch } from "@/shared/components/ui/switch"
 import { Input } from "@/shared/components/ui/input"
@@ -34,56 +32,58 @@ export const SchedulesPage = () => {
     }
 
     return (
-        <div className="p-4 space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen animate-fade-up animated-duration-[800ms] animate-delay-100">
+        <div className="p-3 md:p-4 space-y-4 md:space-y-6 bg-gray-50 dark:bg-gray-900 min-h-screen animate-fade-up animated-duration-[800ms] animate-delay-100">
             <form onSubmit={handleSubmit}>
                 <Card className="dark:bg-gray-800 dark:border-gray-700">
-                    <CardHeader>
+                    <CardHeader className="pb-3 md:pb-6">
                         <div className="flex items-center gap-2">
                             <Clock className="h-5 w-5 text-primary dark:text-blue-400" />
-                            <CardTitle className="dark:text-gray-100">Horario de Atención</CardTitle>
+                            <CardTitle className="dark:text-gray-100 text-lg md:text-2xl">Horario de Atención</CardTitle>
                         </div>
-                        <CardDescription className="dark:text-gray-400">
+                        <CardDescription className="dark:text-gray-400 text-sm md:text-base">
                             Configura tus días y horarios de trabajo
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-3 md:space-y-4 px-3 md:px-6">
                         {schedulesData?.map((schedule, index) => (
                             <div
                                 key={schedule.id}
-                                className="flex items-center gap-4 p-4 border border-border dark:border-gray-700 rounded-lg"
+                                className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-3 md:p-4 border border-border dark:border-gray-700 rounded-lg"
                             >
-                                <Controller
-                                    control={control}
-                                    name={`schedules.${index}.enabled`}
-                                    render={({ field }) => (
-                                        <Switch
-                                            checked={field.value}
-                                            onCheckedChange={field.onChange}
-                                        />
-                                    )}
-                                />
-                                <div className="flex-1 grid grid-cols-3 gap-4 items-center">
-                                    <span className="font-medium text-foreground dark:text-gray-100">
+                                <div className="flex items-center gap-3 w-full sm:w-auto">
+                                    <Controller
+                                        control={control}
+                                        name={`schedules.${index}.enabled`}
+                                        render={({ field }) => (
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        )}
+                                    />
+                                    <span className="font-medium text-foreground dark:text-gray-100 min-w-20">
                                         {schedule.day}
                                     </span>
+                                </div>
+                                <div className="flex gap-2 w-full sm:flex-1 sm:justify-end">
                                     <Controller
                                         control={control}
                                         name={`schedules.${index}.start`}
                                         render={({ field }) => (
-                                            <TimePicker value={field.value} onChange={field.onChange} className="bg-background" />
+                                            <TimePicker value={field.value} onChange={field.onChange} className="bg-background flex-1 sm:w-[140px]" />
                                         )}
                                     />
                                     <Controller
                                         control={control}
                                         name={`schedules.${index}.end`}
                                         render={({ field }) => (
-                                            <TimePicker value={field.value} onChange={field.onChange} className="bg-background" />
+                                            <TimePicker value={field.value} onChange={field.onChange} className="bg-background flex-1 sm:w-[140px]" />
                                         )}
                                     />
                                 </div>
                             </div>
                         ))}
-                        <Button type="submit" className="mt-4" disabled={isSubmitting}>
+                        <Button type="submit" className="mt-4 w-full sm:w-auto" disabled={isSubmitting}>
                             {isSubmitting ? "Guardando..." : "Guardar Horarios"}
                         </Button>
                     </CardContent>
