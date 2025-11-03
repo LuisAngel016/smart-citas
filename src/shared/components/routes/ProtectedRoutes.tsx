@@ -40,7 +40,7 @@ export const AdminRoute = ({ children }: PropsWithChildren) => {
 
     if (authStatus === "not-authenticated") return <Navigate to='/auth/login' />
 
-    if (!isAdmin()) return <Navigate to='/' />
+    if (!isAdmin()) return <Navigate to='/auth/login' />
 
     return children;
 }
