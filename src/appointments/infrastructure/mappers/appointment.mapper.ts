@@ -1,5 +1,5 @@
 import type { AppointmentPage } from "@/appointments/domain/interfaces/appointment-page.interface";
-import { Appointment } from "../../domain/entities/appointment.entity";
+import { Appointment, AppointmentStatus } from "../../domain/entities/appointment.entity";
 import type { AppointmentAPIResponse } from "../dto/response/appointment-api.response";
 import type { AppointmentsApiResponse } from "../dto/response/appointments-api.response";
 
@@ -15,7 +15,7 @@ export class AppointmentMapper {
       serviceName: result.service.name,
       servicePrice: result.service.price,
       serviceDuration: result.service.duration,
-      status: result.status,
+      status: result.status as AppointmentStatus,
       date: result.date,
       time: result.time,
       notes: result.notes,
@@ -40,7 +40,7 @@ export class AppointmentMapper {
       serviceName: result.service.name,
       servicePrice: result.service.price,
       serviceDuration: result.service.duration,
-      status: result.status,
+      status: result.status as AppointmentStatus,
       date: result.date,
       time: result.time,
       notes: result.notes,

@@ -51,7 +51,7 @@ export const useClientForm = () => {
             phone: data.telefono,
             address: data.direccion,
             identification: data.identificacion,
-            createdBy: user?.id || "",
+            createdBy: user?.id,
         }
 
         try {
