@@ -34,7 +34,7 @@ export const CustomUserDropdown = () => {
                         <span className="font-medium">Perfil</span>
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer py-2.5 hover:bg-ring/30 hover:text-ring">
+                <DropdownMenuItem asChild className="cursor-pointer py-2.5 hover:bg-ring/30 hover:text-ring">
                     <Link to="/admin/settings/business" className="flex items-center">
                         <Settings className={cn("mr-3 h-6 w-6")} />
                         <span className="font-medium">Configuración</span>
