@@ -127,7 +127,7 @@ export const AppointmentModal = ({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[650px] font-poppins border-0 p-0 overflow-auto max-h-[90vh] bg-white dark:bg-gray-800">
+            <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto font-poppins border-0 p-0 bg-white dark:bg-gray-800">
                 <div className="relative">
                     <DialogHeader className="px-8 pt-8 pb-6 space-y-3">
                         <div className="flex items-center gap-3">

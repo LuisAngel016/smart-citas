@@ -1,4 +1,4 @@
-import type { UserAPIResponse } from "./user-api.response";
+import type { UserAPIResponse } from "@/users/infrastructure/dto/response/user-api.response";
 
 export interface AuthAPIResponse {
     user:  UserAPIResponse;

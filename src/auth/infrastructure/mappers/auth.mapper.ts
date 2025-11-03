@@ -1,6 +1,6 @@
 import type { AuthAPIResponse } from "@/auth/infrastructure/dto/response/auth-api.response";
 import type { Session } from "@/auth/domain/interfaces/session.interface";
-import { UserMapper } from "./user.mapper";
+import { UserMapper } from "@/users/infrastructure/mappers/user.mapper";
 
 export class AuthMapper {
   static toDomainSession(result: AuthAPIResponse): Session {

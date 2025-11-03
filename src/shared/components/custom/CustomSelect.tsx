@@ -18,7 +18,9 @@ interface CustomSelectProps {
     required?: boolean;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onChange?: (selectedValue: any) => void;
-}export const CustomSelect = ({
+}
+
+export const CustomSelect = ({
     control,
     name,
     options,
@@ -41,6 +43,9 @@ interface CustomSelectProps {
         throw new Error("El valor de 'options' debe ser un array válido.");
     }
 
+    // Detectar si está en modo oscuro
+    const isDarkMode = document.documentElement.classList.contains('dark');
+
     const customStyles: StylesConfig<OptionType> = {
         control: (base, state) => ({
             ...base,
@@ -50,13 +55,13 @@ interface CustomSelectProps {
             borderStyle: 'solid',
             borderColor: (state.isFocused || state.menuIsOpen)
                 ? 'var(--primary)'
-                : 'rgba(229, 231, 235, 0.7)',
+                : isDarkMode ? 'rgba(55, 65, 81, 0.7)' : 'rgba(229, 231, 235, 0.7)',
             borderRadius: '0.5rem',
             paddingLeft: '1rem',
             paddingRight: '0.75rem',
             paddingTop: '0',
             paddingBottom: '0',
-            backgroundColor: 'var(--bg-form-input)',
+            backgroundColor: isDarkMode ? 'rgb(31, 41, 55)' : 'var(--bg-form-input)',
             fontFamily: 'Poppins, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
             fontSize: '0.875rem',
             fontWeight: 300,
@@ -67,18 +72,24 @@ interface CustomSelectProps {
             '&:hover': {
                 borderColor: (state.isFocused || state.menuIsOpen)
                     ? 'var(--primary)'
-                    : 'rgba(229, 231, 235, 0.7)',
+                    : isDarkMode ? 'rgba(55, 65, 81, 0.7)' : 'rgba(229, 231, 235, 0.7)',
             },
         }),
         menu: (base) => ({
             ...base,
-            backgroundColor: 'white',
+            backgroundColor: isDarkMode ? 'rgb(31, 41, 55)' : 'white',
             borderRadius: '0.5rem',
             boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
-            border: '1px solid rgba(229, 231, 235, 0.7)',
+            border: isDarkMode ? '1px solid rgb(55, 65, 81)' : '1px solid rgba(229, 231, 235, 0.7)',
             zIndex: 9999,
             fontFamily: 'Poppins, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
             marginTop: '4px',
+        }),
+        menuList: (base) => ({
+            ...base,
+            backgroundColor: isDarkMode ? 'rgb(31, 41, 55)' : 'white',
+            borderRadius: '0.5rem',
+            padding: '4px',
         }),
         valueContainer: (base) => ({
             ...base,
@@ -89,7 +100,7 @@ interface CustomSelectProps {
         }),
         input: (base) => ({
             ...base,
-            color: 'var(--text-black)',
+            color: isDarkMode ? 'white' : 'var(--text-black)',
             padding: '0',
             margin: '0',
             fontFamily: 'inherit',
@@ -98,7 +109,7 @@ interface CustomSelectProps {
         }),
         placeholder: (base) => ({
             ...base,
-            color: 'rgba(156, 163, 175, 1)',
+            color: isDarkMode ? 'rgba(156, 163, 175, 1)' : 'rgba(156, 163, 175, 1)',
             margin: '0',
             fontFamily: 'inherit',
             fontSize: 'inherit',
@@ -111,7 +122,7 @@ interface CustomSelectProps {
                 : state.isFocused
                     ? "rgba(var(--primary-rgb), 0.2)"
                     : "transparent",
-            color: state.isSelected ? "white" : (state.isFocused ? "var(--primary)" : "var(--text-black)"),
+            color: state.isSelected ? "white" : (state.isFocused ? "var(--primary)" : (isDarkMode ? "white" : "var(--text-black)")),
             cursor: "pointer",
             textAlign: "left",
             padding: '0.5rem 1rem',
@@ -124,7 +135,7 @@ interface CustomSelectProps {
         }),
         singleValue: (base) => ({
             ...base,
-            color: 'var(--text-black)',
+            color: isDarkMode ? 'white' : 'var(--text-black)',
             margin: '0',
             fontFamily: 'inherit',
             fontSize: 'inherit',
@@ -191,7 +202,8 @@ interface CustomSelectProps {
                         })}
                         classNames={{
                             control: () => "dark:border-form-strokedark dark:bg-form-input dark:text-white",
-                            menu: () => "dark:bg-form-input",
+                            menu: () => "dark:bg-gray-800",
+                            menuList: () => "dark:bg-gray-800 dark:border-gray-700",
                             option: () => "dark:text-white",
                         }}
                     />

@@ -14,6 +14,7 @@ import { AdminRoute, NotAuthenticatedRoute } from '../shared/components/routes/P
 import { ServicesPage } from "@/services/presentation";
 import { SchedulesPage } from "@/schedules/presentation";
 import { BusinessPage } from "@/business/presentation";
+import { ProfilePage } from "@/users/presentation/pages/UserPage";
 
 const AuthLayout = lazy(() => import("@/auth/presentation/layouts/AuthLayout"));
 const AdminLayout = lazy(() => import("@/shared/layouts/AdminLayout"));
@@ -62,6 +63,10 @@ export const appRouter = createBrowserRouter([
             {
                 index: true,
                 element: <DashboardPage />
+            },
+            {
+                path: "profile",
+                element: <ProfilePage />
             },
             {
                 path: "appointments",

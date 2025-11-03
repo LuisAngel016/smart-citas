@@ -36,6 +36,36 @@ export function TimePicker({ value, onChange, className }: TimePickerProps) {
         }
     }, [open, selectedHour, selectedMinute])
 
+    // Prevenir propagación de eventos táctiles
+    useEffect(() => {
+        const hourEl = hourScrollRef.current
+        const minuteEl = minuteScrollRef.current
+
+        const preventPropagation = (e: TouchEvent) => {
+            e.stopPropagation()
+        }
+
+        if (hourEl) {
+            hourEl.addEventListener('touchstart', preventPropagation, { passive: true })
+            hourEl.addEventListener('touchmove', preventPropagation, { passive: true })
+        }
+        if (minuteEl) {
+            minuteEl.addEventListener('touchstart', preventPropagation, { passive: true })
+            minuteEl.addEventListener('touchmove', preventPropagation, { passive: true })
+        }
+
+        return () => {
+            if (hourEl) {
+                hourEl.removeEventListener('touchstart', preventPropagation)
+                hourEl.removeEventListener('touchmove', preventPropagation)
+            }
+            if (minuteEl) {
+                minuteEl.removeEventListener('touchstart', preventPropagation)
+                minuteEl.removeEventListener('touchmove', preventPropagation)
+            }
+        }
+    }, [open])
+
     const handleTimeSelect = (newHour: string, newMinute: string, closePopover = false) => {
         const timeValue = `${newHour}:${newMinute}`
         onChange?.(timeValue)
@@ -68,7 +98,11 @@ export function TimePicker({ value, onChange, className }: TimePickerProps) {
                     {displayValue}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="font-poppins w-72 p-0" align="start">
+            <PopoverContent
+                className="font-poppins w-72 p-0"
+                align="start"
+                onOpenAutoFocus={(e) => e.preventDefault()}
+            >
                 <div className="p-4 border-b bg-muted/30">
                     <div className="flex items-center justify-center gap-2">
                         <div className="flex items-center gap-1">
@@ -86,14 +120,17 @@ export function TimePicker({ value, onChange, className }: TimePickerProps) {
                         </div>
                         <div
                             ref={hourScrollRef}
-                            className="h-49 overflow-y-auto overflow-x-hidden"
+                            className="h-49 overflow-y-auto overflow-x-hidden touch-pan-y"
                             style={{
                                 scrollbarWidth: 'thin',
                                 scrollbarColor: 'hsl(var(--primary) / 0.3) transparent',
                                 WebkitOverflowScrolling: 'touch',
-                                overscrollBehavior: 'contain'
+                                overscrollBehavior: 'contain',
+                                touchAction: 'pan-y',
                             }}
                             onWheel={(e) => e.stopPropagation()}
+                            onTouchStart={(e) => e.stopPropagation()}
+                            onTouchMove={(e) => e.stopPropagation()}
                         >
                             <div className="flex flex-col p-1">
                                 {hours.map((h) => (
@@ -122,14 +159,17 @@ export function TimePicker({ value, onChange, className }: TimePickerProps) {
                         </div>
                         <div
                             ref={minuteScrollRef}
-                            className="h-49 overflow-y-auto overflow-x-hidden"
+                            className="h-49 overflow-y-auto overflow-x-hidden touch-pan-y"
                             style={{
                                 scrollbarWidth: 'thin',
                                 scrollbarColor: 'hsl(var(--primary) / 0.3) transparent',
                                 WebkitOverflowScrolling: 'touch',
-                                overscrollBehavior: 'contain'
+                                overscrollBehavior: 'contain',
+                                touchAction: 'pan-y',
                             }}
                             onWheel={(e) => e.stopPropagation()}
+                            onTouchStart={(e) => e.stopPropagation()}
+                            onTouchMove={(e) => e.stopPropagation()}
                         >
                             <div className="flex flex-col p-1">
                                 {minutes.map((m) => (

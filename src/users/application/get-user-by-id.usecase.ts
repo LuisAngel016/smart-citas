@@ -1,4 +1,4 @@
-import type { User } from "../domain/entities/user.entity";
+import type { User } from "@/auth/domain/entities/user.entity";
 import type { IUserRepository } from "../domain/repositories/user.repository";
 
 

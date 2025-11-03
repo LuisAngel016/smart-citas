@@ -5,6 +5,7 @@ import { scheduleContainer } from "@/schedules/IoC/schedule.container";
 import { serviceContainer } from "@/services/IoC/service.container";
 import { businessContainer } from "@/business/IoC/business.container";
 import { dashboardContainer } from "@/dashboard/IoC/dashboard.container";
+import { userContainer } from "@/users/IoC/user.container";
 
 const dependencies = {
   ...authContainer,
@@ -14,6 +15,7 @@ const dependencies = {
   ...businessContainer,
   ...appointmentContainer,
   ...scheduleContainer,
+  ...userContainer,
 };
 
 type DependencyMap = typeof dependencies;

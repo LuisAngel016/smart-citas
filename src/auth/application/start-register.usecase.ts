@@ -1,5 +1,5 @@
 import type { Session } from "../domain/interfaces/session.interface";
-import type { IUserRepository } from "../domain/repositories/user.repository";
+import type { IUserRepository } from "../domain/repositories/auth.repository";
 
 
 export class StartRegisterUseCase {
