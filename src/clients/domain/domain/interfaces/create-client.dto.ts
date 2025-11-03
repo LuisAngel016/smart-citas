@@ -4,7 +4,7 @@ export interface CreateClientDTO {
   email: string;
   identification: string;
   address?: string;
-  createdBy: string;
+  createdBy?: string;
 }
 
 export type UpdateClientDTO = Partial<CreateClientDTO>
