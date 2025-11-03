@@ -8,5 +8,6 @@ export interface IUserRepository {
   update(id: string, data: Partial<Omit<User, "id">>): Promise<User>;
   delete(id: string): Promise<boolean>;
   startLogin(email: string, password: string): Promise<Session>;
+  startRegister(email: string, password: string, fullName: string): Promise<Session>;
   checkAuthStatus(): Promise<Session>;
 }

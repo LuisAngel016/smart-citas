@@ -2,6 +2,7 @@ import type { User } from '@/auth/domain/entities/user.entity';
 import { create } from 'zustand'
 import { LoginAction } from '../infrastructure/hooks/useLoginAction';
 import { CheckAuthAction } from '../infrastructure/hooks/useCheckAuthStatus';
+import { RegisterAction } from '../infrastructure/hooks/useRegisterAction';
 
 
 type AuthStatus = 'authenticated' | 'not-authenticated' | 'checking';
@@ -18,6 +19,7 @@ type AuthState = {
 
     // Actions
     login: (email: string, password: string) => Promise<boolean>,
+    register: (email: string, password: string, fullName: string) => Promise<boolean>,
     logout: () => void,
     checkAuthStatus: () => Promise<boolean>,
 }
@@ -40,6 +42,19 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     login: async (email: string, password: string) => {
         try {
             const data = await LoginAction(email, password);
+            localStorage.setItem('token', data.token);
+            set({ user: data.user, token: data.token, authStatus: 'authenticated' })
+            return true;
+        } catch (error) {
+            console.log(error)
+            localStorage.removeItem('token');
+            set({ user: null, token: null, authStatus: 'not-authenticated' })
+            return false;
+        }
+    },
+    register: async (email: string, password: string, fullName: string) => {
+        try {
+            const data = await RegisterAction(email, password, fullName);
             localStorage.setItem('token', data.token);
             set({ user: data.user, token: data.token, authStatus: 'authenticated' })
             return true;

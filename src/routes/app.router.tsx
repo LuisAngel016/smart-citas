@@ -5,7 +5,7 @@ import { HomePage } from "@/home/presentation/pages/home/HomePage";
 import { HomeLayout } from "@/home/presentation/layouts/HomeLayout";
 
 import { LoginPage } from "@/auth/presentation/pages/login/LoginPage";
-// import { RegisterPage } from "@/auth/presentation/pages/register/RegisterPage";
+import { RegisterPage } from "@/auth/presentation/pages/register/RegisterPage";
 
 import { DashboardPage } from "@/dashboard";
 import { AppointmentsPage } from "@/appointments";
@@ -46,10 +46,10 @@ export const appRouter = createBrowserRouter([
                 path: "login",
                 element: <LoginPage />
             },
-            // {
-            //     path: "register",
-            //     element: <RegisterPage />
-            // }
+            {
+                path: "register",
+                element: <RegisterPage />
+            }
         ]
     },
     // Admin routes

@@ -1,74 +1,115 @@
-"use client"
-
-import { useState, type FormEvent } from "react"
-// import { Link, useNavigate, useSearchParams } from "react-router"
 import { Link } from "react-router"
-import { toast } from "sonner"
-
 import { Button } from "@/shared/components/ui/button"
 import { Card, CardContent } from "@/shared/components/ui/card"
 import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
 
 import { CustomLogo } from "@/shared/components/custom/CustomLogo"
+import { Mail, Lock, User } from "lucide-react"
+import { useRegisterForm } from "@/auth/infrastructure/hooks/useRegisterForm"
 
 export const RegisterPage = () => {
     // const [searchParams] = useSearchParams()
     // const plan = searchParams.get("plan")
     // const navigate = useNavigate();
-    const [isPosting, setIsPosting] = useState(false);
-
-    // const { register } = useAuthStore();
-
-    const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setIsPosting(true);
-
-        // const formData = new FormData(event.target as HTMLFormElement);
-        // const email = formData.get('email') as string;
-        // const password = formData.get('password') as string;
-        // const name = formData.get('name') as string;
-
-        // const IsValid = await register(email, password, name);
-
-        // if (IsValid) {
-        //     navigate('/')
-        //     return;
-        // }
-
-        toast.error('Correo y/o contraseña no validos')
-        setIsPosting(false);
-    }
+    const { register, handleSubmit, errors, isSubmitting } = useRegisterForm()
 
     return (
         <div className="flex flex-col gap-6 animate-fade-up animation-duration-[1000ms] animate-ease-out">
             <Card className="overflow-hidden">
                 <CardContent className="grid p-0">
-                    <form className="p-6 md:p-8" onSubmit={handleRegister}>
+                    <form className="p-6 md:p-8" onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col items-center text-center">
                                 <CustomLogo />
                                 <p className="mt-4 text-balance text-muted-foreground">Crea una nueva cuenta</p>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Nombre completo</Label>
-                                <Input id="name" name="name" type="name" placeholder="Nombre completo" required />
+                                <Label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
+                                    <div className="p-1 rounded-md bg-primary/10">
+                                        <User className="h-3.5 w-3.5 text-primary" />
+                                    </div>
+                                    Nombre completo
+                                </Label>
+                                <Input
+                                    id="name"
+                                    {...register("name", { required: "El nombre es requerido" })}
+                                    placeholder="Nombre completo"
+                                    className="h-10 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                />
+                                {errors.name && <p className="text-xs text-red-500">{errors.name.message}</p>}
+                            </div>
+                            {/* <div className="grid gap-2">
+                                <Label htmlFor="phone" className="text-sm font-medium flex items-center gap-2">
+                                    <div className="p-1 rounded-md bg-primary/10">
+                                        <Phone className="h-3.5 w-3.5 text-primary" />
+                                    </div>
+                                    Teléfono
+                                </Label>
+                                <Input
+                                    id="phone"
+                                    {...register("phone")}
+                                    type="tel"
+                                    placeholder="+52 123 456 7890"
+                                    className="h-10 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                />
+                            </div> */}
+                            <div className="grid gap-2">
+                                <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
+                                    <div className="p-1 rounded-md bg-primary/10">
+                                        <Mail className="h-3.5 w-3.5 text-primary" />
+                                    </div>
+                                    Correo
+                                </Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="mail@google.com"
+                                    className="h-10 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                    {...register("email", {
+                                        required: "El correo es requerido",
+                                        pattern: {
+                                            value: /^\S+@\S+\.\S+$/,
+                                            message: "Ingresa un correo válido",
+                                        },
+                                    })}
+                                />
+                                {errors.email && (
+                                    <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
+                                        {errors.email.message}
+                                    </p>
+                                )}
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="phone">Teléfono</Label>
-                                <Input id="phone" type="tel" placeholder="+52 123 456 7890" />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Correo</Label>
-                                <Input id="email" name="email" type="email" placeholder="mail@google.com" required />
-                            </div>
-                            <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Contraseña</Label>
+                                <div className="flex justify-between">
+                                    <Label htmlFor="password" className="text-sm font-medium flex items-center gap-2">
+                                        <div className="p-1 rounded-md bg-primary/10">
+                                            <Lock className="h-3.5 w-3.5 text-primary" />
+                                        </div>
+                                        Contraseña
+                                    </Label>
                                 </div>
-                                <Input id="password" name="password" type="password" required placeholder="Contraseña" />
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    placeholder="Contraseña"
+                                    className="h-10 font-thin border-border/70 focus:border-primary transition-all duration-200 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+                                    {...register("password", {
+                                        required: "La contraseña es requerida",
+                                        minLength: {
+                                            value: 6,
+                                            message: "La contraseña debe tener al menos 6 caracteres",
+                                        },
+                                    })}
+                                    required
+                                />
+                                {errors.password && (
+                                    <p className="text-xs text-red-500 flex items-center gap-1 animate-in slide-in-from-top-1">
+                                        {errors.password.message}
+                                    </p>
+                                )}
                             </div>
-                            <Button type="submit" className="w-full" disabled={isPosting}>
+                            <Button type="submit" className="w-full" disabled={isSubmitting}>
                                 Registrarse
                             </Button>
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

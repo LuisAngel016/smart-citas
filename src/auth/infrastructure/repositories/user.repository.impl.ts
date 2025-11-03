@@ -38,6 +38,12 @@ export class UserRepositoryImpl implements IUserRepository {
     const user = AuthMapper.toDomainSession(data);
     return user;
   }
+
+  async startRegister(email: string, password: string, fullName: string): Promise<Session> {
+    const { data } = await this.httpClient.post<AuthAPIResponse>("/auth/register", { email, password, fullName });
+    const user = AuthMapper.toDomainSession(data);
+    return user;
+  }
   
   async checkAuthStatus(): Promise<Session> {
     const { data } = await this.httpClient.get<AuthAPIResponse>("/auth/check-status");

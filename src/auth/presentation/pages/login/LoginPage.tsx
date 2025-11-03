@@ -4,19 +4,19 @@ import { Input } from "@/shared/components/ui/input"
 import { Label } from "@/shared/components/ui/label"
 
 import { CustomLogo } from "@/shared/components/custom/CustomLogo"
-// import { useAuthStore } from "@/auth/store/auth.store"
 
 import smartCitasTwo from "@/assets/images/smartCitas.png"
 import { cn } from "@/shared/lib/utils"
 import { useLoginForm } from "@/auth/infrastructure/hooks/useLoginForm"
 import { Lock, Mail } from "lucide-react"
+import { Link } from "react-router"
 
 export const LoginPage = () => {
 
     const { register, handleSubmit, errors, isSubmitting } = useLoginForm()
 
     return (
-        <div className="flex flex-col gap-6 animate-fade-up animate-duration-[1000ms] animate-ease-out">
+        <div className="flex flex-col gap-6 animate-fade-up animation-duration-[1000ms] animate-ease-out">
             <Card className={cn("p-0")}>
                 <CardContent className="grid p-0 md:grid-cols-2">
                     <form className="p-6 md:p-8" onSubmit={handleSubmit}>
@@ -123,15 +123,15 @@ export const LoginPage = () => {
                                     <span className="sr-only">Ingresar con Meta</span>
                                 </Button>
                             </div>
-                            {/* <div className="text-center text-sm">
+                            <div className="text-center text-sm">
                                 ¿No tienes cuenta? {' '}
                                 <Link to="/auth/register" className="underline underline-offset-4 hover:text-primary">
                                     Crea una
                                 </Link>
-                            </div> */}
+                            </div>
                         </div>
                     </form>
-                    <div className="relative bg-gradient-to-br from-primary/10 to-primary/5 hidden md:flex md:items-center md:justify-center p-8">
+                    <div className="relative bg-linear-to-br from-primary/10 to-primary/5 hidden md:flex md:items-center md:justify-center p-8">
                         <img
                             src={smartCitasTwo}
                             alt="SmartCitas Logo"

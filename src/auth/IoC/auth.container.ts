@@ -7,6 +7,7 @@ import { UpdateUserUseCase } from "../application/update-user.usecase";
 import { DeleteUserUseCase } from "../application/delete-user.usecase";
 import { StartLoginUseCase } from "../application/start-login.usecase";
 import { CheckAuthStatusUseCase } from "../application/check-auth-status.usecase";
+import { StartRegisterUseCase } from "../application/start-register.usecase";
 
 /**
  * Contenedor IoC del módulo de Proyectos
@@ -25,5 +26,6 @@ export const authContainer = {
 	updateUserUseCase: new UpdateUserUseCase(authRepository),
 	deleteUserUseCase: new DeleteUserUseCase(authRepository),
 	startLoginUseCase: new StartLoginUseCase(authRepository),
+	startRegisterUseCase: new StartRegisterUseCase(authRepository),
 	checkAuthStatusUseCase: new CheckAuthStatusUseCase(authRepository),
 };
