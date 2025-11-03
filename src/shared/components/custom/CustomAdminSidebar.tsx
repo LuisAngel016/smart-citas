@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { CustomLogo } from '@/shared/components/custom/CustomLogo';
 import { useAuthStore } from '@/auth/store/auth.store';
+import { getInitials } from '@/shared/lib/name.utils';
 
 interface SidebarProps {
     isCollapsed: boolean;
@@ -52,14 +53,6 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
             onMobileClose();
         }
     };
-
-    const getInitials = (fullName: string) => {
-        if (!fullName) return;
-        return fullName
-            .split(" ")
-            .map(word => word[0].toUpperCase())
-            .join("");
-    }
 
     return (
         <>

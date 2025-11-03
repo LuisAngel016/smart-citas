@@ -6,6 +6,7 @@ import { useThemeContext } from '@/shared/hooks/use-theme-context';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { useAuthStore } from '@/auth/store/auth.store';
 import { cn } from '@/shared/lib/utils';
+import { getInitials } from '@/shared/lib/name.utils';
 
 interface HeaderProps {
     onMenuClick: () => void;
@@ -34,15 +35,6 @@ export const CustomAdminHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
             return prev;
         })
     }
-
-    const getInitials = (fullName: string) => {
-        if (!fullName) return;
-        return fullName
-            .split(" ")
-            .map(word => word[0].toUpperCase())
-            .join("");
-    }
-
     return (
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 h-18">
             <div className="flex items-center justify-between gap-4">
