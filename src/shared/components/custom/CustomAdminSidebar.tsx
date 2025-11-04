@@ -189,8 +189,12 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
                 <div className={`p-4 border-t border-gray-200 dark:border-gray-700 transition-all duration-300 ease-in-out overflow-hidden ${isCollapsed ? 'h-0 p-0 opacity-0' : 'h-auto opacity-100'
                     }`}>
                     <div className="flex gap-2.5 items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
-                        <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-                            {getInitials(user?.name || '')}
+                        <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold overflow-hidden">
+                            {user?.imageUrl ? (
+                                <img src={user.imageUrl} alt={user?.name || 'Avatar'} className="h-full w-full object-cover" />
+                            ) : (
+                                getInitials(user?.name || '')
+                            )}
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{user?.name}</p>

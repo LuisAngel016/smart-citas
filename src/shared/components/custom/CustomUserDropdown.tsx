@@ -13,14 +13,26 @@ export const CustomUserDropdown = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <button className="relative flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 text-sm font-semibold text-white transition-all hover:shadow-lg hover:scale-105 focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                    {getInitials(user?.name || "")}
+                <button className="relative flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 text-sm font-semibold text-white transition-all hover:shadow-lg hover:scale-105 focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 overflow-hidden">
+                    {user?.imageUrl ? (
+                        <img
+                            src={user.imageUrl}
+                            alt={user?.name || 'Avatar'}
+                            className="h-full w-full object-cover"
+                        />
+                    ) : (
+                        getInitials(user?.name || "")
+                    )}
                 </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-72 font-poppins" align="end" sideOffset={8}>
                 <div className="flex items-center gap-3 px-2 py-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 text-sm font-semibold text-white">
-                        {getInitials(user?.name || "")}
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-600 text-sm font-semibold text-white overflow-hidden">
+                        {user?.imageUrl ? (
+                            <img src={user.imageUrl} alt={user?.name || 'Avatar'} className="h-full w-full object-cover" />
+                        ) : (
+                            getInitials(user?.name || "")
+                        )}
                     </div>
                     <div className="flex flex-col gap-0.5">
                         <p className="text-sm font-semibold leading-none">{user?.name}</p>
