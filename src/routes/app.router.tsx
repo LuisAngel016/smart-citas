@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { createBrowserRouter, Navigate } from "react-router";
+import { createHashRouter, Navigate } from "react-router";
 
 import { HomePage } from "@/home/presentation/pages/home/HomePage";
 import { HomeLayout } from "@/home/presentation/layouts/HomeLayout";
@@ -26,7 +26,8 @@ const PrivacyPage = lazy(() => import("@/home/presentation/pages/privacy/Privacy
 const TermsPage = lazy(() => import("@/home/presentation/pages/terms/TermsPage"));
 
 
-export const appRouter = createBrowserRouter([
+export const appRouter = createHashRouter([
+    // export const appRouter = createBrowserRouter([
     // Main routes
     {
         path: "/",
