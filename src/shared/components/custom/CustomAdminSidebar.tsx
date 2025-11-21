@@ -27,9 +27,11 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
 
     const { pathname } = useLocation();
 
-    const { user } = useAuthStore();
+    const { user, isAdmin } = useAuthStore();
 
-    const menuItems = [
+    const menuItems = !isAdmin() ? [
+        { icon: CalendarCheck, label: 'Citas', to: '/user/appointments' },
+    ] : [
         { icon: LayoutDashboard, label: 'Dashboard', to: '/admin' },
         { icon: CalendarCheck, label: 'Citas', to: '/admin/appointments' },
         { icon: Users, label: 'Clientes', to: '/admin/clients' },
@@ -123,65 +125,67 @@ export const CustomAdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onTogg
                                 </li>
                             );
                         })}
-                        {/* Configuración como submenú colapsable */}
-                        <li>
-                            <div>
-                                <button
-                                    onClick={() => setIsSettingsOpen((s) => !s)}
-                                    aria-expanded={isSettingsOpen}
-                                    className={`w-full flex items-center gap-1.5 p-2 rounded-lg transition-all duration-300 ${isActiveRoute('/admin/settings')
-                                        ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
-                                        : 'text-gray-600 font-normal dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
-                                        }`}
-                                >
-                                    <Settings size={22} className="shrink-0" />
-                                    <span className={`whitespace-nowrap cursor-pointer transition-all duration-300 ease-in-out overflow-hidden ${isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'
-                                        }`}>
-                                        Configuración
-                                    </span>
-                                    <ChevronRight size={16} className={`ml-auto transition-transform ${isSettingsOpen ? 'rotate-90' : ''} text-muted-foreground`} />
-                                </button>
+                        {/* Configuración como submenú colapsable - solo para admin */}
+                        {isAdmin() && (
+                            <li>
+                                <div>
+                                    <button
+                                        onClick={() => setIsSettingsOpen((s) => !s)}
+                                        aria-expanded={isSettingsOpen}
+                                        className={`w-full flex items-center gap-1.5 p-2 rounded-lg transition-all duration-300 ${isActiveRoute('/admin/settings')
+                                            ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
+                                            : 'text-gray-600 font-normal dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
+                                            }`}
+                                    >
+                                        <Settings size={22} className="shrink-0" />
+                                        <span className={`whitespace-nowrap cursor-pointer transition-all duration-300 ease-in-out overflow-hidden ${isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'
+                                            }`}>
+                                            Configuración
+                                        </span>
+                                        <ChevronRight size={16} className={`ml-auto transition-transform ${isSettingsOpen ? 'rotate-90' : ''} text-muted-foreground`} />
+                                    </button>
 
-                                {/* subitems: hidden when collapsed */}
-                                {!isCollapsed && (
-                                    <ul className={`mt-1 ml-2 pl-2 border-l border-transparent ${isSettingsOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'} transition-all overflow-hidden`}>
-                                        <li>
-                                            <Link
-                                                to="/admin/settings/business"
-                                                className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/business' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}
-                                                onClick={handleLinkClick}
-                                            >
-                                                <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/business' ? 'bg-blue-600' : 'bg-transparent'}`} />
-                                                <Briefcase size={16} className="shrink-0" />
-                                                <span>Negocio</span>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                to="/admin/settings/services"
-                                                className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/services' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}
-                                                onClick={handleLinkClick}
-                                            >
-                                                <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/services' ? 'bg-blue-600' : 'bg-transparent'}`} />
-                                                <Box size={16} className="shrink-0" />
-                                                <span>Servicio</span>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link
-                                                to="/admin/settings/schedules"
-                                                className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/schedules' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}
-                                                onClick={handleLinkClick}
-                                            >
-                                                <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/schedules' ? 'bg-blue-600' : 'bg-transparent'}`} />
-                                                <Clock size={16} className="shrink-0" />
-                                                <span>Horario</span>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                )}
-                            </div>
-                        </li>
+                                    {/* subitems: hidden when collapsed */}
+                                    {!isCollapsed && (
+                                        <ul className={`mt-1 ml-2 pl-2 border-l border-transparent ${isSettingsOpen ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'} transition-all overflow-hidden`}>
+                                            <li>
+                                                <Link
+                                                    to="/admin/settings/business"
+                                                    className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/business' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}
+                                                    onClick={handleLinkClick}
+                                                >
+                                                    <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/business' ? 'bg-blue-600' : 'bg-transparent'}`} />
+                                                    <Briefcase size={16} className="shrink-0" />
+                                                    <span>Negocio</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link
+                                                    to="/admin/settings/services"
+                                                    className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/services' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}
+                                                    onClick={handleLinkClick}
+                                                >
+                                                    <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/services' ? 'bg-blue-600' : 'bg-transparent'}`} />
+                                                    <Box size={16} className="shrink-0" />
+                                                    <span>Servicio</span>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link
+                                                    to="/admin/settings/schedules"
+                                                    className={`flex items-center gap-2 p-2 text-sm rounded-md ${pathname === '/admin/settings/schedules' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 font-medium' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'}`}
+                                                    onClick={handleLinkClick}
+                                                >
+                                                    <span className={`w-1 h-5 rounded-r-sm ${pathname === '/admin/settings/schedules' ? 'bg-blue-600' : 'bg-transparent'}`} />
+                                                    <Clock size={16} className="shrink-0" />
+                                                    <span>Horario</span>
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </div>
+                            </li>
+                        )}
                     </ul>
                 </nav>
 

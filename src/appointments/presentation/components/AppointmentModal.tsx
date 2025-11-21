@@ -24,6 +24,7 @@ import { useDeleteAppointmentDialog } from "@/appointments/infrastructure/hooks/
 import { useCompleteAppointmentDialog } from "@/appointments/infrastructure/hooks/useCompleteAppointmentDialog"
 import { useGetClients } from "@/clients/infrastructure/hooks/useGetClients"
 import { useGetServices } from "@/services/infrastructure/hooks/useGetServices"
+import { useAuthStore } from "@/auth/store/auth.store"
 import CustomSelect from "@/shared/components/custom/CustomSelect"
 import { TimePicker } from "@/shared/components/custom"
 import { DeleteConfirmationModal } from "@/shared/components/custom/DeleteConfirmationModal"
@@ -82,8 +83,14 @@ export const AppointmentModal = ({
 
     const { data: clients } = useGetClients()
     const { data: services } = useGetServices()
+    const { isAdmin, user } = useAuthStore()
 
     const isEditing = !!editingAppointment
+
+    // Si es user, buscar el cliente correspondiente por email
+    const userClient = !isAdmin() && user?.email
+        ? clients?.data.find(c => c.email === user.email || c.identification === user.email)
+        : null
 
     // Obtener valores actuales del formulario
     const idClient = watch("idClient")
@@ -101,6 +108,13 @@ export const AppointmentModal = ({
     // Validar si se puede completar la cita
     const canComplete = canCompleteAppointment(date, time, serviceDuration, status)
     const completeDisabledReason = getCompleteDisabledReason(date, time, serviceDuration, status)
+
+    // Auto-seleccionar cliente si es user
+    useEffect(() => {
+        if (!isAdmin() && userClient && !isEditing && open) {
+            setValue("idClient", userClient.id)
+        }
+    }, [isAdmin, userClient, isEditing, open, setValue])
 
     useEffect(() => {
         function onDoc(e: MouseEvent) {
@@ -168,8 +182,9 @@ export const AppointmentModal = ({
                                         label: client.name
                                     })) ?? []}
                                     placeholder="Seleccionar cliente"
-                                    isClearable
+                                    isClearable={isAdmin()}
                                     required={true}
+                                    isDisabled={!isAdmin()}
                                     onChange={(selected) => {
                                         setValue("idClient", selected?.value ?? "");
                                     }}
@@ -323,14 +338,14 @@ export const AppointmentModal = ({
                                                     onClick={() => {
                                                         if (editingAppointment) handleDeleteClick(editingAppointment)
                                                     }}
-                                                    disabled={isSubmitting || isCompleting}
-                                                    className="h-11 border-destructive/70 text-destructive hover:bg-destructive/10 hover:border-destructive dark:border-destructive/50 dark:hover:bg-destructive/20 transition-all duration-200"
+                                                    disabled={isSubmitting || isCompleting || !isAdmin()}
+                                                    className="h-11 border-destructive/70 text-destructive hover:bg-destructive/10 hover:border-destructive dark:border-destructive/50 dark:hover:bg-destructive/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                             </TooltipTrigger>
                                             <TooltipContent className="font-poppins text-xs p-2 rounded-lg shadow-lg">
-                                                <p className="text-sm font-medium">Eliminar cita</p>
+                                                <p className="text-sm font-medium">{!isAdmin() ? "No tienes permisos para eliminar" : "Eliminar cita"}</p>
                                             </TooltipContent>
                                         </Tooltip>
 
@@ -374,8 +389,8 @@ export const AppointmentModal = ({
                                     </Button>
                                     <Button
                                         type="submit"
-                                        disabled={isSubmitting || isCompleting}
-                                        className="flex-1 sm:flex-none h-11 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all duration-200"
+                                        disabled={isSubmitting || isCompleting || (isEditing && !isAdmin())}
+                                        className="flex-1 sm:flex-none h-11 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {isSubmitting ? (
                                             <span className="flex items-center gap-2">

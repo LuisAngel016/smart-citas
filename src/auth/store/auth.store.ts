@@ -16,6 +16,7 @@ type AuthState = {
 
     // Getters
     isAdmin: () => boolean;
+    isUser: () => boolean;
 
     // Actions
     login: (email: string, password: string) => Promise<boolean>,
@@ -35,7 +36,12 @@ export const useAuthStore = create<AuthState>()((set, get) => ({
     isAdmin: () => {
         const roles = get().user?.roles || [];
 
-        return roles.includes('user') || roles.includes('admin');
+        return roles.includes('admin');
+    },
+    isUser: () => {
+        const roles = get().user?.roles || [];
+
+        return roles.includes('user');
     },
 
     // Actions

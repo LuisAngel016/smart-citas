@@ -10,7 +10,7 @@ import { RegisterPage } from "@/auth/presentation/pages/register/RegisterPage";
 import { DashboardPage } from "@/dashboard";
 import { AppointmentsPage } from "@/appointments";
 import { ClientsPage } from "@/clients";
-import { AdminRoute, NotAuthenticatedRoute } from '../shared/components/routes/ProtectedRoutes';
+import { AdminRoute, NotAuthenticatedRoute, UserRoute } from '../shared/components/routes/ProtectedRoutes';
 import { ServicesPage } from "@/services/presentation";
 import { SchedulesPage } from "@/schedules/presentation";
 import { BusinessPage } from "@/business/presentation";
@@ -114,6 +114,27 @@ export const appRouter = createHashRouter([
             {
                 path: "settings/schedules",
                 element: <SchedulesPage />
+            }
+        ]
+    },
+    // User routes
+    {
+        path: "/user",
+        element: <UserRoute>
+            <AdminLayout />
+        </UserRoute>,
+        children: [
+            {
+                index: true,
+                element: <Navigate to="/user/appointments" />
+            },
+            {
+                path: "appointments",
+                element: <AppointmentsPage />
+            },
+            {
+                path: "profile",
+                element: <ProfilePage />
             }
         ]
     }
