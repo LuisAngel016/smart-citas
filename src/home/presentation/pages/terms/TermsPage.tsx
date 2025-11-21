@@ -10,14 +10,14 @@ export const TermsPage = () => {
       <section className="container mx-auto px-6 py-12 text-gray-800">
         <h1 className="text-3xl font-bold mb-6 text-primary">Términos y Condiciones de Uso</h1>
         <p className="mb-4">
-          Estos Términos regulan el uso de la plataforma <strong>SmartCitas</strong>, disponible en
-          <a href="https://smart-citas.netlify.app/" target="_blank" className="text-primary underline ml-1">www.smartcitas.com</a>.
+          Estos Términos regulan el uso de la plataforma <strong>Appointler</strong>, disponible en
+          <a href="https://appointler.netlify.app/" target="_blank" className="text-primary underline ml-1">www.appointler.com</a>.
           Al utilizar el servicio, aceptas plenamente estas condiciones.
         </p>
 
         <h2 className="text-2xl font-semibold mt-6 mb-2">1. Uso del servicio</h2>
         <p className="mb-4">
-          SmartCitas permite agendar, administrar y gestionar citas en línea. Cada usuario es responsable
+          Appointler permite agendar, administrar y gestionar citas en línea. Cada usuario es responsable
           de la veracidad de la información ingresada y del uso adecuado de la plataforma.
         </p>
 
@@ -29,13 +29,13 @@ export const TermsPage = () => {
 
         <h2 className="text-2xl font-semibold mt-6 mb-2">3. Propiedad intelectual</h2>
         <p className="mb-4">
-          Todos los contenidos, códigos, marcas y diseños pertenecen a SmartCitas. Queda prohibida su reproducción
+          Todos los contenidos, códigos, marcas y diseños pertenecen a Appointler. Queda prohibida su reproducción
           o uso no autorizado sin permiso escrito.
         </p>
 
         <h2 className="text-2xl font-semibold mt-6 mb-2">4. Responsabilidad</h2>
         <p className="mb-4">
-          SmartCitas no será responsable por pérdidas o interrupciones derivadas del mal uso del sistema,
+          Appointler no será responsable por pérdidas o interrupciones derivadas del mal uso del sistema,
           fallas de terceros o causas de fuerza mayor.
         </p>
 

@@ -8,9 +8,9 @@ export const AboutPage = () => {
       <CustomHeader showNavigation={false} />
 
       <section className="container mx-auto px-6 py-12 text-gray-800">
-        <h1 className="text-3xl font-bold mb-6 text-primary">Acerca de SmartCitas</h1>
+        <h1 className="text-3xl font-bold mb-6 text-primary">Acerca de Appointler</h1>
         <p className="mb-4">
-          En <strong>SmartCitas</strong> somos una empresa dedicada al desarrollo de soluciones
+          En <strong>Appointler</strong> somos una empresa dedicada al desarrollo de soluciones
           tecnológicas diseñadas para <strong>simplificar la gestión de citas y optimizar la productividad</strong>
           de los negocios.
         </p>

@@ -5,7 +5,7 @@ interface Props {
     navigate?: string;
 }
 
-export const CustomLogo = ({ subtitle = 'Citas', navigate = '/' }: Props) => {
+export const CustomLogo = ({ /* subtitle = 'Citas', */ navigate = '/' }: Props) => {
     return (
         <Link
             to={navigate}
@@ -170,9 +170,9 @@ export const CustomLogo = ({ subtitle = 'Citas', navigate = '/' }: Props) => {
                         group-hover:after:w-full
                     "
                 >
-                    Smart
+                    Appointler
                 </span>
-                <span
+                {/* <span
                     className="
                         text-2xl
                         font-extralight
@@ -185,7 +185,7 @@ export const CustomLogo = ({ subtitle = 'Citas', navigate = '/' }: Props) => {
                     "
                 >
                     {subtitle}
-                </span>
+                </span> */}
             </div>
         </Link>
     )

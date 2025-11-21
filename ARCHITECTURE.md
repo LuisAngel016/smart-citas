@@ -1,10 +1,10 @@
-# Arquitectura de SmartCitas
+# Arquitectura de Appointler
 
-Este documento describe la arquitectura del frontend de SmartCitas, convenciones y flujos habituales con ejemplos específicos de los módulos `appointments` y `clients`.
+Este documento describe la arquitectura del frontend de Appointler, convenciones y flujos habituales con ejemplos específicos de los módulos `appointments` y `clients`.
 
 ## Visión general
 
-SmartCitas adopta una aproximación modular por dominios y una separación en capas inspirada en Clean Architecture:
+Appointler adopta una aproximación modular por dominios y una separación en capas inspirada en Clean Architecture:
 
 - Cada dominio tiene su propia carpeta bajo `src/` (por ejemplo `appointments`, `clients`, `auth`).
 - Dentro de cada dominio se separan responsabilidades en subcarpetas: `domain`, `application`, `infrastructure`, `presentation`, y ocasionalmente `IoC`.

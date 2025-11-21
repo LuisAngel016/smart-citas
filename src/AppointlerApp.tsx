@@ -27,7 +27,7 @@ export const CheckAuthProvider = ({ children }: PropsWithChildren) => {
   return children;
 }
 
-export const SmartCitasApp = () => {
+export const AppointlerApp = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />

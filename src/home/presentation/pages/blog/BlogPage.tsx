@@ -8,9 +8,9 @@ export const BlogPage = () => {
       <CustomHeader showNavigation={false} />
 
       <section className="container mx-auto px-6 py-12 text-gray-800">
-        <h1 className="text-3xl font-bold mb-6 text-primary">Blog SmartCitas</h1>
+        <h1 className="text-3xl font-bold mb-6 text-primary">Blog Appointler</h1>
         <p className="mb-4">
-          El <strong>Blog de SmartCitas</strong> es un espacio creado para compartir conocimiento,
+          El <strong>Blog de Appointler</strong> es un espacio creado para compartir conocimiento,
           ideas y estrategias que impulsen la transformación digital de los negocios.
         </p>
         <p className="mb-6">
@@ -20,7 +20,7 @@ export const BlogPage = () => {
         <ul className="list-disc list-inside space-y-2 mb-4">
           <li>Estrategias para fidelizar y retener clientes.</li>
           <li>Herramientas digitales para emprendedores.</li>
-          <li>Actualizaciones y novedades de SmartCitas.</li>
+          <li>Actualizaciones y novedades de Appointler.</li>
           <li>Casos de éxito y testimonios reales.</li>
         </ul>
         <p>

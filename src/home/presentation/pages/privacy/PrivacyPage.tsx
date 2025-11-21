@@ -10,7 +10,7 @@ export const PrivacyPage = () => {
       <section className="container mx-auto px-6 py-12 text-gray-800">
         <h1 className="text-3xl font-bold mb-6 text-primary">Política de Privacidad</h1>
         <p className="mb-4">
-          En <strong>SmartCitas</strong> nos tomamos muy en serio la privacidad y seguridad de los datos
+          En <strong>Appointler</strong> nos tomamos muy en serio la privacidad y seguridad de los datos
           de nuestros usuarios. Esta política explica cómo recopilamos, utilizamos y protegemos tu información personal.
         </p>
 
@@ -37,7 +37,7 @@ export const PrivacyPage = () => {
         <h2 className="text-2xl font-semibold mt-6 mb-2">4. Derechos del usuario</h2>
         <p className="mb-4">
           Puedes acceder, corregir o eliminar tus datos personales escribiendo a
-          <strong> privacidad@smartcitas.com</strong>. Cumplimos con la Ley 1581 de 2012 de Protección
+          <strong> privacidad@appointler.com</strong>. Cumplimos con la Ley 1581 de 2012 de Protección
           de Datos Personales y demás normativas aplicables en Colombia.
         </p>
 

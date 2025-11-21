@@ -41,7 +41,7 @@ const footerSections: FooterSection[] = [
     },
 ];
 
-const COMPANY_NAME = "SmartCitas";
+const COMPANY_NAME = "Appointler";
 const COMPANY_DESCRIPTION = "Sistema profesional de gestión de citas para tu negocio";
 
 export const CustomFooter = () => {

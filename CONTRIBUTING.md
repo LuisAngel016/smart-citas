@@ -1,4 +1,4 @@
-# Contribuir a SmartCitas
+# Contribuir a Appointler
 
 Gracias por querer contribuir. Estas son las guías mínimas para colaboraciones pequeñas y PRs.
 

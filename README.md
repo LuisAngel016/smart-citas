@@ -1,6 +1,6 @@
-# smart-citas
+# appointler
 
-Proyecto front-end de la aplicación SmartCitas.
+Proyecto front-end de la aplicación Appointler.
 
 ## Resumen
 Aplicación SPA escrita en TypeScript y React, construida con Vite. La estructura sigue una aproximación modular por dominios (appointments, auth, clients, etc.) y separación por capas (domain, application, infrastructure, presentation, IoC).
@@ -15,7 +15,7 @@ Aplicación SPA escrita en TypeScript y React, construida con Vite. La estructur
 
 ```powershell
 git clone <URL-del-repositorio>
-cd smart-citas
+cd appointler
 ```
 
 2. Instala dependencias
@@ -97,11 +97,11 @@ src/
     contexts/
   routes/
   main.tsx
-  SmartCitasApp.tsx
+  AppointlerApp.tsx
 ```
 
 ## Enlaces rápidos
-- Código principal: `src/SmartCitasApp.tsx` (arranque de router y theme provider)
+- Código principal: `src/AppointlerApp.tsx` (arranque de router y theme provider)
 - Entrada: `src/main.tsx`
 
 ---

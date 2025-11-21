@@ -5,7 +5,7 @@ import { Label } from "@/shared/components/ui/label"
 
 import { CustomLogo } from "@/shared/components/custom/CustomLogo"
 
-import smartCitasTwo from "@/assets/images/smartCitas.png"
+import appointlerTwo from "@/assets/images/appointler.png"
 import { cn } from "@/shared/lib/utils"
 import { useLoginForm } from "@/auth/infrastructure/hooks/useLoginForm"
 import { Lock, Mail } from "lucide-react"
@@ -133,8 +133,8 @@ export const LoginPage = () => {
                     </form>
                     <div className="relative bg-linear-to-br from-primary/10 to-primary/5 hidden md:flex md:items-center md:justify-center p-8">
                         <img
-                            src={smartCitasTwo}
-                            alt="SmartCitas Logo"
+                            src={appointlerTwo}
+                            alt="Appointler Logo"
                             className="max-w-xs w-full h-auto object-contain"
                         />
                     </div>
